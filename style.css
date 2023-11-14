@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+span {
+    font-size: 4rem;
+}
+
+.wrapper nav {
+    width: 15%;
+    background-color: #181e36;
+}
+
+.wrapper nav a {
+    color: rgb(161, 161, 161);
+    padding-top: 16px;
+}
+
+.wrapper nav a .fa-solid {
+    width: 30%;
+}
+
+.wrapper nav a:hover,
+.wrapper nav a .fa-solid:hover {
+    color: white;
+}
+
+.wrapper nav li {
+    height: 55px;
+}
+
+.wrapper nav li:hover {
+    background-color: #454a61;
+}
+
+.wrapper .card {
+    width: 30%;
+    height: 300px;
+}
+
+.wrapper .first,
+.wrapper .third {
+    background-color: #181e36;
+}
+
+.wrapper .second {
+    background-color: #478186;
+}
+
+.wrapper .container {
+    margin: 7rem;
+}
+
+.wrapper .container .db {
+    height: 51%;
+}
+
+.container .table-name,
+.container .table-age,
+.container .table-gender,
+.container .table-contactNumber,
+.container .table-address {
+    background-color: #181e36;
+    color: white;
+    font-weight: 100;
+}
+
+.container .table-name {
+    width: 22%;
+}
+
+.container .table-age {
+    width: 7%;
+}
+
+.container .table-gender {
+    width: 10%;
+}
+
+.container .table-contactNumber {
+    width: 20%;
+}
+
+.container .table td {
+    height: 30.5px;
+}
