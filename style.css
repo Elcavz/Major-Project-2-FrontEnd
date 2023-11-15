@@ -16,6 +16,20 @@ span {
     font-size: 4rem;
 }
 
+.navBar {
+    height: 66.4vh;
+}
+
+.wrapper #profilePic {
+    width: 50%;
+    height: 135px;
+    z-index: 5;
+}
+
+.wrapper #profilePic img {
+    height: 85%;
+}
+
 .wrapper nav {
     width: 15%;
     background-color: #181e36;
@@ -28,13 +42,19 @@ span {
     background-color: #181e36;
 }
 
+.wrapper nav #dbBtn {
+    color: white;
+    background-color: #454a61;
+}
+
+
 .wrapper nav button .fa-solid {
     width: 10%;
 }
 
 .wrapper nav button:hover,
 .wrapper nav button .fa-solid:hover {
-    color: white;
+    color: white!important;
 }
 
 .wrapper nav li {
@@ -42,7 +62,15 @@ span {
 }
 
 .wrapper nav button:hover {
-    background-color: #454a61;
+    background-color: #454a61!important;
+}
+
+.wrapper #logoutDiv {
+    height: 55px;
+}
+
+.wrapper #logoutDiv button:hover {
+    background-color: rgb(182, 53, 53);
 }
 
 .wrapper .card {
@@ -248,4 +276,27 @@ input::-webkit-inner-spin-button {
     height: 100%;
     width: 100%;
     color: white;
+}
+
+/* End of Register Student */
+
+/* Start of Profile CSS */
+#pf {
+    display: none;
+}
+
+.wrapper #profile input {
+    height: 35px;
+}
+
+.wrapper #profile #updateProfile {
+    width: 15%;
+    height: 40px;
+    background-color: #478186;
+}
+
+.wrapper #profile #cancelProfile {
+    width: 15%;
+    height: 40px;
+    background-color: rgb(148, 148, 148);
 }
