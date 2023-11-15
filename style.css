@@ -8,6 +8,10 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+textarea#address {
+    resize: none;
+}
+
 span {
     font-size: 4rem;
 }
@@ -17,17 +21,19 @@ span {
     background-color: #181e36;
 }
 
-.wrapper nav a {
+.wrapper nav button {
     color: rgb(161, 161, 161);
-    padding-top: 16px;
+    outline: none;
+    border: none;
+    background-color: #181e36;
 }
 
-.wrapper nav a .fa-solid {
-    width: 30%;
+.wrapper nav button .fa-solid {
+    width: 10%;
 }
 
-.wrapper nav a:hover,
-.wrapper nav a .fa-solid:hover {
+.wrapper nav button:hover,
+.wrapper nav button .fa-solid:hover {
     color: white;
 }
 
@@ -35,7 +41,7 @@ span {
     height: 55px;
 }
 
-.wrapper nav li:hover {
+.wrapper nav button:hover {
     background-color: #454a61;
 }
 
@@ -89,4 +95,157 @@ span {
 
 .container .table td {
     height: 30.5px;
+}
+
+/* Register Student CSS */
+#regStudent {
+    display: none;
+}
+
+.wrapper #regStudent .mb-5 h1 {
+    font-weight: bolder;
+}
+
+.wrapper #regStudent .required {
+    color: red;
+}
+
+.wrapper #regStudent div.col h4 {
+    width: fit-content;
+}
+
+.wrapper #regStudent div.col input,
+.wrapper #regStudent div.col select {
+    height: 35px;
+    width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.wrapper #regStudent .w-75 button {
+    width: 15%;
+    height: 40px;
+    background-color: #478186;
+    border: none;
+}
+
+/* ID Generated */
+#studentId p {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.font {
+    height: 375px;
+    width: 250px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.top {
+    height: 30%;
+    width: 100%;
+    background-color: #181e36;
+    position: relative;
+    z-index: 5;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.bottom {
+    height: 70%;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom: 1px solid;
+}
+
+.bottom .fs-6 {
+    font-weight: normal;
+}
+
+.top img {
+    height: 100px;
+    width: 100px;
+    background-color: #e6ebe0;
+    border-radius: 10px;
+    position: absolute;
+    top:60px;
+    left: 75px;
+}
+
+.bottom p {
+    position: relative;
+    top: 60px;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 20px;
+    text-emphasis: spacing;
+}
+
+.bottom .desi {
+    font-size:12px;
+    color: grey;
+    font-weight: normal;
+}
+
+.bottom .no {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.barcode img {
+    height: 65px;
+    width: 65px;
+    text-align: center;
+    margin: 5px;
+}
+
+.barcode {
+    text-align: center;
+    position: relative;
+    top: 70px;
+}
+
+.qr img {
+    height: 80px;
+    width: 100%;
+    margin: 20px;
+    background-color: white;
+}
+
+.Details {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+}
+
+.details-info {
+    color: white;
+    text-align: left;
+    padding: 5px;
+    line-height: 20px;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 22px;
+}
+
+.logo {
+    height: 40px;
+    width: 150px;
+    padding: 40px;
+}
+
+.logo img {
+    height: 100%;
+    width: 100%;
+    color: white;
 }
