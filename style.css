@@ -8,6 +8,10 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+.wrapper #db {
+    background-color: #f7f7fc;
+}
+
 textarea#address {
     resize: none;
 }
@@ -61,10 +65,6 @@ span {
     height: 55px;
 }
 
-.wrapper nav button:hover {
-    background-color: #454a61!important;
-}
-
 .wrapper #logoutDiv {
     height: 55px;
 }
@@ -88,7 +88,9 @@ span {
 }
 
 .wrapper .container {
-    margin: 7rem;
+    padding: 2.5rem;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .wrapper .container .db {
@@ -128,6 +130,7 @@ span {
 /* Register Student CSS */
 #regStudent {
     display: none;
+    background-color: #f7f7fc;
 }
 
 .wrapper #regStudent .mb-5 h1 {
@@ -283,20 +286,26 @@ input::-webkit-inner-spin-button {
 /* Start of Profile CSS */
 #pf {
     display: none;
+    background-color: #f7f7fc;
 }
 
-.wrapper #profile input {
+.wrapper #pf input {
     height: 35px;
 }
 
-.wrapper #profile #updateProfile {
+.wrapper #pf #updateProfile {
     width: 15%;
     height: 40px;
     background-color: #478186;
 }
 
-.wrapper #profile #cancelProfile {
+.wrapper #pf #cancelProfile {
     width: 15%;
     height: 40px;
     background-color: rgb(148, 148, 148);
+    transition: all ease 0.3s;
+}
+
+.wrapper #pf #cancelProfile:hover {
+    background-color: rgb(233, 233, 233);
 }

@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #f7f7fc;
+}
+
+h4 {
+    background-color: transparent;
+}
+
+.h-75 {
+    width: 23%;
+    background-color: #ffffff;
+}
+
+.h-75 .rounded-4 {
+    background-color: #24315c;
+    width: 92%;
+    transform: translateY(-25px) translateX(18px);
+}
+
+img {
+    background-color: transparent;
+}
+
+h6 {
+    background-color: transparent;  
+}
+
+.emailDiv {
+    background-color: transparent;
+}
+
+input {
+    height: 35px;
+    width: 100%;
+    border: 3px solid rgb(168, 168, 168);
+    outline: rgb(168, 168, 168);
+}
+
+button {
+    height: 35px;
+    border: 1px solid rgb(168, 168, 168);
+    background-color: #7f8fc0;
+    color: rgb(231, 231, 231);
+    transition: all 0.3s ease;
+}
+
+#wrongPass {
+    color: white;
+}
