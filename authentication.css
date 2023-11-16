@@ -9,6 +9,8 @@
     background-color: #f7f7fc;
 }
 
+/* REGISTRATION CSS */
+
 h4 {
     background-color: transparent;
 }
@@ -36,14 +38,54 @@ h6 {
     background-color: transparent;
 }
 
+#email {
+    width: 79%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    border-right: none;
+}
+
+#otp {
+    width: 79%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    border-right: none;
+}
+
+#emailBtn {
+    height: 35px;
+    width: 85px;
+    border: 2px solid rgb(168, 168, 168);
+    outline: rgb(168, 168, 168);
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: #24315c;
+    position: absolute;
+}
+
+#otpBtn {
+    height: 35px;
+    width: 85px;
+    border: 2px solid rgb(168, 168, 168);
+    outline: rgb(168, 168, 168);
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: #24315c;
+    position: absolute;
+}
+
+#otpEmail {
+    display: none;
+}
+
 input {
     height: 35px;
     width: 100%;
-    border: 3px solid rgb(168, 168, 168);
+    border: 2px solid rgb(168, 168, 168);
     outline: rgb(168, 168, 168);
 }
 
-button {
+#regBtn {
     height: 35px;
     border: 1px solid rgb(168, 168, 168);
     background-color: #7f8fc0;
@@ -51,6 +93,24 @@ button {
     transition: all 0.3s ease;
 }
 
+#loginBtn {
+    height: 35px;
+    border: 1px solid rgb(168, 168, 168);
+    background-color: #6dbe74;
+    color: rgb(231, 231, 231);
+    transition: all 0.3s ease;
+    padding-top: 0.7rem;
+}
+
 #wrongPass {
     color: white;
 }
+
+#warningIcon {
+    color: #ff0000;
+}
+
+/* END OF REGISTRATION */
+
+/* START OF LOGIN CSS */
+

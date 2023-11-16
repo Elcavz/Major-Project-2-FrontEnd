@@ -6,7 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="authentication.css">
     <script src="https://kit.fontawesome.com/dd61417c3c.js" crossorigin="anonymous"></script>
-    <title>REGISTER</title>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <title>ADMIN | REGISTER</title>
 </head>
 <body>
     <div class="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
@@ -21,18 +22,26 @@
                 </div>
                 <div class="mb-5 bg-white">
                     <h3 class="bg-white">Email <span class="text-danger bg-white">*</span></h3>
-                    <input id="email" class="fs-3 px-2 rounded-3 bg-white" type="text">
+                    <input id="email" class="fs-3 px-2 bg-white" type="text">
+                    <button id="emailBtn" class="text-white" onclick="otpSend()">SEND OTP</button>
+                    <div id="otpEmail">
+                        <input id="otp" class="fs-3 px-2 bg-white" type="text">
+                        <button id="otpBtn" class="text-white" onclick="verifyOtp()">VERIFY</button>
+                    </div>
                 </div>
                 <div class="mb-5 bg-white">
                     <h3 id="passH3" class="bg-white">Password <span class="text-danger bg-white">*</span></h3>
                     <input id="password" class="fs-3 px-2 rounded-3 bg-white" type="password">
                 </div>
                 <div class="mb-5 bg-white">
-                    <h3 id="cPassH3" class="bg-white">Confirm Password <span class="text-danger bg-white">*</span></h3>
+                    <h3 id="cPassH3" class="bg-white">Confirm Password <span class="text-danger">*</span></h3>
                     <input id="cPassword" class="fs-3 px-2 rounded-3 bg-white" type="password">
-                    <span id="wrongPass" class="fs-5 bg-white">.</span>
+                    <i id="warningIcon" class="fa-solid"></i><span id="wrongPass" class="fs-5 bg-transparent">.</span>
                 </div>
-                <button id="regBtn" class="w-100 rounded-3" disabled>REGISTER</button>
+                <button id="regBtn" class="w-100 rounded-3" onclick="register()" disabled>REGISTER</button>
+                <div class="mt-4 bg-white">
+                    <a id="loginBtn" class="text-decoration-none w-100 text-center rounded-3" href="login.html" type="button">LOG IN</a>
+                </div>
             </div>
         </div>
     </div>
@@ -55,6 +64,7 @@
             regBtn.disabled = false;
             regBtn.style.backgroundColor = '#24315c';
             regBtn.style.color = 'white';
+            cPassword.style.boxShadow = '0px';
         } else {
             regBtn.disabled = true;
             regBtn.style.backgroundColor = '#7f8fc0';
@@ -74,18 +84,23 @@
         const wrongPassword = document.getElementById('wrongPass');
         const passH3 = document.getElementById('passH3');
         const cPassH3 = document.getElementById('cPassH3');
+        const warningIcon = document.getElementById('warningIcon');
         
         if (password.value === cPassword.value) {
+            wrongPassword.style.color = "white"
             wrongPassword.innerHTML = "."
-            password.style.border = "3px solid rgb(168, 168, 168)"
-            cPassword.style.border = "3px solid rgb(168, 168, 168)"
+            password.style.border = "2px solid rgb(168, 168, 168)"
+            cPassword.style.border = "2px solid rgb(168, 168, 168)"
             passH3.style.color = 'black'
             cPassH3.style.color = 'black'
             regBtn.disabled = false;
             regBtn.style.backgroundColor = '#24315c';
             regBtn.style.color = 'white';
+            warningIcon.style.color = 'white'
+            password.removeAttribute('style');
+            cPassword.removeAttribute('style');
         } else {
-            wrongPassword.style.color = "red"
+            wrongPassword.style.color = "black"
             wrongPassword.innerHTML = "Incorrect Password"
             password.style.border = "2px solid red"
             cPassword.style.border = "2px solid red"
@@ -94,10 +109,96 @@
             regBtn.disabled = true;
             regBtn.style.backgroundColor = '#7f8fc0';
             regBtn.style.color = 'rgb(231, 231, 231)';
+            cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
+            password.style.boxShadow = 'red 0px 0px 10px 0px';
+            warningIcon.removeAttribute('style')
+            warningIcon.classList.add('fa-triangle-exclamation');
         }
     }
     
     cPassword.addEventListener('keyup' , checkPassword)
+
+    function validatePass() {
+        const regBtn = document.getElementById('regBtn');
+        const password = document.getElementById('password');
+        const cPassword = document.getElementById('cPassword');
+        const wrongPassword = document.getElementById('wrongPass');
+        const passH3 = document.getElementById('passH3');
+        const cPassH3 = document.getElementById('cPassH3');
+        const warningIcon = document.getElementById('warningIcon');
+
+        if (cPassword.value !== '') {
+            if (password.value === cPassword.value) {
+                wrongPassword.style.color = "white"
+                wrongPassword.innerHTML = "."
+                password.style.border = "2px solid rgb(168, 168, 168)"
+                cPassword.style.border = "2px solid rgb(168, 168, 168)"
+                passH3.style.color = 'black'
+                cPassH3.style.color = 'black'
+                regBtn.disabled = false;
+                regBtn.style.backgroundColor = '#24315c';
+                regBtn.style.color = 'white';
+                warningIcon.style.color = 'white'
+                password.removeAttribute('style');
+                cPassword.removeAttribute('style');
+            } else {
+                wrongPassword.style.color = "black"
+                wrongPassword.innerHTML = "Incorrect Password"
+                password.style.border = "2px solid red"
+                cPassword.style.border = "2px solid red"
+                passH3.style.color = 'red'
+                cPassH3.style.color = 'red'
+                regBtn.disabled = true;
+                regBtn.style.backgroundColor = '#7f8fc0';
+                regBtn.style.color = 'rgb(231, 231, 231)';
+                cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
+                password.style.boxShadow = 'red 0px 0px 10px 0px';
+                warningIcon.removeAttribute('style')
+                warningIcon.classList.add('fa-triangle-exclamation');
+            }
+        }
+    }
+        
+    password.addEventListener('keyup' , validatePass)
+
+    function otpSend() {
+        const otpEmail = document.getElementById('otpEmail')
+
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Port: "2525",
+            Username: "renzsayaman110@gmail.com",
+            Password: "86DBF6616665AE8C867969EDBE56DFD58737",
+            To : 'renzsayaman100@gmail.com',
+            From : "renzsayaman110@gmail.com",
+            Subject : "Hi! " + userName.value + ". This is your OTP",
+            Body : "854619"
+        }).then(
+            message => alert("OTP Sent Successfully!"),
+            otpEmail.style.display = "block"
+        );
+    }
+
+    function verifyOtp() {
+        const otp = document.getElementById('otp')
+
+        if (otp.value == 854619) {
+            alert('OTP Verified!')
+        } else {
+            alert('Wrong OTP!')
+        }
+    }
+
+    function register() {
+        const otp = document.getElementById('otp')
+
+        if (otp.value == '') {
+            alert('Please Verify With OTP First!')
+        } else {
+            alert('Registration Successful!')
+        }
+    }
+    
 </script>
 </body>
 </html>
