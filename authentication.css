@@ -11,6 +11,10 @@
 
 /* REGISTRATION CSS */
 
+#register h3 {
+    color: #1b46d4;
+}
+
 h4 {
     background-color: transparent;
 }
@@ -36,13 +40,6 @@ h6 {
 
 .emailDiv {
     background-color: transparent;
-}
-
-#email {
-    width: 79%;
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-    border-right: none;
 }
 
 #otp {
@@ -85,21 +82,21 @@ input {
     outline: rgb(168, 168, 168);
 }
 
-#regBtn {
+#register #regBtn {
     height: 35px;
     border: 1px solid rgb(168, 168, 168);
     background-color: #7f8fc0;
     color: rgb(231, 231, 231);
     transition: all 0.3s ease;
+    cursor: not-allowed;
 }
 
 #loginBtn {
     height: 35px;
     border: 1px solid rgb(168, 168, 168);
-    background-color: #6dbe74;
-    color: rgb(231, 231, 231);
+    background-color: #39df47;
+    color: rgb(255, 255, 255);
     transition: all 0.3s ease;
-    padding-top: 0.7rem;
 }
 
 #wrongPass {
@@ -113,4 +110,16 @@ input {
 /* END OF REGISTRATION */
 
 /* START OF LOGIN CSS */
+
+#login h3 {
+    color: #1b46d4;
+}
+
+#login #regBtn {
+    height: 35px;
+    border: 1px solid rgb(168, 168, 168);
+    background-color: #24315c;
+    color: rgb(231, 231, 231);
+    transition: all 0.3s ease;
+}
 

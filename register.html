@@ -9,7 +9,7 @@
     <script src="https://smtpjs.com/v3/smtp.js"></script>
     <title>ADMIN | REGISTER</title>
 </head>
-<body>
+<body id="register">
     <div class="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
         <div class="h-75 shadow-lg border rounded-5">
             <div class="h-25 border rounded-4 text-center d-flex flex-nowrap justify-content-center align-items-center">
@@ -22,25 +22,20 @@
                 </div>
                 <div class="mb-5 bg-white">
                     <h3 class="bg-white">Email <span class="text-danger bg-white">*</span></h3>
-                    <input id="email" class="fs-3 px-2 bg-white" type="text">
-                    <button id="emailBtn" class="text-white" onclick="otpSend()">SEND OTP</button>
-                    <div id="otpEmail">
-                        <input id="otp" class="fs-3 px-2 bg-white" type="text">
-                        <button id="otpBtn" class="text-white" onclick="verifyOtp()">VERIFY</button>
-                    </div>
+                    <input id="email" class="fs-3 px-2 rounded-3 bg-white" type="text">
                 </div>
                 <div class="mb-5 bg-white">
                     <h3 id="passH3" class="bg-white">Password <span class="text-danger bg-white">*</span></h3>
                     <input id="password" class="fs-3 px-2 rounded-3 bg-white" type="password">
                 </div>
                 <div class="mb-5 bg-white">
-                    <h3 id="cPassH3" class="bg-white">Confirm Password <span class="text-danger">*</span></h3>
+                    <h3 id="cPassH3" class="bg-white">Confirm Password <span class="text-danger bg-transparent">*</span></h3>
                     <input id="cPassword" class="fs-3 px-2 rounded-3 bg-white" type="password">
                     <i id="warningIcon" class="fa-solid"></i><span id="wrongPass" class="fs-5 bg-transparent">.</span>
                 </div>
-                <button id="regBtn" class="w-100 rounded-3" onclick="register()" disabled>REGISTER</button>
+                <button id="regBtn" class="w-100 rounded-3" disabled>REGISTER</button>
                 <div class="mt-4 bg-white">
-                    <a id="loginBtn" class="text-decoration-none w-100 text-center rounded-3" href="login.html" type="button">LOG IN</a>
+                    <a id="loginBtn" class="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="login.html" type="button">LOG IN</a>
                 </div>
             </div>
         </div>
@@ -52,6 +47,7 @@
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const cPassword = document.getElementById('cPassword');
+    const wrongPassword = document.getElementById('wrongPass');
 
     function checkFields() {
         const userNameValue = userName.value.trim();
@@ -62,11 +58,13 @@
 
         if (userNameValue !== '' && emailValue !== '' && passwordValue !== '' && cPasswordValue !== '' && wrongPassword == '.') {
             regBtn.disabled = false;
+            regBtn.style.cursor = 'pointer'
             regBtn.style.backgroundColor = '#24315c';
             regBtn.style.color = 'white';
             cPassword.style.boxShadow = '0px';
         } else {
             regBtn.disabled = true;
+            regBtn.style.cursor = 'not-allowed'
             regBtn.style.backgroundColor = '#7f8fc0';
             regBtn.style.color = 'rgb(231, 231, 231)';
         }
@@ -86,64 +84,24 @@
         const cPassH3 = document.getElementById('cPassH3');
         const warningIcon = document.getElementById('warningIcon');
         
-        if (password.value === cPassword.value) {
-            wrongPassword.style.color = "white"
-            wrongPassword.innerHTML = "."
-            password.style.border = "2px solid rgb(168, 168, 168)"
-            cPassword.style.border = "2px solid rgb(168, 168, 168)"
-            passH3.style.color = 'black'
-            cPassH3.style.color = 'black'
-            regBtn.disabled = false;
-            regBtn.style.backgroundColor = '#24315c';
-            regBtn.style.color = 'white';
-            warningIcon.style.color = 'white'
-            password.removeAttribute('style');
-            cPassword.removeAttribute('style');
-        } else {
-            wrongPassword.style.color = "black"
-            wrongPassword.innerHTML = "Incorrect Password"
-            password.style.border = "2px solid red"
-            cPassword.style.border = "2px solid red"
-            passH3.style.color = 'red'
-            cPassH3.style.color = 'red'
-            regBtn.disabled = true;
-            regBtn.style.backgroundColor = '#7f8fc0';
-            regBtn.style.color = 'rgb(231, 231, 231)';
-            cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
-            password.style.boxShadow = 'red 0px 0px 10px 0px';
-            warningIcon.removeAttribute('style')
-            warningIcon.classList.add('fa-triangle-exclamation');
-        }
-    }
-    
-    cPassword.addEventListener('keyup' , checkPassword)
-
-    function validatePass() {
-        const regBtn = document.getElementById('regBtn');
-        const password = document.getElementById('password');
-        const cPassword = document.getElementById('cPassword');
-        const wrongPassword = document.getElementById('wrongPass');
-        const passH3 = document.getElementById('passH3');
-        const cPassH3 = document.getElementById('cPassH3');
-        const warningIcon = document.getElementById('warningIcon');
-
-        if (cPassword.value !== '') {
+        if (password.value !== '' && cPassword.value !== '') {
             if (password.value === cPassword.value) {
                 wrongPassword.style.color = "white"
                 wrongPassword.innerHTML = "."
                 password.style.border = "2px solid rgb(168, 168, 168)"
                 cPassword.style.border = "2px solid rgb(168, 168, 168)"
-                passH3.style.color = 'black'
-                cPassH3.style.color = 'black'
+                passH3.style.color = '#1b46d4'
+                cPassH3.style.color = '#1b46d4'
                 regBtn.disabled = false;
                 regBtn.style.backgroundColor = '#24315c';
                 regBtn.style.color = 'white';
                 warningIcon.style.color = 'white'
                 password.removeAttribute('style');
                 cPassword.removeAttribute('style');
+                regBtn.style.cursor = 'pointer'
             } else {
-                wrongPassword.style.color = "black"
-                wrongPassword.innerHTML = "Incorrect Password"
+                wrongPassword.style.color = "#1b46d4"
+                wrongPassword.innerHTML = " " + "Incorrect Password"
                 password.style.border = "2px solid red"
                 cPassword.style.border = "2px solid red"
                 passH3.style.color = 'red'
@@ -155,50 +113,88 @@
                 password.style.boxShadow = 'red 0px 0px 10px 0px';
                 warningIcon.removeAttribute('style')
                 warningIcon.classList.add('fa-triangle-exclamation');
+                regBtn.style.cursor = 'not-allowed'
             }
+        } else {
+            wrongPassword.style.color = "#1b46d4"
+            wrongPassword.innerHTML = " " + "Incorrect Password"
+            password.style.border = "2px solid red"
+            cPassword.style.border = "2px solid red"
+            passH3.style.color = 'red'
+            cPassH3.style.color = 'red'
+            regBtn.disabled = true;
+            regBtn.style.backgroundColor = '#7f8fc0';
+            regBtn.style.color = 'rgb(231, 231, 231)';
+            cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
+            password.style.boxShadow = 'red 0px 0px 10px 0px';
+            warningIcon.removeAttribute('style')
+            warningIcon.classList.add('fa-triangle-exclamation');
+            regBtn.style.cursor = 'not-allowed'
+        }
+    }
+
+    password.addEventListener('keyup' , checkPassword)
+    cPassword.addEventListener('keyup' , checkPassword)
+
+    function validatePass() {
+        const regBtn = document.getElementById('regBtn');
+        const password = document.getElementById('password');
+        const cPassword = document.getElementById('cPassword');
+        const wrongPassword = document.getElementById('wrongPass');
+        const passH3 = document.getElementById('passH3');
+        const cPassH3 = document.getElementById('cPassH3');
+        const warningIcon = document.getElementById('warningIcon');
+
+        if (cPassword.value !== '' && password.value !== '') {
+            if (password.value === cPassword.value) {
+                wrongPassword.style.color = "white"
+                wrongPassword.innerHTML = "."
+                password.style.border = "2px solid rgb(168, 168, 168)"
+                cPassword.style.border = "2px solid rgb(168, 168, 168)"
+                passH3.style.color = '#1b46d4'
+                cPassH3.style.color = '#1b46d4'
+                regBtn.disabled = false;
+                regBtn.style.backgroundColor = '#24315c';
+                regBtn.style.color = 'white';
+                warningIcon.style.color = 'white'
+                password.removeAttribute('style');
+                cPassword.removeAttribute('style');
+                regBtn.style.cursor = 'pointer'
+            } else {
+                wrongPassword.style.color = "#1b46d4"
+                wrongPassword.innerHTML = " " + "Incorrect Password"
+                password.style.border = "2px solid red"
+                cPassword.style.border = "2px solid red"
+                passH3.style.color = 'red'
+                cPassH3.style.color = 'red'
+                regBtn.disabled = true;
+                regBtn.style.backgroundColor = '#7f8fc0';
+                regBtn.style.color = 'rgb(231, 231, 231)';
+                cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
+                password.style.boxShadow = 'red 0px 0px 10px 0px';
+                warningIcon.removeAttribute('style')
+                warningIcon.classList.add('fa-triangle-exclamation');
+                regBtn.style.cursor = 'not-allowed'
+            }
+        } else {
+            wrongPassword.style.color = "#1b46d4"
+            wrongPassword.innerHTML = " " + "Incorrect Password"
+            password.style.border = "2px solid red"
+            cPassword.style.border = "2px solid red"
+            passH3.style.color = 'red'
+            cPassH3.style.color = 'red'
+            regBtn.disabled = true;
+            regBtn.style.backgroundColor = '#7f8fc0';
+            regBtn.style.color = 'rgb(231, 231, 231)';
+            cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
+            password.style.boxShadow = 'red 0px 0px 10px 0px';
+            warningIcon.removeAttribute('style')
+            warningIcon.classList.add('fa-triangle-exclamation');
+            regBtn.style.cursor = 'not-allowed'
         }
     }
         
-    password.addEventListener('keyup' , validatePass)
-
-    function otpSend() {
-        const otpEmail = document.getElementById('otpEmail')
-
-        Email.send({
-            Host: "smtp.elasticemail.com",
-            Port: "2525",
-            Username: "renzsayaman110@gmail.com",
-            Password: "86DBF6616665AE8C867969EDBE56DFD58737",
-            To : 'renzsayaman100@gmail.com',
-            From : "renzsayaman110@gmail.com",
-            Subject : "Hi! " + userName.value + ". This is your OTP",
-            Body : "854619"
-        }).then(
-            message => alert("OTP Sent Successfully!"),
-            otpEmail.style.display = "block"
-        );
-    }
-
-    function verifyOtp() {
-        const otp = document.getElementById('otp')
-
-        if (otp.value == 854619) {
-            alert('OTP Verified!')
-        } else {
-            alert('Wrong OTP!')
-        }
-    }
-
-    function register() {
-        const otp = document.getElementById('otp')
-
-        if (otp.value == '') {
-            alert('Please Verify With OTP First!')
-        } else {
-            alert('Registration Successful!')
-        }
-    }
-    
+    password.addEventListener('keyup' , validatePass) 
 </script>
 </body>
 </html>

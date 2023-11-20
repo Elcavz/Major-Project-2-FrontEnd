@@ -8,11 +8,14 @@
     <script src="https://kit.fontawesome.com/dd61417c3c.js" crossorigin="anonymous"></script>
     <title>ADMIN | LOG IN</title>
 </head>
-<body>
+<body id="login">
     <div class="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
         <div class="h-75 shadow-lg border rounded-5">
-            <div class="h-25 border rounded-4 text-center d-flex flex-nowrap justify-content-center align-items-center">
-                <h4 class="text-white text-decoration-underline">REGISTRATION</h4>
+            <div class="h-50 border rounded-4 text-center d-flex flex-nowrap flex-column justify-content-center align-items-center">
+                <div class="bg-transparent h-50 w-50">
+                    <img class="img-fluid bg-transparent h-75 w-75" src="pngwing.com (1).png" alt="">
+                </div>
+                <h4 class="text-white text-decoration-underline">LOG IN</h4>
             </div>
             <div class="mx-4 bg-white">
                 <div class="mb-5 bg-white">
@@ -20,25 +23,25 @@
                     <input id="userName" class="fs-3 px-2 rounded-3 bg-white" type="text">
                 </div>
                 <div class="mb-5 bg-white">
-                    <h3 class="bg-white">Email <span class="text-danger bg-white">*</span></h3>
-                    <input id="email" class="fs-3 px-2 rounded-3 bg-white" type="text">
-                </div>
-                <div class="mb-5 bg-white">
                     <h3 id="passH3" class="bg-white">Password <span class="text-danger bg-white">*</span></h3>
                     <input id="password" class="fs-3 px-2 rounded-3 bg-white" type="password">
                 </div>
-                <div class="mb-5 bg-white">
-                    <h3 id="cPassH3" class="bg-white">Confirm Password <span class="text-danger bg-white">*</span></h3>
-                    <input id="cPassword" class="fs-3 px-2 rounded-3 bg-white" type="password">
-                    <span id="wrongPass" class="fs-5 bg-white">.</span>
+                <button id="loginBtn" class="w-100 rounded-3" disabled>LOG IN</button>
+                <div class="mt-4 bg-white">
+                    <a id="regBtn" class="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="register.html" type="button">REGISTER</a>
                 </div>
-                <button id="regBtn" class="w-100 rounded-3" disabled>LOG IN</button>
             </div>
         </div>
     </div>
 
 <script>
-    
+    const loginBtn = document.getElementById('loginBtn')
+
+    if (loginBtn.disabled) {
+        loginBtn.style.cursor = 'not-allowed'
+    } else {
+        loginBtn.style.cursor = 'default'
+    }
 </script>
 </body>
 </html>
