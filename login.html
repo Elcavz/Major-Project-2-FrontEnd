@@ -10,7 +10,7 @@
 </head>
 <body id="login">
     <div class="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
-        <div class="h-75 shadow-lg border rounded-5">
+        <div id="loginCard" class="h-75 shadow-lg border rounded-5">
             <div class="h-50 border rounded-4 text-center d-flex flex-nowrap flex-column justify-content-center align-items-center">
                 <div class="bg-transparent h-50 w-50">
                     <img class="img-fluid bg-transparent h-75 w-75" src="pngwing.com (1).png" alt="">
@@ -19,6 +19,7 @@
             </div>
             <div class="mx-4 bg-white">
                 <div class="mb-5 bg-white">
+                     <span id="invalidCred" class="fs-4 bg-transparent text-danger fw-bold"></span>
                     <h3 class="bg-white">Username <span class="text-danger bg-white">*</span></h3>
                     <input id="userName" class="fs-3 px-2 rounded-3 bg-white" type="text">
                 </div>
@@ -26,7 +27,7 @@
                     <h3 id="passH3" class="bg-white">Password <span class="text-danger bg-white">*</span></h3>
                     <input id="password" class="fs-3 px-2 rounded-3 bg-white" type="password">
                 </div>
-                <button id="loginBtn" class="w-100 rounded-3" disabled>LOG IN</button>
+                <button id="loginBtn" class="w-100 rounded-3" onclick="login()" disabled>LOG IN</button>
                 <div class="mt-4 bg-white">
                     <a id="regBtn" class="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="register.html" type="button">REGISTER</a>
                 </div>
@@ -36,12 +37,57 @@
 
 <script>
     const loginBtn = document.getElementById('loginBtn')
+    const userName = document.getElementById('userName')
+    const password = document.getElementById('password')
+    const loginCard = document.getElementById('loginCard')
+    const invalidCred = document.getElementById('invalidCred')
 
-    if (loginBtn.disabled) {
-        loginBtn.style.cursor = 'not-allowed'
-    } else {
-        loginBtn.style.cursor = 'default'
+    function enableLoginBtn() {
+        if (userName.value !== '' && password.value !== '') {
+            loginBtn.style.backgroundColor = '#39df47'
+            loginBtn.disabled = false
+            loginBtn.style.cursor = 'pointer'
+        } else {
+            loginBtn.style.backgroundColor = '#a0dfa5'
+            loginBtn.disabled = true
+            loginBtn.style.cursor = 'not-allowed'
+        }
     }
+
+    userName.addEventListener('keyup' , enableLoginBtn)
+    password.addEventListener('keyup' , enableLoginBtn)
+
+    function login() {
+        fetch('http://localhost:3000/login', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: userName.value,
+                password: password.value,
+            })
+        }).then((data) => {
+            return data.json()
+        }).then((data) => {
+            console.log(data.success)
+            console.log(data)
+            if (data.success) {
+                loginCard.style.removeProperty('animation')
+                invalidCred.innerHTML = ''
+                alert('ok')
+            } else {
+                loginCard.style.animation = 'shake 0.5s'
+                setTimeout(function() {
+                    loginCard.style.removeProperty('animation')
+                }, 500)
+                invalidCred.innerHTML = 'Invalid Username Or Password'
+            }
+        })
+    }
+
+    
 </script>
 </body>
 </html>

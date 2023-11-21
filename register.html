@@ -16,9 +16,10 @@
                 <h4 class="text-white text-decoration-underline">REGISTRATION</h4>
             </div>
             <div class="mx-4 bg-white">
-                <div class="mb-5 bg-white">
+                <div class="mb-4 bg-white">
                     <h3 class="bg-white">Username <span class="text-danger bg-white">*</span></h3>
                     <input id="userName" class="fs-3 px-2 rounded-3 bg-white" type="text">
+                    <i id="warningIconUsername" class="fa-solid"></i><span id="exist" class="fs-5 bg-transparent"></span>
                 </div>
                 <div class="mb-5 bg-white">
                     <h3 class="bg-white">Email <span class="text-danger bg-white">*</span></h3>
@@ -31,11 +32,13 @@
                 <div class="mb-5 bg-white">
                     <h3 id="cPassH3" class="bg-white">Confirm Password <span class="text-danger bg-transparent">*</span></h3>
                     <input id="cPassword" class="fs-3 px-2 rounded-3 bg-white" type="password">
-                    <i id="warningIcon" class="fa-solid"></i><span id="wrongPass" class="fs-5 bg-transparent">.</span>
+                    <i id="warningIconPassword" class="fa-solid"></i><span id="wrongPass" class="fs-5 bg-transparent">.</span>
                 </div>
-                <button id="regBtn" class="w-100 rounded-3" disabled>REGISTER</button>
+                <button id="regBtn" class="w-100 rounded-3" onclick="register()" disabled>REGISTER</button>
                 <div class="mt-4 bg-white">
-                    <a id="loginBtn" class="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="login.html" type="button">LOG IN</a>
+                    <a id="loginBtn" class="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="login.html" type="button">
+                        LOG IN
+                    </a>
                 </div>
             </div>
         </div>
@@ -82,7 +85,7 @@
         const wrongPassword = document.getElementById('wrongPass');
         const passH3 = document.getElementById('passH3');
         const cPassH3 = document.getElementById('cPassH3');
-        const warningIcon = document.getElementById('warningIcon');
+        const warningIconPassword = document.getElementById('warningIconPassword');
         
         if (password.value !== '' && cPassword.value !== '') {
             if (password.value === cPassword.value) {
@@ -95,12 +98,12 @@
                 regBtn.disabled = false;
                 regBtn.style.backgroundColor = '#24315c';
                 regBtn.style.color = 'white';
-                warningIcon.style.color = 'white'
+                warningIconPassword.style.color = 'white'
                 password.removeAttribute('style');
                 cPassword.removeAttribute('style');
                 regBtn.style.cursor = 'pointer'
             } else {
-                wrongPassword.style.color = "#1b46d4"
+                wrongPassword.style.color = "black"
                 wrongPassword.innerHTML = " " + "Incorrect Password"
                 password.style.border = "2px solid red"
                 cPassword.style.border = "2px solid red"
@@ -111,12 +114,12 @@
                 regBtn.style.color = 'rgb(231, 231, 231)';
                 cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
                 password.style.boxShadow = 'red 0px 0px 10px 0px';
-                warningIcon.removeAttribute('style')
-                warningIcon.classList.add('fa-triangle-exclamation');
+                warningIconPassword.removeAttribute('style')
+                warningIconPassword.classList.add('fa-triangle-exclamation');
                 regBtn.style.cursor = 'not-allowed'
             }
         } else {
-            wrongPassword.style.color = "#1b46d4"
+            wrongPassword.style.color = "black"
             wrongPassword.innerHTML = " " + "Incorrect Password"
             password.style.border = "2px solid red"
             cPassword.style.border = "2px solid red"
@@ -127,8 +130,8 @@
             regBtn.style.color = 'rgb(231, 231, 231)';
             cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
             password.style.boxShadow = 'red 0px 0px 10px 0px';
-            warningIcon.removeAttribute('style')
-            warningIcon.classList.add('fa-triangle-exclamation');
+            warningIconPassword.removeAttribute('style')
+            warningIconPassword.classList.add('fa-triangle-exclamation');
             regBtn.style.cursor = 'not-allowed'
         }
     }
@@ -143,7 +146,7 @@
         const wrongPassword = document.getElementById('wrongPass');
         const passH3 = document.getElementById('passH3');
         const cPassH3 = document.getElementById('cPassH3');
-        const warningIcon = document.getElementById('warningIcon');
+        const warningIconPassword = document.getElementById('warningIconPassword');
 
         if (cPassword.value !== '' && password.value !== '') {
             if (password.value === cPassword.value) {
@@ -156,12 +159,12 @@
                 regBtn.disabled = false;
                 regBtn.style.backgroundColor = '#24315c';
                 regBtn.style.color = 'white';
-                warningIcon.style.color = 'white'
+                warningIconPassword.style.color = 'white'
                 password.removeAttribute('style');
                 cPassword.removeAttribute('style');
                 regBtn.style.cursor = 'pointer'
             } else {
-                wrongPassword.style.color = "#1b46d4"
+                wrongPassword.style.color = "black"
                 wrongPassword.innerHTML = " " + "Incorrect Password"
                 password.style.border = "2px solid red"
                 cPassword.style.border = "2px solid red"
@@ -172,12 +175,12 @@
                 regBtn.style.color = 'rgb(231, 231, 231)';
                 cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
                 password.style.boxShadow = 'red 0px 0px 10px 0px';
-                warningIcon.removeAttribute('style')
-                warningIcon.classList.add('fa-triangle-exclamation');
+                warningIconPassword.removeAttribute('style')
+                warningIconPassword.classList.add('fa-triangle-exclamation');
                 regBtn.style.cursor = 'not-allowed'
             }
         } else {
-            wrongPassword.style.color = "#1b46d4"
+            wrongPassword.style.color = "black"
             wrongPassword.innerHTML = " " + "Incorrect Password"
             password.style.border = "2px solid red"
             cPassword.style.border = "2px solid red"
@@ -188,13 +191,48 @@
             regBtn.style.color = 'rgb(231, 231, 231)';
             cPassword.style.boxShadow = 'red 0px 0px 10px 0px';
             password.style.boxShadow = 'red 0px 0px 10px 0px';
-            warningIcon.removeAttribute('style')
-            warningIcon.classList.add('fa-triangle-exclamation');
+            warningIconPassword.removeAttribute('style')
+            warningIconPassword.classList.add('fa-triangle-exclamation');
             regBtn.style.cursor = 'not-allowed'
         }
     }
         
     password.addEventListener('keyup' , validatePass) 
+
+    function register() {
+        fetch('http://localhost:3000/register', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: userName.value,
+                email: email.value,
+                password: password.value,
+            })
+        }).then((data) => {
+            return data.json()
+        }).then((data) => {
+            const warningIconUsername = document.getElementById('warningIconUsername');
+            const exist = document.getElementById('exist');
+
+            if (data.success) {
+                alert('Registration Successfully!')
+            } else {
+                userName.style.boxShadow = 'red 0px 0px 10px 0px';
+                userName.style.border = "2px solid red"
+                userName.style.animation = 'shake1 0.5s'
+                warningIconUsername.removeAttribute('style');
+                warningIconUsername.classList.add('fa-triangle-exclamation');
+                exist.style.color = "black"
+                exist.innerHTML = " " + "Username Already Taken"
+                setTimeout(() => {
+                    userName.style.removeProperty('animation')
+                }, 500);
+            }
+        })
+    }
 </script>
 </body>
 </html>
