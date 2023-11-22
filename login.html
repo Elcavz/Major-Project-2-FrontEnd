@@ -27,7 +27,9 @@
                     <h3 id="passH3" class="bg-white">Password <span class="text-danger bg-white">*</span></h3>
                     <input id="password" class="fs-3 px-2 rounded-3 bg-white" type="password">
                 </div>
-                <button id="loginBtn" class="w-100 rounded-3" onclick="login()" disabled>LOG IN</button>
+                <div class="text-center bg-transparent">
+                    <button id="loginBtn" class="rounded-3" onclick="login()" disabled>LOG IN</button>
+                </div>
                 <div class="mt-4 bg-white">
                     <a id="regBtn" class="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="register.html" type="button">REGISTER</a>
                 </div>
@@ -76,7 +78,16 @@
             if (data.success) {
                 loginCard.style.removeProperty('animation')
                 invalidCred.innerHTML = ''
-                alert('ok')
+                loginBtn.innerHTML = '✔️'
+                loginBtn.style.width = '15%'
+                loginBtn.style.border = 'green'
+                loginBtn.style.boxShadow = 'green 0px 0px 10px 0px'
+
+                function myURL() {
+                    document.location.href = 'http://127.0.0.1:5500/';
+                }
+
+                setTimeout(myURL, 2000);
             } else {
                 loginCard.style.animation = 'shake 0.5s'
                 setTimeout(function() {
