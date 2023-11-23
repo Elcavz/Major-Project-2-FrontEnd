@@ -179,7 +179,7 @@
         <!-- Register Student Content -->
         <div id="regStudent" class="container shadow-lg">
             <div class="d-flex">
-                <div class="w-75">
+                <div id="regStudentContainer">
                     <div class="mb-5">
                         <h1>Register Student</h1>
                     </div>
@@ -202,12 +202,12 @@
                             <h4>Gender <span class="required fs-3">*</span></h4>
                             <select id="gender" name="gender" class="fs-3 px-2">
                                 <option selected disabled hidden>Choose a gender . . .</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </div>
                         <div class="col">
-                            <h4>Contact Number <span class="required fs-3">*</span></h4>
+                            <h4>Contact Number <span class="required fs-3">*</span> <span id="numberExist" class="fs-3 text-danger fw-bold"></span></h4>
                             <input id="contactNo" class="fs-3 px-2" type="number">
                         </div>
                     </div>
@@ -215,7 +215,14 @@
                         <h4>Address <span class="required fs-3">*</span></h4>
                         <textarea name="address" id="address" class="fs-3 px-2 w-100" cols="30" rows="10"></textarea>
                     </div>
-                    <button id="submitStudentBtn" class="rounded-2" onclick="submitStudent()" disabled>Submit</button>
+                    <div class="row">
+                        <div class="me-2">
+                            <button id="submitStudentBtn" class="rounded-2" onclick="submitStudent()" disabled>Submit</button>
+                        </div>
+                        <div class="ms-2">
+                            <button id="clearBtn" class="rounded-2" onclick="clr()">Clear</button>
+                        </div>
+                    </div>
                 </div>
                 <div id="studentId" class="w-25">
                     <div class="d-flex flex-nowrap justify-content-end align-items-center h-100">
@@ -361,18 +368,26 @@
         }).then((studentData) => {
             return studentData.json()
         }).then((studentData) => {
+            const regStudentContainer = document.getElementById('regStudentContainer')
             const studentId = document.getElementById('studentId')
             const idFirstName = document.getElementById('idFirstName')
             const idLastName = document.getElementById('idLastName')
             const idNumber = document.getElementById('idNumber')
             const phoneNumber = document.getElementById('phoneNumber')
-
+            const numberExist = document.getElementById('numberExist')
+            
             if (studentData.success) {
-                console.log(studentData)
-                studentId.style.display = 'block'
+                regStudentContainer.style.width = '75%'
+                setTimeout(() => {
+                    studentId.style.display = 'block'
+                }, 1000);
+                
                 idFirstName.innerHTML = firstName.value
                 idLastName.innerHTML = lastName.value
                 phoneNumber.innerHTML = contactNo.value
+                numberExist.innerHTML = ''
+                contactNo.style.boxShadow = 'none';
+                contactNo.style.border = "1px solid black"
                 fetch('http://localhost:3000/validation' , {
                     method: 'post',
                     headers: {
@@ -389,25 +404,42 @@
                     idNumber.innerHTML = id.idresult
                 })
             } else {
+                regStudentContainer.style.width = '100%'
+                contactNo.style.animation = 'shake1 0.5s'
+                contactNo.style.boxShadow = 'red 0px 0px 10px 0px';
+                contactNo.style.border = "2px solid red"
+                numberExist.innerHTML = 'Already Exists'
+                setTimeout(function() {
+                    contactNo.style.removeProperty('animation')
+                }, 500)
                 studentId.style.display = 'none'
             }
         })
     }
+    
 
     function studentForm() {
         if (firstName.value !== '' && lastName.value !== '' && age.value !== '' && gender.value !== '' && contactNo.value !== '' && address.value !== '' ) {
-            submitStudentBtn.disabled = false
-            submitStudentBtn.style.backgroundColor = '#54b7c0'
-            submitStudentBtn.style.color = 'black'
-            submitStudentBtn.style.fontWeight = 'bold'
-            submitStudentBtn.style.border = '#7ec9cf 1px solid'
-            submitStudentBtn.style.boxShadow = '#6ef3ff 0px 0px 10px 0px'
-            submitStudentBtn.style.cursor = 'pointer'
+            if (gender.value === 'Male' || gender.value === 'Female') {
+                submitStudentBtn.disabled = false
+                submitStudentBtn.style.backgroundColor = '#54b7c0'
+                submitStudentBtn.style.color = 'black'
+                submitStudentBtn.style.fontWeight = 'bold'
+                submitStudentBtn.style.border = '#7ec9cf 1px solid'
+                submitStudentBtn.style.boxShadow = '#6ef3ff 0px 0px 10px 0px'
+                submitStudentBtn.style.cursor = 'pointer'
+            } else {
+                submitStudentBtn.style.backgroundColor = '#b3e0e4'
+                submitStudentBtn.style.color = '#8b8b8b'
+                submitStudentBtn.style.cursor = 'not-allowed'
+                submitStudentBtn.style.border = '#addee0 1px solid'
+                submitStudentBtn.style.boxShadow = 'none' 
+            }    
         } else {
             submitStudentBtn.style.backgroundColor = '#b3e0e4'
             submitStudentBtn.style.color = '#8b8b8b'
             submitStudentBtn.style.cursor = 'not-allowed'
-            submitStudentBtn.style.border = 'none'
+            submitStudentBtn.style.border = '#addee0 1px solid'
             submitStudentBtn.style.boxShadow = 'none'
         }
     }
@@ -418,6 +450,25 @@
     gender.addEventListener('keyup', studentForm)
     contactNo.addEventListener('keyup', studentForm)
     address.addEventListener('keyup', studentForm)
+
+    function clr() {
+        const regStudentContainer = document.getElementById('regStudentContainer')
+        const studentId = document.getElementById('studentId')
+
+        firstName.value = ''
+        lastName.value = ''
+        age.value = ''
+        gender.value = 'Choose a gender . . .'
+        contactNo.value = ''
+        address.value = ''
+        submitStudentBtn.style.backgroundColor = '#b3e0e4'
+        submitStudentBtn.style.color = '#8b8b8b'
+        submitStudentBtn.style.cursor = 'not-allowed'
+        submitStudentBtn.style.border = '#addee0 1px solid'
+        submitStudentBtn.style.boxShadow = 'none'
+        regStudentContainer.style.width = '100%'
+        studentId.style.display = 'none'
+    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
