@@ -1,70 +1,77 @@
+import { useState } from "react";
 import React from 'react';
+import male from './assets/male.png';
+import female from './assets/female.png';
+import admin from './assets/admin.png'
+import qr from './assets/qr.png';
 
 function Home() {
 
-const [firstNameValue, setFirstNameValue] = React.useState('');
-const [lastNameValue, setLastNameValue] = React.useState('');
-const [ageValue, setAgeValue] = React.useState('');
-const [genderValue, setGenderValue] = React.useState('');
-const [contactNumberValue, setContactNumberValue] = React.useState('');
-const [addressValue, setAddressValue] = React.useState('');
-const db = document.getElementById("db")
-const regStudent = document.getElementById("regStudent")
-const dbBtn = document.getElementById("dbBtn")
-const regStudentBtn = document.getElementById("regStudentBtn")
-const pf = document.getElementById("pf")
-const profileBtn = document.getElementById("profileBtn")
-const submitStudentBtn = document.getElementById('submitStudentBtn')
-const firstName = document.getElementById('firstname')
-const lastName = document.getElementById('lastname')
-const age = document.getElementById('age')
-const gender = document.getElementById('gender')
-const contactNo = document.getElementById('contactNo')
-const address = document.getElementById('address')
+const [firstNameValue, setFirstNameValue] = useState('');
+const [lastNameValue, setLastNameValue] = useState('');
+const [ageValue, setAgeValue] = useState('');
+const [genderValue, setGenderValue] = useState('Choose a gender . . .');
+const [contactNumberValue, setContactNumberValue] = useState('');
+const [addressValue, setAddressValue] = useState('');
 
-  function registerStudent() {
-      db.style.display = "none"
-      pf.style.display = "none"
-      regStudent.style.display = "block"
-      regStudentBtn.style.backgroundColor = "#454a61"
-      regStudentBtn.style.color = "white"
-      dbBtn.style.backgroundColor = "#181e36"
-      dbBtn.style.color = "rgb(161, 161, 161)"
-      profileBtn.style.backgroundColor = "#181e36"
-      profileBtn.style.color = "rgb(161, 161, 161)"
-  }
+const [Dashboard, SetDbDisplay] = useState(true)
+const [RegStudent, SetRSDisplay] = useState()
+const [Profile, SetPFDisplay] = useState()
+
+const [DashboardBtn, SetDbBtnBg] = useState(true)
+const [RegStudentBtn, SetRegStudentBtnBg] = useState()
+const [ProfileBtn, SetProfileBtnBg] = useState()
+
+const [DashboardBtnColor, SetDbBtnColor] = useState(true)
+const [RegStudentBtnColor, SetRegStudentBtnColor] = useState()
+const [ProfileBtnColor, SetProfileBtnColor] = useState()
+
+const [ContactNumber, SetContactNoBoxShadow] = useState('none')
+
+const [RSContainer, SetRSContainerWidth] = useState()
+const [StudentId, SetStudentIdDisplay] = useState()
+const [contactNoBorder, SetContactNoBorder] = useState('none')
+const [ContactNoAnim, SetContactNumberAnim] = useState()
 
   function dashBoard() {
-      db.style.display = "block"
-      regStudent.style.display = "none"
-      pf.style.display = "none"
-      dbBtn.style.backgroundColor = "#454a61"
-      dbBtn.style.color = "white"
-      regStudentBtn.style.backgroundColor = "#181e36"
-      regStudentBtn.style.color = "rgb(161, 161, 161)"
-      profileBtn.style.backgroundColor = "#181e36"
-      profileBtn.style.color = "rgb(161, 161, 161)"
+    SetDbDisplay(true);
+    SetRSDisplay(false);
+    SetPFDisplay(false);
+    SetDbBtnBg(true);
+    SetRegStudentBtnBg(false)
+    SetProfileBtnBg(false);
+    SetDbBtnColor(true);
+    SetRegStudentBtnColor(false);
+    SetProfileBtnColor(false);
+  }
+
+  function registerStudent() {
+    SetRSDisplay(true);
+    SetDbDisplay(false);
+    SetPFDisplay(false);
+    SetRegStudentBtnBg(true)
+    SetDbBtnBg(false);
+    SetProfileBtnBg(false);
+    SetRegStudentBtnColor(true);
+    SetDbBtnColor(false);
+    SetProfileBtnColor(false);
   }
 
   function profile() {
-      profileBtn.style.backgroundColor = "#454a61"
-      profileBtn.style.color = "white"
-      pf.style.display = "block"
-      db.style.display = "none"
-      regStudent.style.display = "none"
-      dbBtn.style.backgroundColor = "#181e36"
-      dbBtn.style.color = "rgb(161, 161, 161)"
-      regStudentBtn.style.backgroundColor = "#181e36"
-      regStudentBtn.style.color = "rgb(161, 161, 161)"
+    SetPFDisplay(true);
+    SetRSDisplay(false);
+    SetDbDisplay(false);
+    SetProfileBtnBg(true);
+    SetDbBtnBg(false);
+    SetRegStudentBtnBg(false)
+    SetProfileBtnColor(true);
+    SetDbBtnColor(false);
+    SetRegStudentBtnColor(false);
   }
 
   function submitStudent() {
-      const firstName = document.getElementById('firstname')
-      const lastName = document.getElementById('lastname')
-      const age = document.getElementById('age')
-      const gender = document.getElementById('gender')
-      const contactNo = document.getElementById('contactNo')
-      const address = document.getElementById('address')
+        
+    console.log('test')
 
       fetch('http://localhost:3000/students' , {
           method: 'post',
@@ -73,18 +80,16 @@ const address = document.getElementById('address')
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              firstname: firstName.value,
-              lastname: lastName.value,
-              age: age.value,
-              gender: gender.value,
-              contactnumber: contactNo.value,
-              address: address.value
+              firstname: firstNameValue,
+              lastname: lastNameValue,
+              age: ageValue,
+              gender: genderValue,
+              contactnumber: contactNumberValue,
+              address: addressValue
           })
       }).then((studentData) => {
           return studentData.json()
       }).then((studentData) => {
-          const regStudentContainer = document.getElementById('regStudentContainer')
-          const studentId = document.getElementById('studentId')
           const idFirstName = document.getElementById('idFirstName')
           const idLastName = document.getElementById('idLastName')
           const idNumber = document.getElementById('idNumber')
@@ -93,22 +98,22 @@ const address = document.getElementById('address')
           const idPic = document.getElementById('idPic')
           
           if (studentData.success) {
-              if (gender.value === 'Male') {
-                  idPic.src = 'male.png'
+              if (genderValue === 'Male') {
+                  idPic.src = male;
               } else {
-                  idPic.src = 'female.png'
+                  idPic.src = female;
               }
-              regStudentContainer.style.width = '75%'
+              SetRSContainerWidth(true);
               setTimeout(() => {
-                  studentId.style.display = 'block'
+                SetStudentIdDisplay(true);
               }, 1000);
               
-              idFirstName.innerHTML = firstName.value
-              idLastName.innerHTML = lastName.value
-              phoneNumber.innerHTML = contactNo.value
+              idFirstName.innerHTML = firstNameValue
+              idLastName.innerHTML = lastNameValue
+              phoneNumber.innerHTML = contactNumberValue
               numberExist.innerHTML = ''
-              contactNo.style.boxShadow = 'none';
-              contactNo.style.border = "1px solid black"
+              SetContactNoBoxShadow(true);
+              SetContactNoBorder(true);
               fetch('http://localhost:3000/validation' , {
                   method: 'post',
                   headers: {
@@ -116,7 +121,7 @@ const address = document.getElementById('address')
                       'Content-Type': 'application/json'
                   },
                   body: JSON.stringify({
-                      contactnumber: contactNo.value
+                      contactnumber: contactNumberValue
                   })
               }).then((id) => {
                   return id.json()
@@ -125,74 +130,64 @@ const address = document.getElementById('address')
                   idNumber.innerHTML = id.idresult
               })
           } else {
-              regStudentContainer.style.width = '100%'
-              contactNo.style.animation = 'shake1 0.5s'
-              contactNo.style.boxShadow = 'red 0px 0px 10px 0px';
-              contactNo.style.border = "2px solid red"
+            SetRSContainerWidth(false);
+            SetContactNumberAnim(true);
+              SetContactNoBoxShadow(false)
+              SetContactNoBorder(false);
               numberExist.innerHTML = 'Already Exists'
               setTimeout(function() {
-                  contactNo.style.removeProperty('animation')
+                  SetContactNumberAnim(false);
               }, 500)
-              studentId.style.display = 'none'
+              SetStudentIdDisplay(false);
           }
       })
   }
   
+  const [SubmitBtnDisable, SetSubBtnDisable] = useState()
+  const [SubmitBtnBgColor, SetSubBtnBgColor] = useState()
+  const [SubmitBtnColor, SetSubBtnColor] = useState()
+  const [SubmitBtnFontWeight, SetSubBtnFontWeight] = useState()
+  const [SubmitBtnBorder, SetSubBtnBorder] = useState()
+  const [SubmitBtnBoxShadow, SetSubBtnBoxShadow] = useState()
+  const [SubmitBtnBoxCursor, SetSubBtnCursor] = useState()
 
   function studentForm() {
-      if (firstName.value !== '' && lastName.value !== '' && age.value !== '' && gender.value !== '' && contactNo.value !== '' && address.value !== '' ) {
-          if (gender.value === 'Male' || gender.value === 'Female') {
-              submitStudentBtn.disabled = false
-              submitStudentBtn.style.backgroundColor = '#54b7c0'
-              submitStudentBtn.style.color = 'black'
-              submitStudentBtn.style.fontWeight = 'bold'
-              submitStudentBtn.style.border = '#7ec9cf 1px solid'
-              submitStudentBtn.style.boxShadow = '#6ef3ff 0px 0px 10px 0px'
-              submitStudentBtn.style.cursor = 'pointer'
-          } else {
-              submitStudentBtn.style.backgroundColor = '#b3e0e4'
-              submitStudentBtn.style.color = '#8b8b8b'
-              submitStudentBtn.style.cursor = 'not-allowed'
-              submitStudentBtn.style.border = '#addee0 1px solid'
-              submitStudentBtn.style.boxShadow = 'none' 
-          }    
-      } else {
-          submitStudentBtn.style.backgroundColor = '#b3e0e4'
-          submitStudentBtn.style.color = '#8b8b8b'
-          submitStudentBtn.style.cursor = 'not-allowed'
-          submitStudentBtn.style.border = '#addee0 1px solid'
-          submitStudentBtn.style.boxShadow = 'none'
-      }
+    const isValidForm =
+      firstNameValue !== "" &&
+      lastNameValue !== "" &&
+      ageValue !== "" &&
+      genderValue !== "" &&
+      contactNumberValue !== "" &&
+      addressValue !== "" &&
+      (genderValue === "Male" || genderValue === "Female");
+  
+    SetSubBtnDisable(!isValidForm);
+    SetSubBtnBgColor(isValidForm);
+    SetSubBtnColor(isValidForm);
+    SetSubBtnFontWeight(isValidForm);
+    SetSubBtnBorder(isValidForm);
+    SetSubBtnBoxShadow(isValidForm);
+    SetSubBtnCursor(isValidForm);
   }
 
-  // firstName.addEventListener('keyup', studentForm)
-  // lastName.addEventListener('keyup', studentForm)
-  // age.addEventListener('keyup', studentForm)
-  // gender.addEventListener('keyup', studentForm)
-  // contactNo.addEventListener('keyup', studentForm)
-  // address.addEventListener('keyup', studentForm)
-
-  function clr() {
-      const regStudentContainer = document.getElementById('regStudentContainer')
-      const studentId = document.getElementById('studentId')
-      const numberExist = document.getElementById('numberExist')
-
-      firstName.value = ''
-      lastName.value = ''
-      age.value = ''
-      gender.value = 'Choose a gender . . .'
-      contactNo.value = ''
-      address.value = ''
-      submitStudentBtn.style.backgroundColor = '#b3e0e4'
-      submitStudentBtn.style.color = '#8b8b8b'
-      submitStudentBtn.style.cursor = 'not-allowed'
-      submitStudentBtn.style.border = '#addee0 1px solid'
-      submitStudentBtn.style.boxShadow = 'none'
-      regStudentContainer.style.width = '100%'
-      studentId.style.display = 'none'
-      numberExist.innerHTML = ''
-      contactNo.style.boxShadow = 'none';
-      contactNo.style.border = "1px solid black"
+  function clr() {  
+    const numberExist = document.getElementById('numberExist')
+    numberExist.innerHTML = ''
+    setFirstNameValue('');
+    setLastNameValue('')
+    setAgeValue('');
+    setGenderValue('Choose a gender . . .');
+    setContactNumberValue('');
+    setAddressValue('');
+    SetSubBtnBgColor(false);
+    SetSubBtnColor(false);
+    SetSubBtnCursor(false);
+    SetSubBtnBorder(false);
+    SetSubBtnBoxShadow(false);
+    SetRSContainerWidth(false);
+    SetStudentIdDisplay(false);
+    SetContactNoBoxShadow(true);
+    SetContactNoBorder(true);
   }
   
   return (
@@ -201,7 +196,7 @@ const address = document.getElementById('address')
         <nav className="vh-100">
             <div className="pt-5">
                 <div id="profilePic" className="text-center m-auto p-auto border rounded-circle">
-                    <img className="img-fluid w-75" src="user-64.png" alt=""/>
+                    <img className="img-fluid w-75" src={admin} alt=""/>
                 </div>
             </div>
             <div className="m-5">
@@ -209,7 +204,13 @@ const address = document.getElementById('address')
             </div>
             <div className="navBar">
                 <li>
-                    <button id="dbBtn" className="fs-4 h-100 w-100" onClick={dashBoard}>
+                    <button id="dbBtn" className="fs-4 h-100 w-100" 
+                        style={
+                            {backgroundColor: DashboardBtn ? '#454a61' : '#181e36',
+                            color: DashboardBtnColor ? 'white' : 'rgb(161, 161, 161)'}
+                        } 
+                        onClick={dashBoard}
+                    >
                         <i className="fa-solid fa-chart-line pe-2 text-center"></i>
                         <span className="fs-4 me-5">
                             Dashboard
@@ -217,7 +218,13 @@ const address = document.getElementById('address')
                     </button>
                 </li>
                 <li>
-                    <button id="regStudentBtn" className="fs-4 h-100 w-100" onClick={registerStudent}>
+                    <button id="regStudentBtn" className="fs-4 h-100 w-100" 
+                        style={
+                                {backgroundColor: RegStudentBtn ? '#454a61' : '#181e36',
+                                color: RegStudentBtnColor ? 'white' : 'rgb(161, 161, 161)'}
+                            } 
+                        onClick={registerStudent}
+                    >
                         <i className="fa-solid fa-user-plus ms-1 text-end"></i>
                         <span className="fs-4 ms-2">
                             Register Student
@@ -225,7 +232,13 @@ const address = document.getElementById('address')
                     </button>
                 </li>
                 <li>
-                    <button id="profileBtn" className="fs-4 h-100 w-100" onClick={profile}>
+                    <button id="profileBtn" className="fs-4 h-100 w-100" 
+                        style={
+                            {backgroundColor: ProfileBtn ? '#454a61' : '#181e36',
+                            color: ProfileBtnColor ? 'white' : 'rgb(161, 161, 161)'}
+                        } 
+                        onClick={profile}
+                    >
                         <i className="fa-solid fa-address-card pe-2 text-center"></i>
                         <span className="fs-4 me-5 pe-5">
                             Profile
@@ -244,7 +257,7 @@ const address = document.getElementById('address')
         </nav>
 
         {/* <!-- Dashboard Content --> */}
-        <div id="db" className="container shadow-lg">
+        <div id="db" style={{display: Dashboard ? 'block' : 'none'}} className="container shadow-lg">
             <div className="db">
                 <div className="mb-2">
                     <h2 className="fs-1 fw-bold">My Dashboard</h2>
@@ -365,9 +378,11 @@ const address = document.getElementById('address')
         </div>
 
         {/* <!-- Register Student Content --> */}
-        <div id="regStudent" className="container shadow-lg">
+        <div id="regStudent" style={{display: RegStudent ? 'block' : 'none'}} className="container shadow-lg">
             <div className="d-flex">
-                <div id="regStudentContainer">
+                <div id="regStudentContainer" style={{
+                    width: RSContainer ? '75%' : '100%'
+                }}>
                     <div className="mb-5">
                         <h1>Register Student</h1>
                     </div>
@@ -416,7 +431,7 @@ const address = document.getElementById('address')
                                 value={genderValue}
                                 onChange={(e) => setGenderValue(e.target.value)}
                             >
-                                <option selected disabled hidden>Choose a gender . . .</option>
+                                <option disabled hidden>Choose a gender . . .</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
@@ -426,6 +441,11 @@ const address = document.getElementById('address')
                             <input 
                                 id="contactNo" 
                                 className="fs-3 px-2" 
+                                style={{
+                                    boxShadow: ContactNumber ? 'none' : 'red 0px 0px 10px 0px',
+                                    border: contactNoBorder ? '1px solid black' : '2px solid red',
+                                    animation: ContactNoAnim ? 'shake1 0.5s' : 'none'
+                                }}
                                 type="number" 
                                 onKeyUp={studentForm}
                                 value={contactNumberValue}
@@ -449,25 +469,44 @@ const address = document.getElementById('address')
                     </div>
                     <div className="row">
                         <div className="me-2">
-                            <button id="submitStudentBtn" className="rounded-2" onClick={submitStudent} disabled>Submit</button>
+                            <button
+                                id="submitStudentBtn"
+                                className="rounded-2"
+                                style={{
+                                    backgroundColor: SubmitBtnBgColor ? "#54b7c0" : "#b3e0e4",
+                                    color: SubmitBtnColor ? "black" : "#8b8b8b",
+                                    fontWeight: SubmitBtnFontWeight ? "bold" : "normal",
+                                    border: SubmitBtnBorder ? "#7ec9cf 1px solid" : "#addee0 1px solid",
+                                    boxShadow: SubmitBtnBoxShadow
+                                    ? "#6ef3ff 0px 0px 10px 0px"
+                                    : "none",
+                                    cursor: SubmitBtnBoxCursor ? "pointer" : "not-allowed",
+                                }}
+                                disabled={SubmitBtnDisable}
+                                onClick={submitStudent}
+                                >
+                                Submit
+                            </button>
                         </div>
                         <div className="ms-2">
                             <button id="clearBtn" className="rounded-2" onClick={clr}>Clear</button>
                         </div>
                     </div>
                 </div>
-                <div id="studentId" className="w-25">
+                <div id="studentId" className="w-25" style={{
+                    display: StudentId ? 'block' : 'none'
+                }}>
                     <div className="d-flex flex-nowrap justify-content-end align-items-center h-100">
                         <div className="padding">
                             <div className="font">
                                 <div className="top">
-                                    <img id="idPic" src="female.png" alt='Profile Pic'/>
+                                    <img id="idPic" src={male} alt='Profile Pic'/>
                                 </div>
                                 <div className="bottom">
                                     <p className="mb-0"><span id="idFirstName" className="fs-3"></span> <span id="idLastName" className="fs-3"></span></p>
                                     <p className="fs-6">ID No. <span id="idNumber" className="fs-6">0000</span></p>
                                     <div className="barcode">
-                                        <img src="qr sample.png" alt='QR Code'/>
+                                        <img src={qr} alt='QR Code'/>
                                     </div>
                                     <div className="mt-3">
                                         <p id="phoneNumber" className="no"></p>
@@ -481,7 +520,7 @@ const address = document.getElementById('address')
         </div>
 
         {/* <!-- Profile Content --> */}
-        <div id="pf" className="container shadow-lg">
+        <div id="pf" style={{display: Profile ? 'block' : 'none'}} className="container shadow-lg">
             <div className="mb-5">
                 <h1 className="fw-bold text-start">Profile</h1>
             </div>
