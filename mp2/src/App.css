@@ -10,6 +10,7 @@
 
 .wrapper #db {
     background-color: #f7f7fc;
+    min-height: 823.3px;
 }
 
 textarea#address {

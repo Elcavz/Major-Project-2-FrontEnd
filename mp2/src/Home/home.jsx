@@ -33,162 +33,259 @@ const [StudentId, SetStudentIdDisplay] = useState()
 const [contactNoBorder, SetContactNoBorder] = useState('none')
 const [ContactNoAnim, SetContactNumberAnim] = useState()
 
-  function dashBoard() {
-    SetDbDisplay(true);
-    SetRSDisplay(false);
-    SetPFDisplay(false);
-    SetDbBtnBg(true);
-    SetRegStudentBtnBg(false)
-    SetProfileBtnBg(false);
-    SetDbBtnColor(true);
-    SetRegStudentBtnColor(false);
-    SetProfileBtnColor(false);
-  }
+function dashBoard() {
+SetDbDisplay(true);
+SetRSDisplay(false);
+SetPFDisplay(false);
+SetDbBtnBg(true);
+SetRegStudentBtnBg(false)
+SetProfileBtnBg(false);
+SetDbBtnColor(true);
+SetRegStudentBtnColor(false);
+SetProfileBtnColor(false);
 
-  function registerStudent() {
-    SetRSDisplay(true);
-    SetDbDisplay(false);
-    SetPFDisplay(false);
-    SetRegStudentBtnBg(true)
-    SetDbBtnBg(false);
-    SetProfileBtnBg(false);
-    SetRegStudentBtnColor(true);
-    SetDbBtnColor(false);
-    SetProfileBtnColor(false);
-  }
+fetch('http://localhost:3000/totalboys', {
+    method: 'POST', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({})
+}).then((data) => {
+    return data.json()
+}).then((data) => {
+    setTotalBoys(data.TotalBoys)
+})
 
-  function profile() {
-    SetPFDisplay(true);
-    SetRSDisplay(false);
-    SetDbDisplay(false);
-    SetProfileBtnBg(true);
-    SetDbBtnBg(false);
-    SetRegStudentBtnBg(false)
-    SetProfileBtnColor(true);
-    SetDbBtnColor(false);
-    SetRegStudentBtnColor(false);
-  }
+fetch('http://localhost:3000/totalgirls', {
+    method: 'POST', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({})
+}).then((data) => {
+    return data.json()
+}).then((data) => {
+    setTotalGirls(data.TotalGirls)
+})
 
-  function submitStudent() {
+fetch('http://localhost:3000/totalstudents', {
+    method: 'POST', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({})
+}).then((data) => {
+    return data.json()
+}).then((data) => { 
+    setTotalStudents(data.TotalStudents)
+})
+}
+
+function registerStudent() {
+SetRSDisplay(true);
+SetDbDisplay(false);
+SetPFDisplay(false);
+SetRegStudentBtnBg(true)
+SetDbBtnBg(false);
+SetProfileBtnBg(false);
+SetRegStudentBtnColor(true);
+SetDbBtnColor(false);
+SetProfileBtnColor(false);
+}
+
+function profile() {
+SetPFDisplay(true);
+SetRSDisplay(false);
+SetDbDisplay(false);
+SetProfileBtnBg(true);
+SetDbBtnBg(false);
+SetRegStudentBtnBg(false)
+SetProfileBtnColor(true);
+SetDbBtnColor(false);
+SetRegStudentBtnColor(false);
+}
+
+function submitStudent() {
+    
+console.log('test')
+
+    fetch('http://localhost:3000/students' , {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstname: firstNameValue,
+            lastname: lastNameValue,
+            age: ageValue,
+            gender: genderValue,
+            contactnumber: contactNumberValue,
+            address: addressValue
+        })
+    }).then((studentData) => {
+        return studentData.json()
+    }).then((studentData) => {
+        const idFirstName = document.getElementById('idFirstName')
+        const idLastName = document.getElementById('idLastName')
+        const idNumber = document.getElementById('idNumber')
+        const phoneNumber = document.getElementById('phoneNumber')
+        const numberExist = document.getElementById('numberExist')
+        const idPic = document.getElementById('idPic')
         
-    console.log('test')
+        if (studentData.success) {
+        if (genderValue === 'Male') {
+            idPic.src = male;
+        } else {
+            idPic.src = female;
+        }
+        SetRSContainerWidth(true);
+        setTimeout(() => {
+        SetStudentIdDisplay(true);
+        }, 1000);
 
-      fetch('http://localhost:3000/students' , {
-          method: 'post',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              firstname: firstNameValue,
-              lastname: lastNameValue,
-              age: ageValue,
-              gender: genderValue,
-              contactnumber: contactNumberValue,
-              address: addressValue
-          })
-      }).then((studentData) => {
-          return studentData.json()
-      }).then((studentData) => {
-          const idFirstName = document.getElementById('idFirstName')
-          const idLastName = document.getElementById('idLastName')
-          const idNumber = document.getElementById('idNumber')
-          const phoneNumber = document.getElementById('phoneNumber')
-          const numberExist = document.getElementById('numberExist')
-          const idPic = document.getElementById('idPic')
-          
-          if (studentData.success) {
-              if (genderValue === 'Male') {
-                  idPic.src = male;
-              } else {
-                  idPic.src = female;
-              }
-              SetRSContainerWidth(true);
-              setTimeout(() => {
-                SetStudentIdDisplay(true);
-              }, 1000);
-              
-              idFirstName.innerHTML = firstNameValue
-              idLastName.innerHTML = lastNameValue
-              phoneNumber.innerHTML = contactNumberValue
-              numberExist.innerHTML = ''
-              SetContactNoBoxShadow(true);
-              SetContactNoBorder(true);
-              fetch('http://localhost:3000/validation' , {
-                  method: 'post',
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      contactnumber: contactNumberValue
-                  })
-              }).then((id) => {
-                  return id.json()
-              }).then((id) => {
-                  console.log(id.idresult)
-                  idNumber.innerHTML = id.idresult
-              })
-          } else {
-            SetRSContainerWidth(false);
-            SetContactNumberAnim(true);
-              SetContactNoBoxShadow(false)
-              SetContactNoBorder(false);
-              numberExist.innerHTML = 'Already Exists'
-              setTimeout(function() {
-                  SetContactNumberAnim(false);
-              }, 500)
-              SetStudentIdDisplay(false);
-          }
-      })
-  }
-  
-  const [SubmitBtnDisable, SetSubBtnDisable] = useState()
-  const [SubmitBtnBgColor, SetSubBtnBgColor] = useState()
-  const [SubmitBtnColor, SetSubBtnColor] = useState()
-  const [SubmitBtnFontWeight, SetSubBtnFontWeight] = useState()
-  const [SubmitBtnBorder, SetSubBtnBorder] = useState()
-  const [SubmitBtnBoxShadow, SetSubBtnBoxShadow] = useState()
-  const [SubmitBtnBoxCursor, SetSubBtnCursor] = useState()
+        const tableBody = document.getElementById('studentsTableBody');
+        const newRow = tableBody.insertRow(-1);
 
-  function studentForm() {
-    const isValidForm =
-      firstNameValue !== "" &&
-      lastNameValue !== "" &&
-      ageValue !== "" &&
-      genderValue !== "" &&
-      contactNumberValue !== "" &&
-      addressValue !== "" &&
-      (genderValue === "Male" || genderValue === "Female");
-  
-    SetSubBtnDisable(!isValidForm);
-    SetSubBtnBgColor(isValidForm);
-    SetSubBtnColor(isValidForm);
-    SetSubBtnFontWeight(isValidForm);
-    SetSubBtnBorder(isValidForm);
-    SetSubBtnBoxShadow(isValidForm);
-    SetSubBtnCursor(isValidForm);
-  }
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+        const cell5 = newRow.insertCell(4);
 
-  function clr() {  
-    const numberExist = document.getElementById('numberExist')
-    numberExist.innerHTML = ''
-    setFirstNameValue('');
-    setLastNameValue('')
-    setAgeValue('');
-    setGenderValue('Choose a gender . . .');
-    setContactNumberValue('');
-    setAddressValue('');
-    SetSubBtnBgColor(false);
-    SetSubBtnColor(false);
-    SetSubBtnCursor(false);
-    SetSubBtnBorder(false);
-    SetSubBtnBoxShadow(false);
-    SetRSContainerWidth(false);
-    SetStudentIdDisplay(false);
-    SetContactNoBoxShadow(true);
-    SetContactNoBorder(true);
-  }
+        cell1.textContent = firstNameValue + ' ' + lastNameValue;
+        cell2.textContent = ageValue;
+        cell3.textContent = genderValue;
+        cell4.textContent = contactNumberValue;
+        cell5.textContent = addressValue;
+            
+        idFirstName.innerHTML = firstNameValue
+        idLastName.innerHTML = lastNameValue
+        phoneNumber.innerHTML = contactNumberValue
+        numberExist.innerHTML = ''
+        SetContactNoBoxShadow(true);
+        SetContactNoBorder(true);
+        fetch('http://localhost:3000/validation' , {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contactnumber: contactNumberValue
+            })
+        }).then((id) => {
+            return id.json()
+        }).then((id) => {
+            console.log(id.idresult)
+            idNumber.innerHTML = id.idresult
+        })
+    } else {
+        SetRSContainerWidth(false);
+        SetContactNumberAnim(true);
+        SetContactNoBoxShadow(false)
+        SetContactNoBorder(false);
+        numberExist.innerHTML = 'Already Exists'
+        setTimeout(function() {
+            SetContactNumberAnim(false);
+        }, 500)
+        SetStudentIdDisplay(false);
+        }
+    })
+}
+
+const [SubmitBtnDisable, SetSubBtnDisable] = useState()
+const [SubmitBtnBgColor, SetSubBtnBgColor] = useState()
+const [SubmitBtnColor, SetSubBtnColor] = useState()
+const [SubmitBtnFontWeight, SetSubBtnFontWeight] = useState()
+const [SubmitBtnBorder, SetSubBtnBorder] = useState()
+const [SubmitBtnBoxShadow, SetSubBtnBoxShadow] = useState()
+const [SubmitBtnBoxCursor, SetSubBtnCursor] = useState()
+
+function studentForm() {
+const isValidForm =
+    firstNameValue !== "" &&
+    lastNameValue !== "" &&
+    ageValue !== "" &&
+    genderValue !== "" &&
+    contactNumberValue !== "" &&
+    addressValue !== "" &&
+    (genderValue === "Male" || genderValue === "Female");
+
+SetSubBtnDisable(!isValidForm);
+SetSubBtnBgColor(isValidForm);
+SetSubBtnColor(isValidForm);
+SetSubBtnFontWeight(isValidForm);
+SetSubBtnBorder(isValidForm);
+SetSubBtnBoxShadow(isValidForm);
+SetSubBtnCursor(isValidForm);
+}
+
+function clr() {  
+const numberExist = document.getElementById('numberExist')
+numberExist.innerHTML = ''
+setFirstNameValue('');
+setLastNameValue('')
+setAgeValue('');
+setGenderValue('Choose a gender . . .');
+setContactNumberValue('');
+setAddressValue('');
+SetSubBtnBgColor(false);
+SetSubBtnColor(false);
+SetSubBtnCursor(false);
+SetSubBtnBorder(false);
+SetSubBtnBoxShadow(false);
+SetRSContainerWidth(false);
+SetStudentIdDisplay(false);
+SetContactNoBoxShadow(true);
+SetContactNoBorder(true);
+}
+
+const [totalBoys, setTotalBoys] = useState();
+const [totalGirls, setTotalGirls] = useState();
+const [totalStudents, setTotalStudents] = useState();
+
+fetch('http://localhost:3000/totalboys', {
+    method: 'POST', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({})
+}).then((data) => {
+    return data.json()
+}).then((data) => {
+    setTotalBoys(data.TotalBoys)
+})
+
+fetch('http://localhost:3000/totalgirls', {
+    method: 'POST', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({})
+}).then((data) => {
+    return data.json()
+}).then((data) => {
+    setTotalGirls(data.TotalGirls)
+})
+
+fetch('http://localhost:3000/totalstudents', {
+    method: 'POST', 
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({})
+}).then((data) => {
+    return data.json()
+}).then((data) => { 
+    setTotalStudents(data.TotalStudents)
+})
   
   return (
     <div>
@@ -262,29 +359,29 @@ const [ContactNoAnim, SetContactNumberAnim] = useState()
                 <div className="mb-2">
                     <h2 className="fs-1 fw-bold">My Dashboard</h2>
                 </div>
-                <div className="row">
-                    <div className="first card p-5 col me-5">
-                        <div className="m-3 h-75">
-                            <h2 className="text-white">Total Boys</h2>
+                <div class="row">
+                    <div class="first card p-5 col me-5">
+                        <div class="m-3 h-75">
+                            <h2 class="text-white">Total Boys</h2>
                         </div>
-                        <div className="card-body">
-                            <span className="text-white">0</span>
-                        </div>
-                    </div>
-                    <div className="second card p-5 col">
-                        <div className="m-3 h-75">
-                            <h2 className="text-white">Total Girls</h2>
-                        </div>
-                        <div className="card-body">
-                            <span className="text-white">0</span>
+                        <div class="card-body">
+                            <span id="totalBoys" class="text-white">{totalBoys}</span>
                         </div>
                     </div>
-                    <div className="third card p-5 col ms-5">
-                        <div className="m-3 h-75">
-                            <h2 className="text-white">Total Students</h2>
+                    <div class="second card p-5 col">
+                        <div class="m-3 h-75">
+                            <h2 class="text-white">Total Girls</h2>
                         </div>
-                        <div className="card-body">
-                            <span className="text-white">0</span>
+                        <div class="card-body">
+                            <span id="totalGirls" class="text-white">{totalGirls}</span>
+                        </div>
+                    </div>
+                    <div class="third card p-5 col ms-5">
+                        <div class="m-3 h-75">
+                            <h2 class="text-white">Total Students</h2>
+                        </div>
+                        <div class="card-body">
+                            <span id="totalStudents" class="text-white">{totalStudents}</span>
                         </div>
                     </div>
                 </div>
@@ -301,77 +398,7 @@ const [ContactNoAnim, SetContactNumberAnim] = useState()
                             <th className="table-address border">Address</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
-                        <tr>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                            <td className="border"></td>
-                        </tr>
+                    <tbody id="studentsTableBody">
                     </tbody>
                 </table>
             </div>
