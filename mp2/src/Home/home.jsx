@@ -43,6 +43,7 @@ SetProfileBtnBg(false);
 SetDbBtnColor(true);
 SetRegStudentBtnColor(false);
 SetProfileBtnColor(false);
+document.title = 'DASHBOARD'
 
 fetch('http://localhost:3000/totalboys', {
     method: 'POST', 
@@ -94,6 +95,7 @@ SetProfileBtnBg(false);
 SetRegStudentBtnColor(true);
 SetDbBtnColor(false);
 SetProfileBtnColor(false);
+document.title = 'REGISTER STUDENT'
 }
 
 function profile() {
@@ -106,6 +108,7 @@ SetRegStudentBtnBg(false)
 SetProfileBtnColor(true);
 SetDbBtnColor(false);
 SetRegStudentBtnColor(false);
+document.title = 'PROFILE'
 }
 
 function submitStudent() {

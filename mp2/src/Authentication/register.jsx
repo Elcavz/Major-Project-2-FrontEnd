@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import React from 'react';
 
 function Registration() {
@@ -8,10 +9,6 @@ const [emailValue, SetEmailValue] = useState('')
 const [passwordValue, SetPasswordValue] = useState('')
 const [cPasswordValue, SetCPasswordValue] = useState('')
 const regBtn = document.getElementById('regBtn');
-// const userName = document.getElementById('userName');
-// const email = document.getElementById('email');
-// const password = document.getElementById('password');
-// const cPassword = document.getElementById('cPassword');
 const [RegBtnCursor, SetRegBtnCursor] = useState()
 const [RegBtnBGColor, SetRegBtnBgColor] = useState()
 const [RegBtnColor, SetRegBtnColor] = useState('none')
@@ -78,10 +75,8 @@ function checkPassword() {
             SetRegBtnCursor(true);
             wrongPassword.innerHTML = "."
             SetRegBtnDisable(false);
-            // regBtn.disabled = false;
             password.removeAttribute('style');
             cPassword.removeAttribute('style');
-            // regBtn.style.cursor = 'pointer'
         } else {
             SetXPassColor(false);
             SetPasswordBorder(false);
@@ -95,11 +90,9 @@ function checkPassword() {
             SetCPasswordBoxShadow(false);
             SetPasswordBoxShadow(false);
             SetRegBtnDisable(true);
-            // regBtn.disabled = true;
             warningIconPassword.removeAttribute('style')
             warningIconPassword.classList.add('fa-triangle-exclamation');
             SetRegBtnCursor(false);
-            // regBtn.style.cursor = 'not-allowed'
         }
     } else {
         SetXPassColor(false);
@@ -114,16 +107,11 @@ function checkPassword() {
             SetCPasswordBoxShadow(false);
             SetPasswordBoxShadow(false);
             SetRegBtnDisable(true);
-            // regBtn.disabled = true;
             warningIconPassword.removeAttribute('style')
             warningIconPassword.classList.add('fa-triangle-exclamation');
             SetRegBtnCursor(false);
-            // regBtn.style.cursor = 'not-allowed'
     }
 }
-
-// password.addEventListener('keyup' , checkPassword)
-// cPassword.addEventListener('keyup' , checkPassword)
 
 function validatePass() {
     const password = document.getElementById('password');
@@ -144,10 +132,8 @@ function validatePass() {
             SetRegBtnCursor(true);
             wrongPassword.innerHTML = "."
             SetRegBtnDisable(false);
-            // regBtn.disabled = false;
             password.removeAttribute('style');
             cPassword.removeAttribute('style');
-            // regBtn.style.cursor = 'pointer'
         } else {
             SetXPassColor(false);
             SetPasswordBorder(false);
@@ -161,11 +147,9 @@ function validatePass() {
             SetCPasswordBoxShadow(false);
             SetPasswordBoxShadow(false);
             SetRegBtnDisable(true);
-            // regBtn.disabled = true;
             warningIconPassword.removeAttribute('style')
             warningIconPassword.classList.add('fa-triangle-exclamation');
             SetRegBtnCursor(false);
-            // regBtn.style.cursor = 'not-allowed'
         }
     } else {
         SetXPassColor(false);
@@ -180,15 +164,11 @@ function validatePass() {
             SetCPasswordBoxShadow(false);
             SetPasswordBoxShadow(false);
             SetRegBtnDisable(true);
-            // regBtn.disabled = true;
             warningIconPassword.removeAttribute('style')
             warningIconPassword.classList.add('fa-triangle-exclamation');
             SetRegBtnCursor(false);
-            // regBtn.style.cursor = 'not-allowed'
     }
 }
-    
-// password.addEventListener('keyup' , validatePass) 
 
 function register() {
     console.log('test')
@@ -230,72 +210,74 @@ function register() {
 }
 
   return (
-    <div className="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
-        <div className="h-75 shadow-lg border rounded-5">
-            <div className="h-25 border rounded-4 text-center d-flex flex-nowrap justify-content-center align-items-center">
-                <h4 className="text-white text-decoration-underline">REGISTRATION</h4>
-            </div>
-            <div className="mx-4 bg-white">
-                <div className="mb-4 bg-white">
-                    <h3 className="bg-white">Username <span className="text-danger bg-white fs-3">*</span></h3>
-                    <input id="userName" 
-                    style={{
-                        boxShadow: UserNameBoxShadow ? '' : 'red 0px 0px 10px 0px',
-                        border: UserNameBorder ? '' : '2px solid red',
-                        animation: UserNameAnimation ? 'shake1 0.5s' : 'none'
-                    }} className="fs-3 px-2 rounded-3 bg-white" type="text" value={userNameValue} onChange={(e) => SetUserNameValue(e.target.value)} onKeyUp={checkFields}/>
-                    <br/><i id="warningIconUsername" className="fa-solid"></i>
-                    <span id="exist" style={{
-                        color: ExistColor ? 'black' : 'black'
-                    }} className="fs-5 bg-transparent"></span>
+    <div id="register">
+        <div className="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
+            <div className="h-75 shadow-lg border rounded-5">
+                <div className="h-25 border rounded-4 text-center d-flex flex-nowrap justify-content-center align-items-center">
+                    <h4 className="text-white text-decoration-underline">REGISTRATION</h4>
                 </div>
-                <div className="mb-5 bg-white">
-                    <h3 className="bg-white">Email <span className="text-danger bg-white fs-3">*</span></h3>
-                    <input id="email" className="fs-3 px-2 rounded-3 bg-white" type="text" value={emailValue} onChange={(e) => SetEmailValue(e.target.value)} onKeyUp={checkFields}/>
-                </div>
-                <div className="mb-5 bg-white">
-                    <h3 id="passH3" 
-                    style={{
-                        color: PassH3Color ? '#1b46d4' : 'red'
-                    }} className="bg-white">Password <span className="text-danger bg-white fs-3">*</span></h3>
-                    <input id="password" 
-                    style={{
-                        border: PasswordBorder ? '2px solid rgb(168, 168, 168)' : '2px solid red',
-                        boxShadow: PasswordBoxShadow ? '' : 'red 0px 0px 10px 0px'
-                    }} className="fs-3 px-2 rounded-3 bg-white" type="password" value={passwordValue} onChange={(e) => SetPasswordValue(e.target.value)} onKeyUp={ValidatePassword}/>
-                </div>
-                <div className="mb-5 bg-white">
-                    <h3 id="cPassH3" 
-                    style={{
-                        color: CPassH3Color ? '#1b46d4' : 'red'
-                    }} className="bg-white">Confirm Password <span className="text-danger bg-transparent fs-3">*</span></h3>
-                    <input id="cPassword" 
-                    style={{
-                        border: CPasswordBorder ? '2px solid rgb(168, 168, 168)' : '2px solid red',
-                        boxShadow: CPasswordBoxShadow ? '' : 'red 0px 0px 10px 0px'
-                    }} className="fs-3 px-2 rounded-3 bg-white" type="password" value={cPasswordValue} onChange={(e) => SetCPasswordValue(e.target.value)} onKeyUp={ValidateCPassword}/>
-                    <i id="warningIconPassword" 
-                    style={{
-                        color: WarningIconColor ? 'white' : 'black'
-                    }} className="fa-solid"></i><span id="wrongPass" 
-                    style={{
-                        color: XPasswordColor ? 'white' : 'black'
-                    }} className="fs-5 bg-transparent">.</span>
-                </div>
-                <div className="text-center bg-transparent">
-                    <button id="regBtn"
-                    style={{
-                        cursor: RegBtnCursor ? 'pointer' : 'not-allowed',
-                        backgroundColor: RegBtnBGColor ? '#24315c' : '#7f8fc0',
-                        boxShadow: RegBtnSubmitBoxShadow ? 'green' : 'green',
-                        color: RegBtnColor ? 'white' : 'rgb(231, 231, 231)',
-                        width: RegBtnWidth ? '15%' : ''
-                    }} className="rounded-3" onClick={register} disabled={RegBtnDisable}>REGISTER</button>
-                </div>
-                <div className="mt-4 bg-white">
-                    <a id="loginBtn" className="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3" href="login.html" type="button">
-                        LOG IN
-                    </a>
+                <div className="mx-4 bg-white">
+                    <div className="mb-4 bg-white">
+                        <h3 className="bg-white">Username <span className="text-danger bg-white fs-3">*</span></h3>
+                        <input id="userName" 
+                        style={{
+                            boxShadow: UserNameBoxShadow ? '' : 'red 0px 0px 10px 0px',
+                            border: UserNameBorder ? '' : '2px solid red',
+                            animation: UserNameAnimation ? 'shake1 0.5s' : 'none'
+                        }} className="fs-3 px-2 rounded-3 bg-white" type="text" value={userNameValue} onChange={(e) => SetUserNameValue(e.target.value)} onKeyUp={checkFields}/>
+                        <br/><i id="warningIconUsername" className="fa-solid"></i>
+                        <span id="exist" style={{
+                            color: ExistColor ? 'black' : 'black'
+                        }} className="fs-5 bg-transparent"></span>
+                    </div>
+                    <div className="mb-5 bg-white">
+                        <h3 className="bg-white">Email <span className="text-danger bg-white fs-3">*</span></h3>
+                        <input id="email" className="fs-3 px-2 rounded-3 bg-white" type="text" value={emailValue} onChange={(e) => SetEmailValue(e.target.value)} onKeyUp={checkFields}/>
+                    </div>
+                    <div className="mb-5 bg-white">
+                        <h3 id="passH3" 
+                        style={{
+                            color: PassH3Color ? '#1b46d4' : 'red'
+                        }} className="bg-white">Password <span className="text-danger bg-white fs-3">*</span></h3>
+                        <input id="password" 
+                        style={{
+                            border: PasswordBorder ? '2px solid rgb(168, 168, 168)' : '2px solid red',
+                            boxShadow: PasswordBoxShadow ? '' : 'red 0px 0px 10px 0px'
+                        }} className="fs-3 px-2 rounded-3 bg-white" type="password" value={passwordValue} onChange={(e) => SetPasswordValue(e.target.value)} onKeyUp={ValidatePassword}/>
+                    </div>
+                    <div className="mb-5 bg-white">
+                        <h3 id="cPassH3" 
+                        style={{
+                            color: CPassH3Color ? '#1b46d4' : 'red'
+                        }} className="bg-white">Confirm Password <span className="text-danger bg-transparent fs-3">*</span></h3>
+                        <input id="cPassword" 
+                        style={{
+                            border: CPasswordBorder ? '2px solid rgb(168, 168, 168)' : '2px solid red',
+                            boxShadow: CPasswordBoxShadow ? '' : 'red 0px 0px 10px 0px'
+                        }} className="fs-3 px-2 rounded-3 bg-white" type="password" value={cPasswordValue} onChange={(e) => SetCPasswordValue(e.target.value)} onKeyUp={ValidateCPassword}/>
+                        <i id="warningIconPassword" 
+                        style={{
+                            color: WarningIconColor ? 'white' : 'black'
+                        }} className="fa-solid"></i><span id="wrongPass" 
+                        style={{
+                            color: XPasswordColor ? 'white' : 'black'
+                        }} className="fs-5 bg-transparent">.</span>
+                    </div>
+                    <div className="text-center bg-transparent">
+                        <button id="regBtn"
+                        style={{
+                            cursor: RegBtnCursor ? 'pointer' : 'not-allowed',
+                            backgroundColor: RegBtnBGColor ? '#24315c' : '#7f8fc0',
+                            boxShadow: RegBtnSubmitBoxShadow ? 'green' : 'green',
+                            color: RegBtnColor ? 'white' : 'rgb(231, 231, 231)',
+                            width: RegBtnWidth ? '15%' : ''
+                        }} className="rounded-3" onClick={register} disabled={RegBtnDisable}>REGISTER</button>
+                    </div>
+                    <div className="mt-4 bg-white">
+                        <Link to='/login' id="loginBtn" className="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3">
+                            LOG IN
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

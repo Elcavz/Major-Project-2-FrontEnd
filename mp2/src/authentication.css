@@ -6,35 +6,38 @@
     list-style: none;
     box-sizing: border-box;
     font-family: 'Josefin Sans', sans-serif;
-    background-color: #f7f7fc;
 }
 
 /* REGISTRATION CSS */
 
-h3 {
+#register {
+  background-color: #f7f7fc;
+}
+
+#register h3 {
     color: #1b46d4;
 }
 
-h4 {
+#register h4 {
     background-color: transparent;
 }
 
-.h-75 {
+#register .h-75 {
     width: 23%;
     background-color: #ffffff;
 }
 
-.h-75 .rounded-4 {
+#register .h-75 .rounded-4 {
     background-color: #24315c;
     width: 92%;
     transform: translateY(-25px) translateX(18px);
 }
 
-img {
+#register img {
     background-color: transparent;
 }
 
-h6 {
+#register h6 {
     background-color: transparent;  
 }
 
@@ -152,11 +155,11 @@ h6 {
 
 /* START OF LOGIN CSS */
 
-#login h3 {
-    color: #1b46d4;
+#login {
+  background-color: #f7f7fc;
 }
 
-#login #regBtn {
+#login #reg_Btn {
     height: 35px;
     border: 1px solid rgb(168, 168, 168);
     background-color: #24315c;
@@ -164,7 +167,7 @@ h6 {
     transition: all 0.3s ease;
 }
 
-#login #loginBtn {
+#login #login_Btn {
     height: 35px;
     width: 100%;
     border: 1px solid rgb(168, 168, 168);
@@ -172,6 +175,37 @@ h6 {
     color: rgb(255, 255, 255);
     transition: all 0.3s ease;
     cursor: not-allowed;
+}
+
+#login {
+  background-color: #f7f7fc;
+}
+
+#login h3 {
+    color: #1b46d4;
+}
+
+#login h4 {
+    background-color: transparent;
+}
+
+#login .h-75 {
+    width: 23%;
+    background-color: #ffffff;
+}
+
+#login .h-75 .rounded-4 {
+    background-color: #24315c;
+    width: 92%;
+    transform: translateY(-25px) translateX(18px);
+}
+
+#login img {
+    background-color: transparent;
+}
+
+#login h6 {
+    background-color: transparent;  
 }
 
 @keyframes shake {
