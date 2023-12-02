@@ -22,7 +22,7 @@ span {
 }
 
 .navBar {
-    height: 66.4vh;
+    height: 64.3vh;
 }
 
 .wrapper #profilePic {
@@ -373,16 +373,27 @@ input::-webkit-inner-spin-button {
 .wrapper #pf #updateProfile {
     width: 15%;
     height: 40px;
-    background-color: #478186;
+    background-color: #b3e0e4;
+    color: #8b8b8b;
+    cursor: not-allowed;
+    border: #addee0 1px solid;
+    transition: all ease 0.5s;
 }
 
 .wrapper #pf #cancelProfile {
     width: 15%;
     height: 40px;
-    background-color: rgb(148, 148, 148);
-    transition: all ease 0.3s;
+    background-color: transparent;
+    color: black;
+    border: 1px solid #8b8b8b;
+    transition: all ease 0.5s;
 }
 
 .wrapper #pf #cancelProfile:hover {
     background-color: rgb(233, 233, 233);
+}
+
+#pf #pfUsername,
+#pf #pfEmail {
+    cursor: not-allowed;
 }

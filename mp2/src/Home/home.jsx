@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 import male from './assets/male.png';
 import female from './assets/female.png';
 import admin from './assets/admin.png'
 import qr from './assets/qr.png';
+import profileBg from './assets/profileBg.png';
 
 function Home() {
 
@@ -71,18 +72,21 @@ fetch('http://localhost:3000/totalgirls', {
     setTotalGirls(data.TotalGirls)
 })
 
-fetch('http://localhost:3000/totalstudents', {
-    method: 'POST', 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({})
-}).then((data) => {
-    return data.json()
-}).then((data) => { 
-    setTotalStudents(data.TotalStudents)
-})
+setTotalStudents(totalBoys + totalGirls)
+
+// fetch('http://localhost:3000/totalstudents', {
+//     method: 'POST', 
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Accept': 'application/json'
+//     },
+//     body: JSON.stringify({})
+// }).then((data) => {
+//     return data.json()
+// }).then((data) => {
+//     console.log(data)
+//     setTotalStudents(data.TotalStudents)
+// })
 }
 
 function registerStudent() {
@@ -112,8 +116,6 @@ document.title = 'PROFILE'
 }
 
 function submitStudent() {
-    
-console.log('test')
 
     fetch('http://localhost:3000/students' , {
         method: 'post',
@@ -251,44 +253,147 @@ const [totalBoys, setTotalBoys] = useState();
 const [totalGirls, setTotalGirls] = useState();
 const [totalStudents, setTotalStudents] = useState();
 
-fetch('http://localhost:3000/totalboys', {
-    method: 'POST', 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({})
-}).then((data) => {
-    return data.json()
-}).then((data) => {
-    setTotalBoys(data.TotalBoys)
-})
+const TotalBoys = () => {
+    fetch('http://localhost:3000/totalboys', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({})
+    }).then((data) => {
+        return data.json()
+    }).then((data) => {
+        setTotalBoys(data.TotalBoys)
+    })
+}
 
-fetch('http://localhost:3000/totalgirls', {
-    method: 'POST', 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({})
-}).then((data) => {
-    return data.json()
-}).then((data) => {
-    setTotalGirls(data.TotalGirls)
-})
+const TotalGirls = () => { 
+    fetch('http://localhost:3000/totalgirls', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({})
+    }).then((data) => {
+        return data.json()
+    }).then((data) => {
+        setTotalGirls(data.TotalGirls)
+    })
+}
 
-fetch('http://localhost:3000/totalstudents', {
-    method: 'POST', 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({})
-}).then((data) => {
-    return data.json()
-}).then((data) => { 
-    setTotalStudents(data.TotalStudents)
-})
+setTotalStudents(totalBoys + totalGirls)
+
+function logOut() {
+    localStorage.clear();
+    document.location.href = 'login'
+}
+
+const [adminUsername, setAdminUsername] = useState()
+const [adminEmail, setAdminEmail] = useState()
+const userToken = localStorage.getItem('token: ')
+
+const adminData = () => {
+    fetch('http://localhost:3000/admin', {
+        method: 'get',
+        headers: {
+            'Authorization': 'Bearer ' + userToken,
+        },
+        body: null
+    }).then((adminData) => {
+        return adminData.json();
+    }).then((adminData) => {
+        console.log(adminData.result)
+        setAdminUsername(adminData.result.username)
+        setAdminEmail(adminData.result.email)
+    }) 
+}
+
+const [oldPassword, setOldPassword] = useState('')
+const [newPassword, setNewPassword] = useState('')
+const [newCPassword, setNewCPassword] = useState('')
+
+function updatePass() {
+    fetch('http://localhost:3000/change-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            username: adminUsername,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        })
+    }).then((data) => {
+        return data.json()
+    }).then((data) => {
+        console.log(data)
+    })
+}
+
+// const updateProfile = document.getElementById('updateProfile')
+// const cancelProfile = document.getElementById('updateProfile')
+// const [updateProfileBtnDisabled, setupdateProfileBtnDisabled] = useState()
+// const [updateProfileBtn, setupdateProfileBtn] = useState()
+
+// function validatePass() {
+//     if (oldPassword !== '' && newPassword !== '' && newCPassword !== '') {
+//         if (newPassword === newCPassword) {
+//             setupdateProfileBtn.disabled= false
+//             // updateProfile.disabled = false
+//             // updateProfile.style.backgroundColor = '#54b7c0'
+//             // updateProfile.style.color = 'black'
+//             // updateProfile.style.fontWeight = 'bold'
+//             // updateProfile.style.border = '#7ec9cf 1px solid'
+//             // updateProfile.style.boxShadow = '#6ef3ff 0px 0px 10px 0px'
+//             // updateProfile.style.cursor = 'pointer'
+//         } else {
+//             setupdateProfileBtn.disabled= true
+//             // updateProfile.disabled = true
+//             // updateProfile.style.backgroundColor = '#b3e0e4'
+//             // updateProfile.style.color = '#8b8b8b'
+//             // updateProfile.style.fontWeight = 'none'
+//             // updateProfile.style.border = '#addee0 1px solid'
+//             // updateProfile.style.removeProperty('box-shadow')
+//             // updateProfile.style.cursor = 'not-allowed'
+//         }
+//     } else {
+//         updateProfile.disabled = true
+//         updateProfile.style.backgroundColor = '#b3e0e4'
+//         updateProfile.style.color = '#8b8b8b'
+//         updateProfile.style.fontWeight = 'none'
+//         updateProfile.style.border = '#addee0 1px solid'
+//         updateProfile.style.removeProperty('box-shadow')
+//         updateProfile.style.cursor = 'not-allowed'
+//     }
+// }
+
+// oldPassword.addEventListener('keyup', validatePass)
+// newPassword.addEventListener('keyup', validatePass)
+// newCPassword.addEventListener('keyup', validatePass)
+
+// function cancel() {
+//     oldPassword.value = ''
+//     newPassword.value = ''
+//     newCPassword.value = ''
+//     updateProfile.disabled = true
+//     updateProfile.style.backgroundColor = '#b3e0e4'
+//     updateProfile.style.color = '#8b8b8b'
+//     updateProfile.style.fontWeight = 'none'
+//     updateProfile.style.border = '#addee0 1px solid'
+//     updateProfile.style.removeProperty('box-shadow')
+//     updateProfile.style.cursor = 'not-allowed'
+// }
+
+useEffect(() => {
+    adminData();
+    TotalBoys();
+    TotalGirls();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
   
   return (
     <div>
@@ -299,8 +404,9 @@ fetch('http://localhost:3000/totalstudents', {
                     <img className="img-fluid w-75" src={admin} alt=""/>
                 </div>
             </div>
-            <div className="m-5">
-                <h2 className="text-white text-center">ADMINISTRATIVE</h2>
+            <div className="m-5 text-center">
+                <span id="adminUsername" className="text-white fw-bold fs-3">{adminUsername}</span>
+                <h2 className="text-white-50 fs-5 text-center text-decoration-underline">ADMINISTRATIVE</h2>
             </div>
             <div className="navBar">
                 <li>
@@ -347,7 +453,7 @@ fetch('http://localhost:3000/totalstudents', {
                 </li>
             </div>
             <div id="logoutDiv">
-                <button id="logoutBtn" className="fs-4 h-100 w-100">
+                <button id="logoutBtn" className="fs-4 h-100 w-100" onClick={logOut}>
                     <i className="fa-solid fa-arrow-right-from-bracket text-center"></i>
                     <span className="fs-4 me-5 pe-4">
                         Log Out
@@ -558,32 +664,32 @@ fetch('http://localhost:3000/totalstudents', {
                 <div className="w-50 ms-5">
                     <div className="mb-5">
                         <h4>Username:</h4>
-                        <input className="w-50 fs-3 px-2" type="text" value="" disabled/>
+                        <input id="pfUsername" className="w-50 fs-3 px-2" type="text" value={adminUsername} disabled/>
                     </div>
                     <div className="mb-5">
                         <h4>Email:</h4>
-                        <input className="w-50 fs-3 px-2" type="text" value="" disabled/>
+                        <input id="pfEmail" className="w-50 fs-3 px-2" type="text" value={adminEmail} disabled/>
                     </div>
                     <div className="mb-4 pt-5">
                         <h2>Change Password:</h2>
                     </div>
                     <div className="mb-5">
                         <h4>Current Password:</h4>
-                        <input className="w-50 fs-3 px-2" type="password" value="******"/>
+                        <input className="w-50 fs-3 px-2" type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
                     </div>
                     <div className="mb-5">
                         <h4>New Password:</h4>
-                        <input className="w-50 fs-3 px-2" type="password" value=""/>
+                        <input className="w-50 fs-3 px-2" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} type="password"/>
                     </div>
                     <div className="mb-4">
                         <h4>Confirm Password:</h4>
-                        <input className="w-50 fs-3 px-2" type="password" value=""/>
+                        <input className="w-50 fs-3 px-2" type="password" value={newCPassword} onChange={(e) => setNewCPassword(e.target.value)}/>
                     </div>
-                    <button id="updateProfile" className="rounded-2 fw-bold me-3">Update</button>
+                    <button id="updateProfile" className="rounded-2 fw-bold me-3" onClick={updatePass}>Update</button>
                     <button id="cancelProfile" className="rounded-2 fw-bold">Cancel</button>
                 </div>
                 <div className="w-50">
-                    <img className="img-fluid" src="49.png" alt=""/>
+                    <img className="img-fluid" src={profileBg} alt=""/>
                 </div>
             </div>
         </div>

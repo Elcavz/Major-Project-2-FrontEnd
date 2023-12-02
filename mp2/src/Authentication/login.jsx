@@ -46,6 +46,7 @@ function Login() {
         }).then((data) => {
             if (data.success) {
                 const loginBtn = document.getElementById('login_Btn')
+                localStorage.setItem('token: ', data.token)
                 loginCard.style.removeProperty('animation')
                 invalidCred.innerHTML = ''
                 loginBtn.innerHTML = '✔️'
@@ -59,7 +60,6 @@ function Login() {
                 setTimeout(myURL, 2000);
             } else {
                 SetLoginCardAnim(true);
-                // loginCard.style.animation = 'shake 0.5s'
                 setTimeout(function() {
                     SetLoginCardAnim(false);
                 }, 500)

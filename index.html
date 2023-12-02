@@ -198,18 +198,18 @@
                     </div>
                     <div class="mb-5">
                         <h4>Current Password:</h4>
-                        <input class="w-50 fs-3 px-2" type="password" value="******">
+                        <input id="oldPassword" class="w-50 fs-3 px-2" type="password" value="******">
                     </div>
                     <div class="mb-5">
                         <h4>New Password:</h4>
-                        <input class="w-50 fs-3 px-2" type="password" value="">
+                        <input id="newPassword" class="w-50 fs-3 px-2" type="password" value="">
                     </div>
                     <div class="mb-4">
                         <h4>Confirm Password:</h4>
-                        <input class="w-50 fs-3 px-2" type="password" value="">
+                        <input id="newCPassword" class="w-50 fs-3 px-2" type="password" value="">
                     </div>
-                    <button id="updateProfile" class="rounded-2 fw-bold me-3">Update</button>
-                    <button id="cancelProfile" class="rounded-2 fw-bold">Cancel</button>
+                    <button id="updateProfile" class="rounded-2 me-3" disabled>Update</button>
+                    <button id="cancelProfile" class="rounded-2" onclick="cancel()">Cancel</button>
                 </div>
                 <div class="w-50">
                     <img class="img-fluid" src="49.png" alt="">
@@ -233,6 +233,58 @@
     const gender = document.getElementById('gender')
     const contactNo = document.getElementById('contactNo')
     const address = document.getElementById('address')
+    const oldPassword = document.getElementById('oldPassword')
+    const newPassword = document.getElementById('newPassword')
+    const newCPassword = document.getElementById('newCPassword')
+    const updateProfile = document.getElementById('updateProfile')
+    const cancelProfile = document.getElementById('updateProfile')
+
+    function validatePass() {
+        if (oldPassword.value !== '' && newPassword.value !== '' && newCPassword.value !== '') {
+            if (newPassword.value === newCPassword.value) {
+                updateProfile.disabled = false
+                updateProfile.style.backgroundColor = '#54b7c0'
+                updateProfile.style.color = 'black'
+                updateProfile.style.fontWeight = 'bold'
+                updateProfile.style.border = '#7ec9cf 1px solid'
+                updateProfile.style.boxShadow = '#6ef3ff 0px 0px 10px 0px'
+                updateProfile.style.cursor = 'pointer'
+            } else {
+                updateProfile.disabled = true
+                updateProfile.style.backgroundColor = '#b3e0e4'
+                updateProfile.style.color = '#8b8b8b'
+                updateProfile.style.fontWeight = 'none'
+                updateProfile.style.border = '#addee0 1px solid'
+                updateProfile.style.removeProperty('box-shadow')
+                updateProfile.style.cursor = 'not-allowed'
+            }
+        } else {
+            updateProfile.disabled = true
+            updateProfile.style.backgroundColor = '#b3e0e4'
+            updateProfile.style.color = '#8b8b8b'
+            updateProfile.style.fontWeight = 'none'
+            updateProfile.style.border = '#addee0 1px solid'
+            updateProfile.style.removeProperty('box-shadow')
+            updateProfile.style.cursor = 'not-allowed'
+        }
+    }
+
+    oldPassword.addEventListener('keyup', validatePass)
+    newPassword.addEventListener('keyup', validatePass)
+    newCPassword.addEventListener('keyup', validatePass)
+
+    function cancel() {
+        oldPassword.value = ''
+        newPassword.value = ''
+        newCPassword.value = ''
+        updateProfile.disabled = true
+        updateProfile.style.backgroundColor = '#b3e0e4'
+        updateProfile.style.color = '#8b8b8b'
+        updateProfile.style.fontWeight = 'none'
+        updateProfile.style.border = '#addee0 1px solid'
+        updateProfile.style.removeProperty('box-shadow')
+        updateProfile.style.cursor = 'not-allowed'
+    }
 
     function registerStudent() {
         title.innerHTML = 'REGISTER STUDENT'
