@@ -8,6 +8,12 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+.wrapper {
+    background-image: url(Home/assets/cool-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .wrapper #db {
     background-color: #f7f7fc;
     min-height: 823.3px;
@@ -74,6 +80,33 @@ span {
     background-color: rgb(182, 53, 53);
 }
 
+.wrapper #modalLogoutBtn {
+    height: 38px;
+    width: 105px;
+    color: black;
+    font-weight: bold;
+    background-color: transparent;
+    border: #181e36 2px solid;
+    transition: all 0.5s ease;
+}
+
+.wrapper #modalLogoutBtn:hover {
+    background-color: #181e36;
+    color: white;
+    font-weight: normal;
+}
+
+.wrapper #modalBody {
+    height: 150px;
+}
+
+.wrapper #cancelLogoutBtn {
+    height: 38px;
+    width: 105px;
+    color: white;
+    transition: all 0.5s ease;
+}
+
 .wrapper .card {
     width: 30%;
     height: 300px;
@@ -96,6 +129,10 @@ span {
 
 .wrapper .container .db {
     height: 51%;
+}
+
+.shadow-lg {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset!important;
 }
 
 .container .table-name,
@@ -396,4 +433,28 @@ input::-webkit-inner-spin-button {
 #pf #pfUsername,
 #pf #pfEmail {
     cursor: not-allowed;
+}
+
+#oldPassword,
+#newPassword,
+#newCPassword {
+    outline: none;
+}
+
+#eyeBtn-0,
+#eyeBtn-1,
+#eyeBtn-2 {
+  right: 295px;
+  bottom: 0;
+  top: 0;
+  width: 10%;
+  color: #1b46d4;
+  border: none;
+  display: none;
+  outline: none;
+}
+
+#eyeBtn .fa-eye {
+  color: #1b46d4;
+  border: none;
 }

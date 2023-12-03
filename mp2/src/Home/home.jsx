@@ -35,58 +35,31 @@ const [contactNoBorder, SetContactNoBorder] = useState('none')
 const [ContactNoAnim, SetContactNumberAnim] = useState()
 
 function dashBoard() {
-SetDbDisplay(true);
-SetRSDisplay(false);
-SetPFDisplay(false);
-SetDbBtnBg(true);
-SetRegStudentBtnBg(false)
-SetProfileBtnBg(false);
-SetDbBtnColor(true);
-SetRegStudentBtnColor(false);
-SetProfileBtnColor(false);
-document.title = 'DASHBOARD'
+    SetDbDisplay(true);
+    SetRSDisplay(false);
+    SetPFDisplay(false);
+    SetDbBtnBg(true);
+    SetRegStudentBtnBg(false)
+    SetProfileBtnBg(false);
+    SetDbBtnColor(true);
+    SetRegStudentBtnColor(false);
+    SetProfileBtnColor(false);
+    document.title = 'DASHBOARD'
 
-fetch('http://localhost:3000/totalboys', {
-    method: 'POST', 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({})
-}).then((data) => {
-    return data.json()
-}).then((data) => {
-    setTotalBoys(data.TotalBoys)
-})
-
-fetch('http://localhost:3000/totalgirls', {
-    method: 'POST', 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({})
-}).then((data) => {
-    return data.json()
-}).then((data) => {
-    setTotalGirls(data.TotalGirls)
-})
-
-setTotalStudents(totalBoys + totalGirls)
-
-// fetch('http://localhost:3000/totalstudents', {
-//     method: 'POST', 
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json'
-//     },
-//     body: JSON.stringify({})
-// }).then((data) => {
-//     return data.json()
-// }).then((data) => {
-//     console.log(data)
-//     setTotalStudents(data.TotalStudents)
-// })
+    fetch('http://localhost:3000/students-count', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({})
+    }).then((data) => {
+        return data.json()
+    }).then((data) => {
+        setTotalBoys(data.TotalBoys)
+        setTotalGirls(data.TotalGirls)
+        setTotalStudents(data.TotalBoys + data.TotalGirls)
+    })
 }
 
 function registerStudent() {
@@ -116,7 +89,6 @@ document.title = 'PROFILE'
 }
 
 function submitStudent() {
-
     fetch('http://localhost:3000/students' , {
         method: 'post',
         headers: {
@@ -253,8 +225,8 @@ const [totalBoys, setTotalBoys] = useState();
 const [totalGirls, setTotalGirls] = useState();
 const [totalStudents, setTotalStudents] = useState();
 
-const TotalBoys = () => {
-    fetch('http://localhost:3000/totalboys', {
+const Students = () => {
+    fetch('http://localhost:3000/students-count', {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
@@ -265,25 +237,12 @@ const TotalBoys = () => {
         return data.json()
     }).then((data) => {
         setTotalBoys(data.TotalBoys)
-    })
-}
-
-const TotalGirls = () => { 
-    fetch('http://localhost:3000/totalgirls', {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({})
-    }).then((data) => {
-        return data.json()
-    }).then((data) => {
         setTotalGirls(data.TotalGirls)
+        setTotalStudents(data.TotalBoys + data.TotalGirls)
     })
 }
 
-setTotalStudents(totalBoys + totalGirls)
+const [showModal, setShowModal] = useState('none');
 
 function logOut() {
     localStorage.clear();
@@ -333,71 +292,111 @@ function updatePass() {
     })
 }
 
-// const updateProfile = document.getElementById('updateProfile')
-// const cancelProfile = document.getElementById('updateProfile')
-// const [updateProfileBtnDisabled, setupdateProfileBtnDisabled] = useState()
-// const [updateProfileBtn, setupdateProfileBtn] = useState()
+const [updateProfileBtn, setUpdateProfileBtn] = useState()
+const [updateProfileBtnDisabled, setUpdateProfileBtnDisabled] = useState()
+const [updateProfileBtnColor, setUpdateProfileBtnColor] = useState()
+const [updateProfileBtnFW, setUpdateProfileBtnFW] = useState()
+const [updateProfileBtnBorder, setUpdateProfileBtnBorder] = useState()
+const [updateProfileBtnCursor, setUpdateProfileBtnCursor] = useState()
+const [updateProfileBtnBoxShadow, setUpdateProfileBtnBoxShadow] = useState()
 
-// function validatePass() {
-//     if (oldPassword !== '' && newPassword !== '' && newCPassword !== '') {
-//         if (newPassword === newCPassword) {
-//             setupdateProfileBtn.disabled= false
-//             // updateProfile.disabled = false
-//             // updateProfile.style.backgroundColor = '#54b7c0'
-//             // updateProfile.style.color = 'black'
-//             // updateProfile.style.fontWeight = 'bold'
-//             // updateProfile.style.border = '#7ec9cf 1px solid'
-//             // updateProfile.style.boxShadow = '#6ef3ff 0px 0px 10px 0px'
-//             // updateProfile.style.cursor = 'pointer'
-//         } else {
-//             setupdateProfileBtn.disabled= true
-//             // updateProfile.disabled = true
-//             // updateProfile.style.backgroundColor = '#b3e0e4'
-//             // updateProfile.style.color = '#8b8b8b'
-//             // updateProfile.style.fontWeight = 'none'
-//             // updateProfile.style.border = '#addee0 1px solid'
-//             // updateProfile.style.removeProperty('box-shadow')
-//             // updateProfile.style.cursor = 'not-allowed'
-//         }
-//     } else {
-//         updateProfile.disabled = true
-//         updateProfile.style.backgroundColor = '#b3e0e4'
-//         updateProfile.style.color = '#8b8b8b'
-//         updateProfile.style.fontWeight = 'none'
-//         updateProfile.style.border = '#addee0 1px solid'
-//         updateProfile.style.removeProperty('box-shadow')
-//         updateProfile.style.cursor = 'not-allowed'
-//     }
-// }
+function validatePass() {
+    if (oldPassword !== '' && newPassword !== '' && newCPassword !== '') {
+        if (newPassword === newCPassword) {
+            setUpdateProfileBtn(true);
+            setUpdateProfileBtnDisabled(false);
+            setUpdateProfileBtnColor(true);
+            setUpdateProfileBtnFW(true);
+            setUpdateProfileBtnBorder(true);
+            setUpdateProfileBtnCursor(true);
+            setUpdateProfileBtnBoxShadow(true);
+        } else {
+            setUpdateProfileBtn(false);
+            setUpdateProfileBtnDisabled(true);
+            setUpdateProfileBtnColor(false);
+            setUpdateProfileBtnFW(false);
+            setUpdateProfileBtnBorder(false);
+            setUpdateProfileBtnBoxShadow(false);
+            setUpdateProfileBtnCursor(false);
+        }
+    } else {
+        setUpdateProfileBtn(false);
+        setUpdateProfileBtnDisabled(true);
+        setUpdateProfileBtnColor(false);
+        setUpdateProfileBtnFW(false);
+        setUpdateProfileBtnBorder(false);
+        setUpdateProfileBtnBoxShadow(false);
+        setUpdateProfileBtnCursor(false);
+    }
+}
 
-// oldPassword.addEventListener('keyup', validatePass)
-// newPassword.addEventListener('keyup', validatePass)
-// newCPassword.addEventListener('keyup', validatePass)
+function cancel() {
+    setOldPassword('')
+    setNewPassword('')
+    setNewCPassword('')
+    setUpdateProfileBtn(false);
+    setUpdateProfileBtnDisabled(true);
+    setUpdateProfileBtnColor(false);
+    setUpdateProfileBtnFW(false);
+    setUpdateProfileBtnBorder(false);
+    setUpdateProfileBtnBoxShadow(false);
+    setUpdateProfileBtnCursor(false);
+}
 
-// function cancel() {
-//     oldPassword.value = ''
-//     newPassword.value = ''
-//     newCPassword.value = ''
-//     updateProfile.disabled = true
-//     updateProfile.style.backgroundColor = '#b3e0e4'
-//     updateProfile.style.color = '#8b8b8b'
-//     updateProfile.style.fontWeight = 'none'
-//     updateProfile.style.border = '#addee0 1px solid'
-//     updateProfile.style.removeProperty('box-shadow')
-//     updateProfile.style.cursor = 'not-allowed'
-// }
+const [eye0, setEye0Display] = useState()
+const [eye1, setEye1Display] = useState()
+const [eye2, setEye2Display] = useState()
+
+function eyeOldPass() {
+    (oldPassword !== '') ? setEye0Display(true) : setEye0Display(false);
+}
+
+function eyeNewPass() {
+    (newPassword !== '') ? setEye1Display(true) : setEye1Display(false);
+}
+
+function eyeNewCPass() {
+    (newCPassword !== '') ? setEye2Display(true) : setEye2Display(false);
+}
+
+const [eyeToggle0, setEyeShow0] = useState(false)
+const [passType, setpassType] = useState(true)
+function eye0Show() {
+    setEyeShow0(!eyeToggle0)
+    setpassType(!passType)
+}
+
+const [eyeToggle1, setEyeShow1] = useState(false)
+const [NewPassType, setNewPassType] = useState(true)
+function eye1Show() {
+    setEyeShow1(!eyeToggle1)
+    setNewPassType(!NewPassType)
+}
+
+const [eyeToggle2, setEyeShow2] = useState(false)
+const [newCPassType, setNewCPassType] = useState(true)
+function eye2Show() {
+    setEyeShow2(!eyeToggle2)
+    setNewCPassType(!newCPassType)
+}
+
+function profileAct() {
+    validatePass()
+    eyeOldPass()
+    eyeNewPass()
+    eyeNewCPass()
+}
 
 useEffect(() => {
     adminData();
-    TotalBoys();
-    TotalGirls();
+    Students();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 
   
   return (
     <div>
-      <section className="wrapper d-flex flex-row">
+      <section className="wrapper d-flex flex-row bg-dark">
         <nav className="vh-100">
             <div className="pt-5">
                 <div id="profilePic" className="text-center m-auto p-auto border rounded-circle">
@@ -453,7 +452,7 @@ useEffect(() => {
                 </li>
             </div>
             <div id="logoutDiv">
-                <button id="logoutBtn" className="fs-4 h-100 w-100" onClick={logOut}>
+                <button id="logoutBtn" className="fs-4 h-100 w-100" data-bs-toggle="modal" data-bs-target="#logoutModal" onClick={() => setShowModal(true)}>
                     <i className="fa-solid fa-arrow-right-from-bracket text-center"></i>
                     <span className="fs-4 me-5 pe-4">
                         Log Out
@@ -468,29 +467,29 @@ useEffect(() => {
                 <div className="mb-2">
                     <h2 className="fs-1 fw-bold">My Dashboard</h2>
                 </div>
-                <div class="row">
-                    <div class="first card p-5 col me-5">
-                        <div class="m-3 h-75">
-                            <h2 class="text-white">Total Boys</h2>
+                <div className="row">
+                    <div className="first card p-5 col me-5">
+                        <div className="m-3 h-75">
+                            <h2 className="text-white">Total Boys</h2>
                         </div>
-                        <div class="card-body">
-                            <span id="totalBoys" class="text-white">{totalBoys}</span>
-                        </div>
-                    </div>
-                    <div class="second card p-5 col">
-                        <div class="m-3 h-75">
-                            <h2 class="text-white">Total Girls</h2>
-                        </div>
-                        <div class="card-body">
-                            <span id="totalGirls" class="text-white">{totalGirls}</span>
+                        <div className="card-body">
+                            <span id="totalBoys" className="text-white">{totalBoys}</span>
                         </div>
                     </div>
-                    <div class="third card p-5 col ms-5">
-                        <div class="m-3 h-75">
-                            <h2 class="text-white">Total Students</h2>
+                    <div className="second card p-5 col">
+                        <div className="m-3 h-75">
+                            <h2 className="text-white">Total Girls</h2>
                         </div>
-                        <div class="card-body">
-                            <span id="totalStudents" class="text-white">{totalStudents}</span>
+                        <div className="card-body">
+                            <span id="totalGirls" className="text-white">{totalGirls}</span>
+                        </div>
+                    </div>
+                    <div className="third card p-5 col ms-5">
+                        <div className="m-3 h-75">
+                            <h2 className="text-white">Total Students</h2>
+                        </div>
+                        <div className="card-body">
+                            <span id="totalStudents" className="text-white">{totalStudents}</span>
                         </div>
                     </div>
                 </div>
@@ -675,25 +674,124 @@ useEffect(() => {
                     </div>
                     <div className="mb-5">
                         <h4>Current Password:</h4>
-                        <input className="w-50 fs-3 px-2" type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
+                        <div className="position-relative">
+                            <input
+                                id="oldPassword"
+                                className="w-50 fs-3 px-2" 
+                                type={`${passType ? 'password' : 'text'}`}
+                                value={oldPassword} 
+                                onKeyUp={profileAct} 
+                                onChange={(e) => setOldPassword(e.target.value)}
+                            />
+                            <button id="eyeBtn-0" 
+                                style={{
+                                    display: eye0 ? 'block' : 'none'
+                                }}
+                                className="position-absolute h-100 bg-transparent"
+                                onClick={eye0Show}
+                            >
+                                <i id="fas-eye-0" 
+                                    className={`${eyeToggle0 ? 'fa-solid fa-eye fa-xl' : 'fa-solid fa-eye-slash fa-xl'}`}
+                                ></i>
+                            </button>
+                        </div>
                     </div>
                     <div className="mb-5">
                         <h4>New Password:</h4>
-                        <input className="w-50 fs-3 px-2" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} type="password"/>
+                        <div className="position-relative">
+                            <input
+                                id="newPassword"
+                                className="w-50 fs-3 px-2" 
+                                value={newPassword} 
+                                onKeyUp={profileAct} 
+                                onChange={(e) => setNewPassword(e.target.value)} 
+                                type={`${NewPassType ? 'password' : 'text'}`}
+                            />
+                            <button id="eyeBtn-1" 
+                                style={{
+                                    display: eye1 ? 'block' : 'none'
+                                }}
+                                className="position-absolute h-100 bg-transparent"
+                                onClick={eye1Show}
+                            >
+                                <i id="fas-eye-1" 
+                                    className={`${eyeToggle1 ? 'fa-solid fa-eye fa-xl' : 'fa-solid fa-eye-slash fa-xl'}`}
+                                ></i>
+                            </button>
+                        </div>
                     </div>
                     <div className="mb-4">
                         <h4>Confirm Password:</h4>
-                        <input className="w-50 fs-3 px-2" type="password" value={newCPassword} onChange={(e) => setNewCPassword(e.target.value)}/>
+                        <div className="position-relative">
+                            <input
+                                id="newCPassword"
+                                className="w-50 fs-3 px-2" 
+                                type={`${newCPassType ? 'password' : 'text'}`}
+                                value={newCPassword} 
+                                onKeyUp={profileAct} 
+                                onChange={(e) => setNewCPassword(e.target.value)}
+                            />
+                            <button id="eyeBtn-2" 
+                                style={{
+                                    display: eye2 ? 'block' : 'none'
+                                }}
+                                className="position-absolute h-100 bg-transparent"
+                                onClick={eye2Show}
+                            >
+                                <i id="fas-eye-2" 
+                                    className={`${eyeToggle2 ? 'fa-solid fa-eye fa-xl' : 'fa-solid fa-eye-slash fa-xl'}`}
+                                ></i>
+                            </button>
+                        </div>
                     </div>
-                    <button id="updateProfile" className="rounded-2 fw-bold me-3" onClick={updatePass}>Update</button>
-                    <button id="cancelProfile" className="rounded-2 fw-bold">Cancel</button>
+                    <button id="updateProfile"
+                    style={{
+                        backgroundColor: updateProfileBtn ? '#54b7c0' : '#b3e0e4',
+                        color: updateProfileBtnColor ? 'black' : '#8b8b8b',
+                        fontWeight: updateProfileBtnFW ? 'bold' : 'none',
+                        border: updateProfileBtnBorder ? '#7ec9cf 1px solid' : '#addee0 1px solid',
+                        cursor: updateProfileBtnCursor ? 'pointer' : 'not-allowed',
+                        boxShadow: updateProfileBtnBoxShadow ? '#6ef3ff 0px 0px 10px 0px' : 'none'
+                    }} className="rounded-2 fw-bold me-3" onClick={updatePass} disabled={updateProfileBtnDisabled}>Update</button>
+                    <button id="cancelProfile" className="rounded-2 fw-bold" onClick={cancel}>Cancel</button>
                 </div>
                 <div className="w-50">
                     <img className="img-fluid" src={profileBg} alt=""/>
                 </div>
             </div>
         </div>
-      </section>
+
+        {showModal && (
+        <div className="modal fade" id="logoutModal" tabIndex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="logoutModalLabel">LOGOUT</h1>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modalBody" className="modal-body text-center">
+                    <div className="mt-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="50" width="50" viewBox="0 0 512 512"><path fill="#f00000" d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                    <p className="fs-3">Are you sure you want to exit?</p>
+                    </div>
+                </div>
+                <div className="modal-footer py-3">
+                    <button id="cancelLogoutBtn" type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button 
+                        id="modalLogoutBtn" 
+                        type="button" 
+                        className="btn"
+                        onClick={logOut}
+                    >
+                        LOG OUT
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+        )}
+
+        </section>
     </div>
   );
 }

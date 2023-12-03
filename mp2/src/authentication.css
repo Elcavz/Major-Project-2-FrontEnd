@@ -11,11 +11,13 @@
 /* REGISTRATION CSS */
 
 #register {
-  background-color: #f7f7fc;
+  background-image: url(Authentication/assets/banner.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #register h3 {
-    color: #1b46d4;
+    color: black;
 }
 
 #register h4 {
@@ -24,7 +26,12 @@
 
 #register .h-75 {
     width: 23%;
-    background-color: #ffffff;
+    backdrop-filter: blur(10px);
+}
+
+#register .h-75 .mx-4 {
+  backdrop-filter: blur(10px);
+  background-color: transparent!important;
 }
 
 #register .h-75 .rounded-4 {
@@ -88,6 +95,24 @@
   outline: rgb(168, 168, 168);
 }
 
+#eyeLoginBtn,
+#eyeBtnR-0,
+#eyeBtnR-1 {
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 10%;
+  color: black;
+  border: none;
+  display: none;
+  outline: none;
+}
+
+#eyeBtnR .fa-eye {
+  color: black;
+  border: none;
+}
+
 #regBtn {
   width: 100%;
   height: 35px;
@@ -116,40 +141,40 @@
 }
 
 @keyframes shake1 {
-    0% {
-        transform: translate(1px, 1px) rotate(0deg);
-      }
-      10% {
-        transform: translate(-1px, -2px) rotate(-1deg);
-      }
-      20% {
-        transform: translate(-3px, 0px) rotate(1deg);
-      }
-      30% {
-        transform: translate(3px, 2px) rotate(0deg);
-      }
-      40% {
-        transform: translate(1px, -1px) rotate(1deg);
-      }
-      50% {
-        transform: translate(-1px, 2px) rotate(-1deg);
-      }
-      60% {
-        transform: translate(-3px, 1px) rotate(0deg);
-      }
-      70% {
-        transform: translate(3px, 1px) rotate(-1deg);
-      }
-      80% {
-        transform: translate(-1px, -1px) rotate(1deg);
-      }
-      90% {
-        transform: translate(1px, 2px) rotate(0deg);
-      }
-      100% {
-        transform: translate(1px, -2px) rotate(-1deg);
-      }
-  }
+  0% {
+      transform: translate(1px, 1px) rotate(0deg);
+    }
+    10% {
+      transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+      transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+      transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+      transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+      transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+      transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
 
 /* END OF REGISTRATION */
 
@@ -157,6 +182,16 @@
 
 #login {
   background-color: #f7f7fc;
+}
+
+#loginCard {
+  background-color: transparent!important;
+  backdrop-filter: blur(10px);
+}
+
+#loginCard .mx-4 {
+  background-color: transparent!important;
+  backdrop-filter: blur(10px);
 }
 
 #login #reg_Btn {
@@ -178,11 +213,13 @@
 }
 
 #login {
-  background-color: #f7f7fc;
+  background-image: url(Authentication/assets/banner.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #login h3 {
-    color: #1b46d4;
+    color: black;
 }
 
 #login h4 {
@@ -209,22 +246,22 @@
 }
 
 @keyframes shake {
-    0% {
-      transform: translate(0);
-    }
-    20% {
-      transform: translate(3em);
-    }
-    40% {
-      transform: translate(-3em);
-    }
-    60% {
-      transform: translate(3em);
-    }
-    80% {
-      transform: translate(-3em);
-    }
-    100% {
-      transform: translate(0);
-    }
+  0% {
+    transform: translate(0);
   }
+  20% {
+    transform: translate(3em);
+  }
+  40% {
+    transform: translate(-3em);
+  }
+  60% {
+    transform: translate(3em);
+  }
+  80% {
+    transform: translate(-3em);
+  }
+  100% {
+    transform: translate(0);
+  }
+}

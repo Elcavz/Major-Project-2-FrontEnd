@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import React from 'react';
 import loginLogo from './assets/adminLogin.png';
@@ -68,6 +68,28 @@ function Login() {
         })
     }
 
+    const [eye, setEyeDisplay] = useState()
+
+    function eyePass() {
+        (passwordValue !== '') ? setEyeDisplay(true) : setEyeDisplay(false);
+    }
+
+    const [eyeToggle, setEyeShow] = useState(false)
+    const [passType, setpassType] = useState(true)
+    function eyeShow() {
+        setEyeShow(!eyeToggle)
+        setpassType(!passType)
+    }
+
+    function passwordLogin() {
+        enableLoginBtn()
+        eyePass()
+    }
+
+    useEffect(() => {
+        document.title = 'ADMIN | LOGIN'
+    }, [])
+
     return (
         <div id="login">
         <div className="vh-100 d-flex flex-nowrap justify-content-center align-items-center">
@@ -81,15 +103,34 @@ function Login() {
                 </div>
                 <h4 className="text-white text-decoration-underline">LOG IN</h4>
             </div>
-            <div className="mx-4 bg-white">
-                <div className="mb-5 bg-white">
+            <div className="mx-4 bg-transparent">
+                <div className="mb-5 bg-transparent">
                      <span id="invalidCred" className="fs-4 bg-transparent text-danger fw-bold"></span>
-                    <h3 className="bg-white">Username <span className="text-danger bg-white fs-3">*</span></h3>
-                    <input id="userName" className="fs-3 px-2 rounded-3 bg-white" value={userNameValue} onKeyUp={enableLoginBtn} onChange={(e) => SetUserNameValue(e.target.value)} type="text"/>
+                    <h3 className="bg-transparent">Username <span className="text-danger bg-transparent fs-3">*</span></h3>
+                    <input id="userName" className="fs-3 px-2 rounded-3 bg-transparent" value={userNameValue} onKeyUp={enableLoginBtn} onChange={(e) => SetUserNameValue(e.target.value)} type="text"/>
                 </div>
-                <div className="mb-5 bg-white">
-                    <h3 id="passH3" className="bg-white">Password <span className="text-danger bg-white fs-3">*</span></h3>
-                    <input id="password" className="fs-3 px-2 rounded-3 bg-white" value={passwordValue} onKeyUp={enableLoginBtn} onChange={(e) => SetPasswordValue(e.target.value)} type="password"/>
+                <div className="mb-5 bg-transparent">
+                    <h3 id="passH3" className="bg-transparent">Password <span className="text-danger bg-transparent fs-3">*</span></h3>
+                    <div className="position-relative">
+                        <input id="password" 
+                            className="fs-3 px-2 rounded-3 bg-transparent" 
+                            value={passwordValue}
+                            onKeyUp={passwordLogin} 
+                            onChange={(e) => SetPasswordValue(e.target.value)} 
+                            type={`${passType ? 'password' : 'text'}`}
+                        />
+                        <button id="eyeLoginBtn"
+                            style={{
+                                display: eye ? 'block' : 'none'
+                            }}
+                            className="position-absolute h-100 bg-transparent"
+                            onClick={eyeShow}
+                        >
+                            <i id="fas-eye" 
+                                className={`${eyeToggle ? 'fa-solid fa-eye fa-xl' : 'fa-solid fa-eye-slash fa-xl'}`}
+                            ></i>
+                        </button>
+                    </div>
                 </div>
                 <div className="text-center bg-transparent">
                     <button id="login_Btn" 
@@ -97,11 +138,11 @@ function Login() {
                         backgroundColor: LoginBtnBGColor ? '#39df47' : '#a0dfa5',
                         cursor: LoginBtnCursor ? 'pointer' : 'not-allowed',
                         width: LoginBtnWidth ? '15%' : '100%',
-                        border: LoginBtnBorder ? 'green' : 'none',
+                        border: LoginBtnBorder ? 'green 1px solid' : 'white 1px solid',
                         boxShadow: LoginBtnBoxShadow ? 'green 0px 0px 10px 0px' : 'none'
                     }} className="rounded-3" onClick={login} disabled={LoginBtnDisabled}>LOG IN</button>
                 </div>
-                <div className="mt-4 bg-white">
+                <div className="mt-4 bg-transparent">
                     <Link id="reg_Btn" to='/register' className="d-flex flex-nowrap justify-content-center align-items-center text-decoration-none w-100 rounded-3">REGISTER</Link>
                 </div>
             </div>
