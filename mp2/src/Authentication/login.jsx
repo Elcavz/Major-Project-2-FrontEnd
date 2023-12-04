@@ -10,8 +10,9 @@ function Login() {
     const invalidCred = document.getElementById('invalidCred')
     const [userNameValue, SetUserNameValue] = useState('')
     const [passwordValue, SetPasswordValue] = useState('')
+    const [LoginBtnColor, SetLoginBtnColor] = useState()
     const [LoginBtnBGColor, SetLoginBtnBGColor] = useState()
-    const [LoginBtnDisabled, SetLoginBtnDisabled] = useState()
+    const [LoginBtnDisabled, SetLoginBtnDisabled] = useState(true)
     const [LoginBtnCursor, SetLoginBtnCursor] = useState()
     const [LoginBtnWidth, SetLoginBtnWidth] = useState()
     const [LoginBtnBorder, SetLoginBtnBorder] = useState()
@@ -20,10 +21,12 @@ function Login() {
 
     function enableLoginBtn() {
         if (userNameValue !== '' && passwordValue !== '') {
+            SetLoginBtnColor(true);
             SetLoginBtnBGColor(true);
             SetLoginBtnDisabled(false);
             SetLoginBtnCursor(true);
         } else {
+            SetLoginBtnColor(false);
             SetLoginBtnBGColor(false);
             SetLoginBtnDisabled(true);
             SetLoginBtnCursor(false);
@@ -107,7 +110,7 @@ function Login() {
                 <div className="mb-5 bg-transparent">
                      <span id="invalidCred" className="fs-4 bg-transparent text-danger fw-bold"></span>
                     <h3 className="bg-transparent">Username <span className="text-danger bg-transparent fs-3">*</span></h3>
-                    <input id="userName" className="fs-3 px-2 rounded-3 bg-transparent" value={userNameValue} onKeyUp={enableLoginBtn} onChange={(e) => SetUserNameValue(e.target.value)} type="text"/>
+                    <input id="userName" className="fs-3 px-2 rounded-3 bg-transparent" value={userNameValue} autoComplete="off" onKeyUp={enableLoginBtn} onChange={(e) => SetUserNameValue(e.target.value)} type="text"/>
                 </div>
                 <div className="mb-5 bg-transparent">
                     <h3 id="passH3" className="bg-transparent">Password <span className="text-danger bg-transparent fs-3">*</span></h3>
@@ -135,6 +138,7 @@ function Login() {
                 <div className="text-center bg-transparent">
                     <button id="login_Btn" 
                     style={{
+                        color: LoginBtnColor ? 'white' : '#8b8b8b',
                         backgroundColor: LoginBtnBGColor ? '#39df47' : '#a0dfa5',
                         cursor: LoginBtnCursor ? 'pointer' : 'not-allowed',
                         width: LoginBtnWidth ? '15%' : '100%',

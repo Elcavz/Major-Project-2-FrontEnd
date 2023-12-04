@@ -272,6 +272,8 @@ const adminData = () => {
 const [oldPassword, setOldPassword] = useState('')
 const [newPassword, setNewPassword] = useState('')
 const [newCPassword, setNewCPassword] = useState('')
+const oldPassWrong = document.getElementById('oldPassWrong')
+const updateProfile = document.getElementById('updateProfile')
 
 function updatePass() {
     fetch('http://localhost:3000/change-password', {
@@ -288,7 +290,12 @@ function updatePass() {
     }).then((data) => {
         return data.json()
     }).then((data) => {
-        console.log(data)
+        if (data.success === false) {
+            oldPassWrong.innerHTML = 'Wrong Password!'
+        } else {
+            updateProfile.innerHTML = '✔️'
+            oldPassWrong.innerHTML = ''
+        }
     })
 }
 
@@ -387,6 +394,23 @@ function profileAct() {
     eyeNewCPass()
 }
 
+const [isLoaded, setLoaded] = useState(false);
+
+useEffect(() => {
+  const timeoutId = setTimeout(() => {
+    setLoaded(true);
+  }, 3000);
+
+  return () => clearTimeout(timeoutId);
+}, []);
+
+useEffect(() => {
+    if (isLoaded) {
+      document.body.classList.add('loaded');
+      document.querySelector('h1').style.color = '#222222';
+    }
+  }, [isLoaded]);
+
 useEffect(() => {
     adminData();
     Students();
@@ -396,7 +420,17 @@ useEffect(() => {
   
   return (
     <div>
-      <section className="wrapper d-flex flex-row bg-dark">
+
+        {/* LOADING POPUP */}
+        <div id="loader-wrapper">
+            <div id="loader"></div>
+        
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>
+    
+    {/* NAVIGATION BAR */}
+    <section className="wrapper d-flex flex-row bg-dark">
         <nav className="vh-100">
             <div className="pt-5">
                 <div id="profilePic" className="text-center m-auto p-auto border rounded-circle">
@@ -404,12 +438,15 @@ useEffect(() => {
                 </div>
             </div>
             <div className="m-5 text-center">
-                <span id="adminUsername" className="text-white fw-bold fs-3">{adminUsername}</span>
+                <span id="adminUsername" className="text-white fw-bold fs-3" title={`${adminUsername} | Administrator`}>{adminUsername}</span>
                 <h2 className="text-white-50 fs-5 text-center text-decoration-underline">ADMINISTRATIVE</h2>
             </div>
             <div className="navBar">
                 <li>
-                    <button id="dbBtn" className="fs-4 h-100 w-100" 
+                    <button 
+                        id="dbBtn" 
+                        className="fs-4 h-100 w-100"
+                        title="Dashboard"
                         style={
                             {backgroundColor: DashboardBtn ? '#454a61' : '#181e36',
                             color: DashboardBtnColor ? 'white' : 'rgb(161, 161, 161)'}
@@ -423,7 +460,10 @@ useEffect(() => {
                     </button>
                 </li>
                 <li>
-                    <button id="regStudentBtn" className="fs-4 h-100 w-100" 
+                    <button 
+                        id="regStudentBtn" 
+                        className="fs-4 h-100 w-100"
+                        title="Register Student" 
                         style={
                                 {backgroundColor: RegStudentBtn ? '#454a61' : '#181e36',
                                 color: RegStudentBtnColor ? 'white' : 'rgb(161, 161, 161)'}
@@ -437,7 +477,10 @@ useEffect(() => {
                     </button>
                 </li>
                 <li>
-                    <button id="profileBtn" className="fs-4 h-100 w-100" 
+                    <button 
+                        id="profileBtn" 
+                        className="fs-4 h-100 w-100"
+                        title="Profile"
                         style={
                             {backgroundColor: ProfileBtn ? '#454a61' : '#181e36',
                             color: ProfileBtnColor ? 'white' : 'rgb(161, 161, 161)'}
@@ -673,7 +716,9 @@ useEffect(() => {
                         <h2>Change Password:</h2>
                     </div>
                     <div className="mb-5">
-                        <h4>Current Password:</h4>
+                        <div className="position-relative row">
+                            <h4 id="oldPasswordH4">Current Password:</h4> <h4 id="oldPassWrong" className="fs-4 b-2 text-danger fw-bold"> </h4>
+                        </div>
                         <div className="position-relative">
                             <input
                                 id="oldPassword"
@@ -744,15 +789,22 @@ useEffect(() => {
                             </button>
                         </div>
                     </div>
-                    <button id="updateProfile"
-                    style={{
-                        backgroundColor: updateProfileBtn ? '#54b7c0' : '#b3e0e4',
-                        color: updateProfileBtnColor ? 'black' : '#8b8b8b',
-                        fontWeight: updateProfileBtnFW ? 'bold' : 'none',
-                        border: updateProfileBtnBorder ? '#7ec9cf 1px solid' : '#addee0 1px solid',
-                        cursor: updateProfileBtnCursor ? 'pointer' : 'not-allowed',
-                        boxShadow: updateProfileBtnBoxShadow ? '#6ef3ff 0px 0px 10px 0px' : 'none'
-                    }} className="rounded-2 fw-bold me-3" onClick={updatePass} disabled={updateProfileBtnDisabled}>Update</button>
+                    <button 
+                        id="updateProfile"
+                        style={{
+                            backgroundColor: updateProfileBtn ? '#54b7c0' : '#b3e0e4',
+                            color: updateProfileBtnColor ? 'black' : '#8b8b8b',
+                            fontWeight: updateProfileBtnFW ? 'bold' : 'none',
+                            border: updateProfileBtnBorder ? '#7ec9cf 1px solid' : '#addee0 1px solid',
+                            cursor: updateProfileBtnCursor ? 'pointer' : 'not-allowed',
+                            boxShadow: updateProfileBtnBoxShadow ? '#6ef3ff 0px 0px 10px 0px' : 'none'
+                        }} 
+                        className="rounded-2 fw-bold me-3" 
+                        onClick={updatePass} 
+                        disabled={updateProfileBtnDisabled}
+                    >
+                        Update
+                    </button>
                     <button id="cancelProfile" className="rounded-2 fw-bold" onClick={cancel}>Cancel</button>
                 </div>
                 <div className="w-50">
@@ -760,7 +812,8 @@ useEffect(() => {
                 </div>
             </div>
         </div>
-
+                    
+        {/* LOG OUT MODAL */}
         {showModal && (
         <div className="modal fade" id="logoutModal" tabIndex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
@@ -791,7 +844,7 @@ useEffect(() => {
         </div>
         )}
 
-        </section>
+    </section>
     </div>
   );
 }

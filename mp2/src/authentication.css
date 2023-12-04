@@ -125,7 +125,7 @@
 
 #loginBtn {
     height: 35px;
-    border: 1px solid rgb(168, 168, 168);
+    border: 1px solid white;
     background-color: #39df47;
     color: rgb(255, 255, 255);
     transition: all 0.3s ease;
@@ -196,7 +196,7 @@
 
 #login #reg_Btn {
     height: 35px;
-    border: 1px solid rgb(168, 168, 168);
+    border: 1px solid white;
     background-color: #24315c;
     color: rgb(231, 231, 231);
     transition: all 0.3s ease;

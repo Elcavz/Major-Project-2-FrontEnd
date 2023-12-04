@@ -11,7 +11,7 @@ const [cPasswordValue, SetCPasswordValue] = useState('')
 const regBtn = document.getElementById('regBtn');
 const [RegBtnCursor, SetRegBtnCursor] = useState()
 const [RegBtnBGColor, SetRegBtnBgColor] = useState()
-const [RegBtnColor, SetRegBtnColor] = useState('none')
+const [RegBtnColor, SetRegBtnColor] = useState(false)
 const [RegBtnBorder, setRegBtnBorder] = useState()
 
 const [UserNameBoxShadow, SetUserNameBoxShadow] = useState('none')
@@ -267,6 +267,7 @@ useEffect(() => {
                                 type="text" value={userNameValue}
                                 onChange={(e) => SetUserNameValue(e.target.value)}
                                 onKeyUp={checkFields}
+                                autoComplete="off"
                             />
                         <br/><i id="warningIconUsername" style={{color: WarningIconUsername ? 'transparent' : 'red'}} className="fa-solid"></i>
                         <span id="exist" style={{
@@ -275,7 +276,7 @@ useEffect(() => {
                     </div>
                     <div className="mb-5 bg-transparent">
                         <h3 className="bg-transparent">Email <span className="text-danger bg-transparent fs-3">*</span></h3>
-                        <input id="email" className="fs-3 px-2 rounded-3 bg-transparent" type="text" value={emailValue} onChange={(e) => SetEmailValue(e.target.value)} onKeyUp={checkFields}/>
+                        <input id="email" className="fs-3 px-2 rounded-3 bg-transparent" type="text" value={emailValue} autoComplete="off" onChange={(e) => SetEmailValue(e.target.value)} onKeyUp={checkFields}/>
                     </div>
                     <div className="mb-5 bg-transparent">
                         <h3 id="passH3" 
@@ -356,9 +357,9 @@ useEffect(() => {
                             cursor: RegBtnCursor ? 'pointer' : 'not-allowed',
                             backgroundColor: RegBtnBGColor ? '#24315c' : '#7f8fc0',
                             boxShadow: RegBtnSubmitBoxShadow ? 'green 0px 0px 10px 0px' : 'none',
-                            color: RegBtnColor ? 'white' : 'rgb(231, 231, 231)',
+                            color: RegBtnColor ? 'white' : '#cccccc',
                             width: RegBtnWidth ? '15%' : '',
-                            border: RegBtnBorder ? 'green 1px solid' : 'white 1px solid'
+                            border: RegBtnBorder ? 'green 1px solid' : '#cccccc 1px solid'
                         }} className="rounded-3" onClick={register} disabled={RegBtnDisable}>REGISTER</button>
                     </div>
                     <div className="mt-4 bg-transparent">
