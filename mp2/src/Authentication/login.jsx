@@ -109,11 +109,19 @@ function Login() {
             <div className="mx-4 bg-transparent">
                 <div className="mb-5 bg-transparent">
                      <span id="invalidCred" className="fs-4 bg-transparent text-danger fw-bold"></span>
-                    <h3 className="bg-transparent">Username <span className="text-danger bg-transparent fs-3">*</span></h3>
-                    <input id="userName" className="fs-3 px-2 rounded-3 bg-transparent" value={userNameValue} autoComplete="off" onKeyUp={enableLoginBtn} onChange={(e) => SetUserNameValue(e.target.value)} type="text"/>
+                    <h3 className="bg-transparent text-white">Username <span className="text-danger bg-transparent fs-3">*</span></h3>
+                    <input 
+                        id="userName" 
+                        className="fs-3 px-2 rounded-3 bg-transparent" 
+                        value={userNameValue} 
+                        autoComplete="off" 
+                        onKeyUp={enableLoginBtn} 
+                        onChange={(e) => SetUserNameValue(e.target.value)} 
+                        type="text"
+                    />
                 </div>
                 <div className="mb-5 bg-transparent">
-                    <h3 id="passH3" className="bg-transparent">Password <span className="text-danger bg-transparent fs-3">*</span></h3>
+                    <h3 id="passH3" className="bg-transparent text-white">Password <span className="text-danger bg-transparent fs-3">*</span></h3>
                     <div className="position-relative">
                         <input id="password" 
                             className="fs-3 px-2 rounded-3 bg-transparent" 

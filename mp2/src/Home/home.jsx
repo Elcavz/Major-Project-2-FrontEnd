@@ -12,19 +12,25 @@ const [firstNameValue, setFirstNameValue] = useState('');
 const [lastNameValue, setLastNameValue] = useState('');
 const [ageValue, setAgeValue] = useState('');
 const [genderValue, setGenderValue] = useState('Choose a gender . . .');
+const [gradeValue, setGradeValue] = useState('What his/her grade? . . .');
 const [contactNumberValue, setContactNumberValue] = useState('');
 const [addressValue, setAddressValue] = useState('');
 
+const [Search, setSearch] = useState('');
+
 const [Dashboard, SetDbDisplay] = useState(true)
 const [RegStudent, SetRSDisplay] = useState()
+const [ViewStudents, SetViewStudentsDisplay] = useState()
 const [Profile, SetPFDisplay] = useState()
 
 const [DashboardBtn, SetDbBtnBg] = useState(true)
 const [RegStudentBtn, SetRegStudentBtnBg] = useState()
+const [SetViewStudentsBtn, SetSetViewStudentsBtnBg] = useState()
 const [ProfileBtn, SetProfileBtnBg] = useState()
 
 const [DashboardBtnColor, SetDbBtnColor] = useState(true)
 const [RegStudentBtnColor, SetRegStudentBtnColor] = useState()
+const [ViewStudentsColor, SetViewStudentsColor] = useState()
 const [ProfileBtnColor, SetProfileBtnColor] = useState()
 
 const [ContactNumber, SetContactNoBoxShadow] = useState('none')
@@ -38,12 +44,15 @@ function dashBoard() {
     SetDbDisplay(true);
     SetRSDisplay(false);
     SetPFDisplay(false);
+    SetViewStudentsDisplay(false);
     SetDbBtnBg(true);
     SetRegStudentBtnBg(false)
     SetProfileBtnBg(false);
+    SetSetViewStudentsBtnBg(false);
     SetDbBtnColor(true);
     SetRegStudentBtnColor(false);
     SetProfileBtnColor(false);
+    SetViewStudentsColor(false);
     document.title = 'DASHBOARD'
 
     fetch('http://localhost:3000/students-count', {
@@ -63,29 +72,52 @@ function dashBoard() {
 }
 
 function registerStudent() {
-SetRSDisplay(true);
-SetDbDisplay(false);
-SetPFDisplay(false);
-SetRegStudentBtnBg(true)
-SetDbBtnBg(false);
-SetProfileBtnBg(false);
-SetRegStudentBtnColor(true);
-SetDbBtnColor(false);
-SetProfileBtnColor(false);
-document.title = 'REGISTER STUDENT'
+    SetRSDisplay(true);
+    SetDbDisplay(false);
+    SetPFDisplay(false);
+    SetViewStudentsDisplay(false);
+    SetRegStudentBtnBg(true)
+    SetDbBtnBg(false);
+    SetProfileBtnBg(false);
+    SetSetViewStudentsBtnBg(false);
+    SetRegStudentBtnColor(true);
+    SetDbBtnColor(false);
+    SetProfileBtnColor(false);
+    SetViewStudentsColor(false);
+    document.title = 'ENROLL STUDENT'
+}
+
+function viewStudents() {
+    SetPFDisplay(false);
+    SetRSDisplay(false);
+    SetDbDisplay(false);
+    SetViewStudentsDisplay(true);
+    SetProfileBtnBg(false);
+    SetDbBtnBg(false);
+    SetRegStudentBtnBg(false);
+    SetSetViewStudentsBtnBg(true);
+    SetProfileBtnColor(false);
+    SetDbBtnColor(false);
+    SetRegStudentBtnColor(false);
+    SetViewStudentsColor(true);
+    LoadStudentData();
+    document.title = 'VIEW STUDENTS'
 }
 
 function profile() {
-SetPFDisplay(true);
-SetRSDisplay(false);
-SetDbDisplay(false);
-SetProfileBtnBg(true);
-SetDbBtnBg(false);
-SetRegStudentBtnBg(false)
-SetProfileBtnColor(true);
-SetDbBtnColor(false);
-SetRegStudentBtnColor(false);
-document.title = 'PROFILE'
+    SetPFDisplay(true);
+    SetRSDisplay(false);
+    SetDbDisplay(false);
+    SetViewStudentsDisplay(false);
+    SetProfileBtnBg(true);
+    SetDbBtnBg(false);
+    SetRegStudentBtnBg(false);
+    SetSetViewStudentsBtnBg(false);
+    SetProfileBtnColor(true);
+    SetDbBtnColor(false);
+    SetRegStudentBtnColor(false);
+    SetViewStudentsColor(false);
+    document.title = 'PROFILE'
 }
 
 function submitStudent() {
@@ -100,6 +132,7 @@ function submitStudent() {
             lastname: lastNameValue,
             age: ageValue,
             gender: genderValue,
+            grade: gradeValue,
             contactnumber: contactNumberValue,
             address: addressValue
         })
@@ -114,30 +147,30 @@ function submitStudent() {
         const idPic = document.getElementById('idPic')
         
         if (studentData.success) {
-        if (genderValue === 'Male') {
-            idPic.src = male;
-        } else {
-            idPic.src = female;
-        }
-        SetRSContainerWidth(true);
-        setTimeout(() => {
-        SetStudentIdDisplay(true);
-        }, 1000);
+            if (genderValue === 'Male') {
+                idPic.src = male;
+            } else {
+                idPic.src = female;
+            }
+            SetRSContainerWidth(true);
+            setTimeout(() => {
+            SetStudentIdDisplay(true);
+            }, 1000);
 
-        const tableBody = document.getElementById('studentsTableBody');
-        const newRow = tableBody.insertRow(-1);
+        // const tableBody = document.getElementById('studentsTableBody');
+        // const newRow = tableBody.insertRow(-1);
 
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        const cell3 = newRow.insertCell(2);
-        const cell4 = newRow.insertCell(3);
-        const cell5 = newRow.insertCell(4);
+        // const cell1 = newRow.insertCell(0);
+        // const cell2 = newRow.insertCell(1);
+        // const cell3 = newRow.insertCell(2);
+        // const cell4 = newRow.insertCell(3);
+        // const cell5 = newRow.insertCell(4);
 
-        cell1.textContent = firstNameValue + ' ' + lastNameValue;
-        cell2.textContent = ageValue;
-        cell3.textContent = genderValue;
-        cell4.textContent = contactNumberValue;
-        cell5.textContent = addressValue;
+        // cell1.textContent = firstNameValue + ' ' + lastNameValue;
+        // cell2.textContent = ageValue;
+        // cell3.textContent = genderValue;
+        // cell4.textContent = contactNumberValue;
+        // cell5.textContent = addressValue;
             
         idFirstName.innerHTML = firstNameValue
         idLastName.innerHTML = lastNameValue
@@ -174,6 +207,42 @@ function submitStudent() {
     })
 }
 
+function LoadStudentData() {
+    // Assuming Search is a global variable or passed as a parameter
+    fetch('http://localhost:3000/show-students', {
+        method: 'get',
+    }).then((response) => {
+        return response.json();
+    }).then((studentData) => {
+        const tableBody = document.getElementById('studentsTableBody');
+        
+        // Assuming Search is a global variable or passed as a parameter
+        const filteredData = studentData.students.filter((element) => {
+            return Search.toLocaleLowerCase() === '' ?
+                element :
+                element.FirstName.toLocaleLowerCase().includes(Search.toLocaleLowerCase());
+        });
+
+        let tr = "";
+        for (let i = 0; i < filteredData.length; i++) {
+            const element = filteredData[i];
+            tr += "<tr>" +
+                "<td>" + element.FirstName + " " + element.LastName + "</td>" +
+                "<td>" + element.Age + "</td>" +
+                "<td>" + element.Gender + "</td>" +
+                "<td>" + element.Grade + "</td>" +
+                "<td>" + element.ContactNumber + "</td>" +
+                "<td>" + element.Address + "</td>" +
+                "</tr>";
+        }
+
+        tableBody.innerHTML = tr;
+    }).catch((error) => {
+        console.error('Error during fetch operation:', error);
+    });
+}
+
+
 const [SubmitBtnDisable, SetSubBtnDisable] = useState()
 const [SubmitBtnBgColor, SetSubBtnBgColor] = useState()
 const [SubmitBtnColor, SetSubBtnColor] = useState()
@@ -183,42 +252,46 @@ const [SubmitBtnBoxShadow, SetSubBtnBoxShadow] = useState()
 const [SubmitBtnBoxCursor, SetSubBtnCursor] = useState()
 
 function studentForm() {
-const isValidForm =
-    firstNameValue !== "" &&
-    lastNameValue !== "" &&
-    ageValue !== "" &&
-    genderValue !== "" &&
-    contactNumberValue !== "" &&
-    addressValue !== "" &&
-    (genderValue === "Male" || genderValue === "Female");
+    const isNotGrade = gradeValue === "1" || gradeValue === "2" || gradeValue === "3" || gradeValue === "4" || gradeValue === "5" || gradeValue === "6";
+    const isValidForm =
+        firstNameValue !== "" &&
+        lastNameValue !== "" &&
+        ageValue !== "" &&
+        genderValue !== "" &&
+        gradeValue !== "" &&
+        contactNumberValue !== "" &&
+        addressValue !== "" &&
+        isNotGrade &&
+        (genderValue === "Male" || genderValue === "Female");
 
-SetSubBtnDisable(!isValidForm);
-SetSubBtnBgColor(isValidForm);
-SetSubBtnColor(isValidForm);
-SetSubBtnFontWeight(isValidForm);
-SetSubBtnBorder(isValidForm);
-SetSubBtnBoxShadow(isValidForm);
-SetSubBtnCursor(isValidForm);
+    SetSubBtnDisable(!isValidForm);
+    SetSubBtnBgColor(isValidForm);
+    SetSubBtnColor(isValidForm);
+    SetSubBtnFontWeight(isValidForm);
+    SetSubBtnBorder(isValidForm);
+    SetSubBtnBoxShadow(isValidForm);
+    SetSubBtnCursor(isValidForm);
 }
 
 function clr() {  
-const numberExist = document.getElementById('numberExist')
-numberExist.innerHTML = ''
-setFirstNameValue('');
-setLastNameValue('')
-setAgeValue('');
-setGenderValue('Choose a gender . . .');
-setContactNumberValue('');
-setAddressValue('');
-SetSubBtnBgColor(false);
-SetSubBtnColor(false);
-SetSubBtnCursor(false);
-SetSubBtnBorder(false);
-SetSubBtnBoxShadow(false);
-SetRSContainerWidth(false);
-SetStudentIdDisplay(false);
-SetContactNoBoxShadow(true);
-SetContactNoBorder(true);
+    const numberExist = document.getElementById('numberExist')
+    numberExist.innerHTML = ''
+    setFirstNameValue('');
+    setLastNameValue('')
+    setAgeValue('');
+    setGenderValue('Choose a gender . . .');
+    setGradeValue('What his/her grade? . . .');
+    setContactNumberValue('');
+    setAddressValue('');
+    SetSubBtnBgColor(false);
+    SetSubBtnColor(false);
+    SetSubBtnCursor(false);
+    SetSubBtnBorder(false);
+    SetSubBtnBoxShadow(false);
+    SetRSContainerWidth(false);
+    SetStudentIdDisplay(false);
+    SetContactNoBoxShadow(true);
+    SetContactNoBorder(true);
 }
 
 const [totalBoys, setTotalBoys] = useState();
@@ -394,40 +467,32 @@ function profileAct() {
     eyeNewCPass()
 }
 
-const [isLoaded, setLoaded] = useState(false);
+// const [isLoaded, setLoaded] = useState(false);
 
-useEffect(() => {
-  const timeoutId = setTimeout(() => {
-    setLoaded(true);
-  }, 3000);
+// useEffect(() => {
+//   const timeoutId = setTimeout(() => {
+//     setLoaded(true);
+//   }, 3000);
 
-  return () => clearTimeout(timeoutId);
-}, []);
+//   return () => clearTimeout(timeoutId);
+// }, []);
 
-useEffect(() => {
-    if (isLoaded) {
-      document.body.classList.add('loaded');
-      document.querySelector('h1').style.color = '#222222';
-    }
-  }, [isLoaded]);
+// useEffect(() => {
+//     if (isLoaded) {
+//       document.body.classList.add('loaded');
+//       document.querySelector('h1').style.color = '#222222';
+//     }
+//   }, [isLoaded]);
 
 useEffect(() => {
     adminData();
     Students();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+    LoadStudentData();
+}, []);
 
   
   return (
     <div>
-
-        {/* LOADING POPUP */}
-        <div id="loader-wrapper">
-            <div id="loader"></div>
-        
-            <div class="loader-section section-left"></div>
-            <div class="loader-section section-right"></div>
-        </div>
     
     {/* NAVIGATION BAR */}
     <section className="wrapper d-flex flex-row bg-dark">
@@ -472,7 +537,24 @@ useEffect(() => {
                     >
                         <i className="fa-solid fa-user-plus ms-1 text-end"></i>
                         <span className="fs-4 ms-2">
-                            Register Student
+                            Enroll Student
+                        </span>
+                    </button>
+                </li>
+                <li>
+                    <button 
+                        id="profileBtn" 
+                        className="fs-4 h-100 w-100"
+                        title="View Students"
+                        style={
+                            {backgroundColor: SetViewStudentsBtn ? '#454a61' : '#181e36',
+                            color: ViewStudentsColor ? 'white' : 'rgb(161, 161, 161)'}
+                        } 
+                        onClick={viewStudents}
+                    >
+                        <i className="fa-solid fa-table-list pe-2 text-center"></i>
+                        <span className="fs-4 pe-3">
+                            View Students
                         </span>
                     </button>
                 </li>
@@ -537,32 +619,16 @@ useEffect(() => {
                     </div>
                 </div>
             </div>
-            <div className="mt-5">
-                <h2>Students List:</h2>
-                <table className="table table-striped border border-2">
-                    <thead>
-                        <tr>
-                            <th className="table-name border">Name</th>
-                            <th className="table-age border">Age</th>
-                            <th className="table-gender border">Gender</th>
-                            <th className="table-contactNumber border">Contact No.</th>
-                            <th className="table-address border">Address</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentsTableBody">
-                    </tbody>
-                </table>
-            </div>
         </div>
 
-        {/* <!-- Register Student Content --> */}
+        {/* <!-- Enroll Student Content --> */}
         <div id="regStudent" style={{display: RegStudent ? 'block' : 'none'}} className="container shadow-lg">
             <div className="d-flex">
                 <div id="regStudentContainer" style={{
                     width: RSContainer ? '75%' : '100%'
                 }}>
                     <div className="mb-5">
-                        <h1>Register Student</h1>
+                        <h1>Enroll Student</h1>
                     </div>
                     <div className="row mb-5">
                         <div className="col">
@@ -612,6 +678,25 @@ useEffect(() => {
                                 <option disabled hidden>Choose a gender . . .</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div className="col">
+                            <h4>Grade <span className="required fs-3">*</span></h4>
+                            <select 
+                                id="grade" 
+                                name="grade" 
+                                className="fs-3 px-2" 
+                                onKeyUp={studentForm}
+                                value={gradeValue}
+                                onChange={(e) => setGradeValue(e.target.value)}
+                            >
+                                <option disabled hidden>What his/her grade? . . .</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
                             </select>
                         </div>
                         <div className="col">
@@ -693,6 +778,33 @@ useEffect(() => {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        {/* <!-- View Students Content --> */}
+        <div id="vs" style={{display: ViewStudents ? 'block' : 'none'}} className="container shadow-lg">
+            <div className="mb-5">
+                <h1 className="fw-bold text-start">View Students</h1>
+            </div>
+            <div>
+                <div className="mt-5">
+                    <h2>Students List:</h2>
+                    <input type="text" value={Search} onChange={(e) => setSearch(e.target.value)} />
+                    <table className="table table-striped border border-2">
+                        <thead>
+                            <tr>
+                                <th className="table-name border">Name</th>
+                                <th className="table-age border">Age</th>
+                                <th className="table-gender border">Gender</th>
+                                <th className="table-grade border">Grade</th>
+                                <th className="table-contactNumber border">Contact No.</th>
+                                <th className="table-address border">Address</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

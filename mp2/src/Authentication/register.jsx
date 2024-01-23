@@ -256,7 +256,7 @@ useEffect(() => {
                 </div>
                 <div className="mx-4 bg-transparent">
                     <div className="mb-4 bg-transparent">
-                        <h3 className="bg-transparent">Username <span className="text-danger bg-transparent fs-3">*</span></h3>
+                        <h3 className="bg-transparent text-white">Username <span className="text-danger bg-transparent fs-3">*</span></h3>
                             <input id="userName" 
                                 style={{
                                     boxShadow: UserNameBoxShadow ? '' : 'red 0px 0px 10px 0px',
@@ -275,7 +275,7 @@ useEffect(() => {
                         }} className="fs-5 bg-transparent"></span>
                     </div>
                     <div className="mb-5 bg-transparent">
-                        <h3 className="bg-transparent">Email <span className="text-danger bg-transparent fs-3">*</span></h3>
+                        <h3 className="bg-transparent text-white">Email <span className="text-danger bg-transparent fs-3">*</span></h3>
                         <input id="email" className="fs-3 px-2 rounded-3 bg-transparent" type="text" value={emailValue} autoComplete="off" onChange={(e) => SetEmailValue(e.target.value)} onKeyUp={checkFields}/>
                     </div>
                     <div className="mb-5 bg-transparent">
@@ -283,7 +283,7 @@ useEffect(() => {
                             style={{
                                 color: PassH3Color ? 'black' : 'red'
                             }}
-                            className="bg-transparent"
+                            className="bg-transparent text-white"
                         >
                             Password <span className="text-danger bg-transparent fs-3">*</span></h3>
                         <div className="position-relative">
@@ -316,7 +316,7 @@ useEffect(() => {
                             style={{
                                 color: CPassH3Color ? 'black' : 'red'
                             }}
-                            className="bg-transparent"
+                            className="bg-transparent text-white"
                         >Confirm Password <span className="text-danger bg-transparent fs-3">*</span>
                         </h3>
                         <div className="position-relative">
