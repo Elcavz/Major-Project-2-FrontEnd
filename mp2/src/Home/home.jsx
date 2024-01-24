@@ -16,7 +16,7 @@ const [gradeValue, setGradeValue] = useState('What his/her grade? . . .');
 const [contactNumberValue, setContactNumberValue] = useState('');
 const [addressValue, setAddressValue] = useState('');
 
-const [Search, setSearch] = useState('');
+const [searchInput, setSearchInput] = useState('');
 
 const [Dashboard, SetDbDisplay] = useState(true)
 const [RegStudent, SetRSDisplay] = useState()
@@ -100,7 +100,6 @@ function viewStudents() {
     SetDbBtnColor(false);
     SetRegStudentBtnColor(false);
     SetViewStudentsColor(true);
-    LoadStudentData();
     document.title = 'VIEW STUDENTS'
 }
 
@@ -176,6 +175,7 @@ function submitStudent() {
         idLastName.innerHTML = lastNameValue
         phoneNumber.innerHTML = contactNumberValue
         numberExist.innerHTML = ''
+        LoadStudentData();
         SetContactNoBoxShadow(true);
         SetContactNoBorder(true);
         fetch('http://localhost:3000/validation' , {
@@ -190,7 +190,6 @@ function submitStudent() {
         }).then((id) => {
             return id.json()
         }).then((id) => {
-            console.log(id.idresult)
             idNumber.innerHTML = id.idresult
         })
     } else {
@@ -217,29 +216,62 @@ function LoadStudentData() {
         const tableBody = document.getElementById('studentsTableBody');
         
         // Assuming Search is a global variable or passed as a parameter
+        console.log(studentData.students)
         const filteredData = studentData.students.filter((element) => {
-            return Search.toLocaleLowerCase() === '' ?
+            const filterTest = document.getElementById('filter').value
+            
+            if (filterTest === 'name') {
+                return searchInput.toLocaleLowerCase() === '' ?
                 element :
-                element.FirstName.toLocaleLowerCase().includes(Search.toLocaleLowerCase());
+                element.FirstName.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
+            } else if (filterTest === 'age') {
+                return searchInput.toString() === '' ?
+                element :
+                element.Age.toString().includes(searchInput);
+            } else if (filterTest === 'gender') {
+                return searchInput.toLocaleLowerCase() === '' ?
+                element :
+                element.Gender.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
+            } else if (filterTest === 'grade') {
+                return searchInput.toString() === '' ?
+                element :
+                element.Grade.toString().includes(searchInput);
+            } else if (filterTest === 'contactNo') {
+                return searchInput.toLocaleLowerCase() === '' ?
+                element :
+                element.ContactNumber.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
+            } else if (filterTest === 'address') {
+                return searchInput.toLocaleLowerCase() === '' ?
+                element :
+                element.Address.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
+            }
         });
 
         let tr = "";
-        for (let i = 0; i < filteredData.length; i++) {
-            const element = filteredData[i];
-            tr += "<tr>" +
-                "<td>" + element.FirstName + " " + element.LastName + "</td>" +
-                "<td>" + element.Age + "</td>" +
-                "<td>" + element.Gender + "</td>" +
-                "<td>" + element.Grade + "</td>" +
-                "<td>" + element.ContactNumber + "</td>" +
-                "<td>" + element.Address + "</td>" +
-                "</tr>";
+        if (filteredData.length > 0) {
+            for (let i = 0; i < filteredData.length; i++) {
+                const element = filteredData[i];
+                tr += "<tr>" +
+                    "<td>" + element.FirstName + " " + element.LastName + "</td>" +
+                    "<td>" + element.Age + "</td>" +
+                    "<td>" + element.Gender + "</td>" +
+                    "<td>" + element.Grade + "</td>" +
+                    "<td>" + element.ContactNumber + "</td>" +
+                    "<td>" + element.Address + "</td>" +
+                    "</tr>";
+            }
+        } else {
+            // Display a message or handle the case when no results are found
+            tr = "<tr><td colspan='6'>No matching records found</td></tr>";
         }
-
         tableBody.innerHTML = tr;
     }).catch((error) => {
         console.error('Error during fetch operation:', error);
     });
+}
+
+function searchKeyUp() {
+    LoadStudentData()
 }
 
 
@@ -483,6 +515,43 @@ function profileAct() {
 //       document.querySelector('h1').style.color = '#222222';
 //     }
 //   }, [isLoaded]);
+
+const [searchInputVisibility, setSearchInputInputVisibility] = useState(false);
+const [searchInputWidth, setSearchInputInputWidth] = useState(false);
+const [searchFilterVisibility, setSearcFilterVisibility] = useState(false);
+const [searchFilterWidth, setSearcFilterWidth] = useState(false);
+const [searchIcon, setSearchInputIcon] = useState(true);
+const [searchOnClick, setSearchInputOnClick] = useState(true);
+
+const [searchBtnBG, setSearchInputBtnBG] = useState()
+const [searchBtnBorder, setSearchInputBtnBorder] = useState()
+const [searchBtnBoxShadow, setSearchInputBtnBoxShadow] = useState()
+
+function searchShow() {
+    setSearchInputInputVisibility(true);
+    setSearcFilterVisibility(true);
+    setSearchInputInputWidth(true);
+    setSearcFilterWidth(true);
+    setSearchInputBtnBG(true);
+    setSearchInputBtnBorder(true);
+    setSearchInputBtnBoxShadow(true);
+    LoadStudentData();
+    setSearchInputIcon(!searchIcon);
+    setSearchInputOnClick(!searchOnClick);
+}
+
+function searchHide() {
+    setSearchInputInputVisibility(false);
+    setSearcFilterVisibility(false);
+    setSearchInputInputWidth(false);
+    setSearcFilterWidth(false);
+    setSearchInputBtnBG(false);
+    setSearchInputBtnBorder(false);
+    setSearchInputBtnBoxShadow(false);
+    setSearchInput('');
+    setSearchInputIcon(!searchIcon);
+    setSearchInputOnClick(!searchOnClick);
+}
 
 useEffect(() => {
     adminData();
@@ -756,7 +825,7 @@ useEffect(() => {
                         </div>
                     </div>
                 </div>
-                <div id="studentId" className="w-25" style={{
+                <div id="studentId" style={{
                     display: StudentId ? 'block' : 'none'
                 }}>
                     <div className="d-flex flex-nowrap justify-content-end align-items-center h-100">
@@ -789,22 +858,73 @@ useEffect(() => {
             </div>
             <div>
                 <div className="mt-5">
-                    <h2>Students List:</h2>
-                    <input type="text" value={Search} onChange={(e) => setSearch(e.target.value)} />
-                    <table className="table table-striped border border-2">
-                        <thead>
-                            <tr>
-                                <th className="table-name border">Name</th>
-                                <th className="table-age border">Age</th>
-                                <th className="table-gender border">Gender</th>
-                                <th className="table-grade border">Grade</th>
-                                <th className="table-contactNumber border">Contact No.</th>
-                                <th className="table-address border">Address</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsTableBody">
-                        </tbody>
-                    </table>
+                    <div className="d-flex flex-nowrap justify-content-around w-100">
+                        <div className="d-flex flex-nowrap">
+                            <div id="searchContainer" className="d-flex flex-nowrap justify-content-between">
+                                <h2>Students List:</h2>
+                                <input id="searchStudent" 
+                                    style={{
+                                        visibility: searchInputVisibility ? 'visible' : 'hidden',
+                                        width: searchInputWidth ? '20%' : '0%'
+                                    }}
+                                    className="fs-3 px-2"
+                                    type="text"
+                                    autoComplete="off"
+                                    value={searchInput}
+                                    onKeyUp={searchKeyUp}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                />
+                            </div>
+                            <div className="ps-2">
+                                <select
+                                style={{
+                                    visibility: searchFilterVisibility ? 'visible' : 'hidden',
+                                    width: searchFilterWidth ? '100%' : '0%'
+                                }}
+                                name="filterTable" id="filter" className="fs-4 px-1">
+                                    <option value="name">Name</option>
+                                    <option value="age">Age</option>
+                                    <option value="gender">Gender</option>
+                                    <option value="grade">Grade</option>
+                                    <option value="contactNo">Contact Number</option>
+                                    <option value="address">Address</option>
+                                </select>
+                            </div>
+                        </div>
+                        {/* backgroundColor: updateProfileBtn ? '#54b7c0' : '#b3e0e4',
+                                color: updateProfileBtnColor ? 'black' : '#8b8b8b',
+                                fontWeight: updateProfileBtnFW ? 'bold' : 'none',
+                                border: updateProfileBtnBorder ? '#7ec9cf 1px solid' : '#addee0 1px solid',
+                                cursor: updateProfileBtnCursor ? 'pointer' : 'not-allowed',
+                                boxShadow: updateProfileBtnBoxShadow ? '#6ef3ff 0px 0px 10px 0px' : 'none' */}
+                        <button id="searchBtn"
+                            style={{
+                                background: searchBtnBG ? '#e90e0e' : '#54b7c0',
+                                border: searchBtnBorder ? '#df4444 1px solid' : '#7ec9cf 1px solid',
+                                boxShadow: searchBtnBoxShadow ? '#b90c0c 0px 0px 30px 0px' : '#6ef3ff 0px 0px 10px 0px'
+                            }}
+                            onClick={searchOnClick ? searchShow : searchHide}>
+                            <i id="searchIcon" className={`${searchIcon ? "fa-solid fs-3 pt-1 fa-magnifying-glass" : "fa-solid fs-3 pt-1 fa-xmark"}`}></i>
+                        </button>
+                    </div>
+                    <div id="table-wrapper">
+                        <div id="table-scroll">
+                            <table className="table table-striped border border-2">
+                                <thead>
+                                    <tr>
+                                        <th className="table-name border">Name</th>
+                                        <th className="table-age border">Age</th>
+                                        <th className="table-gender border">Gender</th>
+                                        <th className="table-grade border">Grade</th>
+                                        <th className="table-contactNumber border">Contact No.</th>
+                                        <th className="table-address border">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

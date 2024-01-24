@@ -74,7 +74,7 @@ span {
 }
 
 .wrapper #logoutDiv {
-    height: 55px;
+    height: 51px;
 }
 
 .wrapper #logoutDiv button:hover {
@@ -283,6 +283,7 @@ input::-webkit-inner-spin-button {
 /* ID Generated */
 #studentId {
     display: none;
+    width: 23%;
 }
 
 #studentId p {
@@ -409,6 +410,62 @@ input::-webkit-inner-spin-button {
     display: none;
     background-color: #f7f7fc;
     min-height: 720px;
+}
+
+#vs .mt-5 .d-flex {
+    width: 95%;
+}
+
+#vs .mt-5 .d-flex #searchContainer {
+    width: 120%;
+}
+
+#vs .mt-5 #searchStudent {
+    height: 35px;
+    width: 20%;
+    outline: none;
+    transition: all 0.5s ease;
+}
+
+#vs .mt-5 #filter {
+    height: 35px;
+    width: 100%;
+    outline: none;
+    transition: all 0.5s ease;
+}
+
+#vs .mt-5 .d-flex .ps-2 {
+    width: 15%;
+}
+
+#searchBtn {
+    width: 3.5%;
+    background-color: #54b7c0;
+    color: black;
+    font-weight: bold;
+    border: #7ec9cf 1px solid;
+    box-shadow: #6ef3ff 0px 0px 10px 0px;
+    transition: all 0.5s ease;
+}
+
+#testBtntest {
+    background-color: #e90e0e;
+    border: #df4444 1px solid;
+    box-shadow: #b90c0c 0px 0px 30px 4px;
+}
+
+#table-wrapper {
+    position:relative;
+}
+
+#table-scroll {
+    height:500px;
+    overflow:auto;  
+    margin-top:20px;
+}
+
+#table-wrapper table {
+    width:100%;
 }
 
 /* Start of Profile CSS */

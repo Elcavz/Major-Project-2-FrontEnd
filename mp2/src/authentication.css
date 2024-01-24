@@ -52,13 +52,6 @@
     background-color: transparent;
 }
 
-#otp {
-    width: 79%;
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-    border-right: none;
-}
-
 #emailBtn {
     height: 35px;
     width: 85px;
@@ -68,21 +61,6 @@
     border-bottom-right-radius: 0.5rem;
     background-color: #24315c;
     position: absolute;
-}
-
-#otpBtn {
-  height: 35px;
-  width: 85px;
-  border: 2px solid rgb(168, 168, 168);
-  outline: rgb(168, 168, 168);
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  background-color: #24315c;
-  position: absolute;
-}
-
-#otpEmail {
-  display: none;
 }
 
 #userName,
