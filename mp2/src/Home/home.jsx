@@ -119,7 +119,21 @@ function profile() {
     document.title = 'PROFILE'
 }
 
+function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${month}-${day}-${year} ${hours}:${minutes}:${seconds}`;
+}
+
 function submitStudent() {
+    const currentDate = new Date();
+    const formattedDate = formatDate(currentDate);
+
     fetch('http://localhost:3000/students' , {
         method: 'post',
         headers: {
@@ -133,7 +147,8 @@ function submitStudent() {
             gender: genderValue,
             grade: gradeValue,
             contactnumber: contactNumberValue,
-            address: addressValue
+            address: addressValue,
+            date: formattedDate
         })
     }).then((studentData) => {
         return studentData.json()
@@ -144,6 +159,7 @@ function submitStudent() {
         const phoneNumber = document.getElementById('phoneNumber')
         const numberExist = document.getElementById('numberExist')
         const idPic = document.getElementById('idPic')
+        const gradeLevel = document.getElementById('gradeLevel')
         
         if (studentData.success) {
             if (genderValue === 'Male') {
@@ -155,21 +171,6 @@ function submitStudent() {
             setTimeout(() => {
             SetStudentIdDisplay(true);
             }, 1000);
-
-        // const tableBody = document.getElementById('studentsTableBody');
-        // const newRow = tableBody.insertRow(-1);
-
-        // const cell1 = newRow.insertCell(0);
-        // const cell2 = newRow.insertCell(1);
-        // const cell3 = newRow.insertCell(2);
-        // const cell4 = newRow.insertCell(3);
-        // const cell5 = newRow.insertCell(4);
-
-        // cell1.textContent = firstNameValue + ' ' + lastNameValue;
-        // cell2.textContent = ageValue;
-        // cell3.textContent = genderValue;
-        // cell4.textContent = contactNumberValue;
-        // cell5.textContent = addressValue;
             
         idFirstName.innerHTML = firstNameValue
         idLastName.innerHTML = lastNameValue
@@ -191,13 +192,14 @@ function submitStudent() {
             return id.json()
         }).then((id) => {
             idNumber.innerHTML = id.idresult
+            gradeLevel.innerHTML = id.grade
         })
     } else {
         SetRSContainerWidth(false);
         SetContactNumberAnim(true);
         SetContactNoBoxShadow(false)
         SetContactNoBorder(false);
-        numberExist.innerHTML = 'Already Exists'
+        numberExist.innerHTML = 'Already Exists';
         setTimeout(function() {
             SetContactNumberAnim(false);
         }, 500)
@@ -218,32 +220,36 @@ function LoadStudentData() {
         // Assuming Search is a global variable or passed as a parameter
         console.log(studentData.students)
         const filteredData = studentData.students.filter((element) => {
-            const filterTest = document.getElementById('filter').value
+            const filterValue = document.getElementById('filter').value
             
-            if (filterTest === 'name') {
+            if (filterValue === 'name') {
                 return searchInput.toLocaleLowerCase() === '' ?
                 element :
                 element.FirstName.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
-            } else if (filterTest === 'age') {
+            } else if (filterValue === 'age') {
                 return searchInput.toString() === '' ?
                 element :
                 element.Age.toString().includes(searchInput);
-            } else if (filterTest === 'gender') {
+            } else if (filterValue === 'gender') {
                 return searchInput.toLocaleLowerCase() === '' ?
                 element :
                 element.Gender.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
-            } else if (filterTest === 'grade') {
+            } else if (filterValue === 'grade') {
                 return searchInput.toString() === '' ?
                 element :
                 element.Grade.toString().includes(searchInput);
-            } else if (filterTest === 'contactNo') {
+            } else if (filterValue === 'contactNo') {
                 return searchInput.toLocaleLowerCase() === '' ?
                 element :
                 element.ContactNumber.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
-            } else if (filterTest === 'address') {
+            } else if (filterValue === 'address') {
                 return searchInput.toLocaleLowerCase() === '' ?
                 element :
                 element.Address.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase());
+            } else if (filterValue === 'dateEnrolled') {
+                return searchInput.toString() === '' ?
+                element :
+                element.Date_Enrolled.toString().includes(searchInput);
             }
         });
 
@@ -252,12 +258,13 @@ function LoadStudentData() {
             for (let i = 0; i < filteredData.length; i++) {
                 const element = filteredData[i];
                 tr += "<tr>" +
-                    "<td>" + element.FirstName + " " + element.LastName + "</td>" +
-                    "<td>" + element.Age + "</td>" +
-                    "<td>" + element.Gender + "</td>" +
-                    "<td>" + element.Grade + "</td>" +
-                    "<td>" + element.ContactNumber + "</td>" +
-                    "<td>" + element.Address + "</td>" +
+                    "<td class='border'>" + element.FirstName + " " + element.LastName + "</td>" +
+                    "<td class='border'>" + element.Age + "</td>" +
+                    "<td class='border'>" + element.Gender + "</td>" +
+                    "<td class='border'>" + element.Grade + "</td>" +
+                    "<td class='border'>" + element.ContactNumber + "</td>" +
+                    "<td class='border'>" + element.Address + "</td>" +
+                    "<td class='border'>" + element.Date_Enrolled + "</td>" +
                     "</tr>";
             }
         } else {
@@ -499,23 +506,6 @@ function profileAct() {
     eyeNewCPass()
 }
 
-// const [isLoaded, setLoaded] = useState(false);
-
-// useEffect(() => {
-//   const timeoutId = setTimeout(() => {
-//     setLoaded(true);
-//   }, 3000);
-
-//   return () => clearTimeout(timeoutId);
-// }, []);
-
-// useEffect(() => {
-//     if (isLoaded) {
-//       document.body.classList.add('loaded');
-//       document.querySelector('h1').style.color = '#222222';
-//     }
-//   }, [isLoaded]);
-
 const [searchInputVisibility, setSearchInputInputVisibility] = useState(false);
 const [searchInputWidth, setSearchInputInputWidth] = useState(false);
 const [searchFilterVisibility, setSearcFilterVisibility] = useState(false);
@@ -558,7 +548,6 @@ useEffect(() => {
     Students();
     LoadStudentData();
 }, []);
-
   
   return (
     <div>
@@ -571,11 +560,11 @@ useEffect(() => {
                     <img className="img-fluid w-75" src={admin} alt=""/>
                 </div>
             </div>
-            <div className="m-5 text-center">
+            <div id="adminContainer" className="p-5 text-center">
                 <span id="adminUsername" className="text-white fw-bold fs-3" title={`${adminUsername} | Administrator`}>{adminUsername}</span>
                 <h2 className="text-white-50 fs-5 text-center text-decoration-underline">ADMINISTRATIVE</h2>
             </div>
-            <div className="navBar">
+            <div className="navBar mt-5">
                 <li>
                     <button 
                         id="dbBtn" 
@@ -604,8 +593,8 @@ useEffect(() => {
                             } 
                         onClick={registerStudent}
                     >
-                        <i className="fa-solid fa-user-plus ms-1 text-end"></i>
-                        <span className="fs-4 ms-2">
+                        <i className="fa-solid fa-user-plus me-1 text-end"></i>
+                        <span className="fs-4 pe-3">
                             Enroll Student
                         </span>
                     </button>
@@ -836,7 +825,8 @@ useEffect(() => {
                                 </div>
                                 <div className="bottom">
                                     <p className="mb-0"><span id="idFirstName" className="fs-3"></span> <span id="idLastName" className="fs-3"></span></p>
-                                    <p className="fs-6">ID No. <span id="idNumber" className="fs-6">0000</span></p>
+                                    <p className="m-0 fs-6">Grade <span id="gradeLevel" className="fs-6">0000</span></p>
+                                    <p className="mb-2 fs-6">ID No. <span id="idNumber" className="fs-6">0000</span></p>
                                     <div className="barcode">
                                         <img src={qr} alt='QR Code'/>
                                     </div>
@@ -861,7 +851,7 @@ useEffect(() => {
                     <div className="d-flex flex-nowrap justify-content-around w-100">
                         <div className="d-flex flex-nowrap">
                             <div id="searchContainer" className="d-flex flex-nowrap justify-content-between">
-                                <h2>Students List:</h2>
+                                <h2 className="m-0 pt-2">Students List:</h2>
                                 <input id="searchStudent" 
                                     style={{
                                         visibility: searchInputVisibility ? 'visible' : 'hidden',
@@ -888,27 +878,22 @@ useEffect(() => {
                                     <option value="grade">Grade</option>
                                     <option value="contactNo">Contact Number</option>
                                     <option value="address">Address</option>
+                                    <option value="dateEnrolled">Date Enrolled</option>
                                 </select>
                             </div>
                         </div>
-                        {/* backgroundColor: updateProfileBtn ? '#54b7c0' : '#b3e0e4',
-                                color: updateProfileBtnColor ? 'black' : '#8b8b8b',
-                                fontWeight: updateProfileBtnFW ? 'bold' : 'none',
-                                border: updateProfileBtnBorder ? '#7ec9cf 1px solid' : '#addee0 1px solid',
-                                cursor: updateProfileBtnCursor ? 'pointer' : 'not-allowed',
-                                boxShadow: updateProfileBtnBoxShadow ? '#6ef3ff 0px 0px 10px 0px' : 'none' */}
                         <button id="searchBtn"
                             style={{
                                 background: searchBtnBG ? '#e90e0e' : '#54b7c0',
                                 border: searchBtnBorder ? '#df4444 1px solid' : '#7ec9cf 1px solid',
-                                boxShadow: searchBtnBoxShadow ? '#b90c0c 0px 0px 30px 0px' : '#6ef3ff 0px 0px 10px 0px'
+                                boxShadow: searchBtnBoxShadow ? '#b90c0c 0px 0px 15px 0px' : '#6ef3ff 0px 0px 20px 0px'
                             }}
                             onClick={searchOnClick ? searchShow : searchHide}>
                             <i id="searchIcon" className={`${searchIcon ? "fa-solid fs-3 pt-1 fa-magnifying-glass" : "fa-solid fs-3 pt-1 fa-xmark"}`}></i>
                         </button>
                     </div>
                     <div id="table-wrapper">
-                        <div id="table-scroll">
+                        <div id="table-scroll" className="border border-bottom-0">
                             <table className="table table-striped border border-2">
                                 <thead>
                                     <tr>
@@ -918,6 +903,7 @@ useEffect(() => {
                                         <th className="table-grade border">Grade</th>
                                         <th className="table-contactNumber border">Contact No.</th>
                                         <th className="table-address border">Address</th>
+                                        <th className="table-dateEnrolled border">Date Enrolled</th>
                                     </tr>
                                 </thead>
                                 <tbody id="studentsTableBody">

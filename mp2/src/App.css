@@ -15,6 +15,10 @@
     background-size: cover;
 }
 
+.wrapper .vh-100 #adminContainer {
+    border-bottom: #41508d 1px double;
+}
+
 .wrapper #db {
     background-color: #f7f7fc;
     min-height: 823.3px;
@@ -29,7 +33,7 @@ span {
 }
 
 .navBar {
-    height: 64.3vh;
+    height: 576px;
 }
 
 .wrapper #profilePic {
@@ -134,41 +138,6 @@ span {
 
 .shadow-lg {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset!important;
-}
-
-.container .table-name,
-.container .table-age,
-.container .table-gender,
-.container .table-grade,
-.container .table-contactNumber,
-.container .table-address {
-    background-color: #181e36;
-    color: white;
-    font-weight: 100;
-}
-
-.container .table-name {
-    width: 18%;
-}
-
-.container .table-age {
-    width: 7%;
-}
-
-.container .table-gender {
-    width: 10%;
-}
-
-.container .table-grade {
-    width: 7%;
-}
-
-.container .table-contactNumber {
-    width: 18%;
-}
-
-.container .table td {
-    height: 30.5px;
 }
 
 /* Enroll Student CSS */
@@ -444,14 +413,55 @@ input::-webkit-inner-spin-button {
     color: black;
     font-weight: bold;
     border: #7ec9cf 1px solid;
+    outline: none;
     box-shadow: #6ef3ff 0px 0px 10px 0px;
     transition: all 0.5s ease;
+    z-index: 2;
 }
 
-#testBtntest {
-    background-color: #e90e0e;
-    border: #df4444 1px solid;
-    box-shadow: #b90c0c 0px 0px 30px 4px;
+
+.container .table-name,
+.container .table-age,
+.container .table-gender,
+.container .table-grade,
+.container .table-contactNumber,
+.container .table-address,
+.container .table-dateEnrolled {
+    background-color: #181e36;
+    color: white;
+    font-weight: 100;
+}
+
+.container .table-name {
+    width: 18%;
+}
+
+.container .table-age {
+    width: 7%;
+}
+
+.container .table-gender {
+    width: 10%;
+}
+
+.container .table-grade {
+    width: 7%;
+}
+
+.container .table-contactNumber {
+    width: 13%;
+}
+
+.container .table-address {
+    width: 20%;
+}
+
+.container .table-dateEnrolled {
+    width: 10%;
+}
+
+.container .table td {
+    height: 30.5px;
 }
 
 #table-wrapper {
@@ -459,14 +469,18 @@ input::-webkit-inner-spin-button {
 }
 
 #table-scroll {
-    height:500px;
-    overflow:auto;  
-    margin-top:20px;
+    height: 500px;
+    overflow: auto;  
+    margin-top: 15px;
 }
 
 #table-wrapper table {
     width:100%;
 }
+/* 
+table tbody .border {
+    border: 1px black solid;
+} */
 
 /* Start of Profile CSS */
 #pf {

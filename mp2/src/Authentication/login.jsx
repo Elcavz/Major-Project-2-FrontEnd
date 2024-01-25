@@ -71,6 +71,22 @@ function Login() {
         })
     }
 
+    useEffect(() => {
+        const keyDownHandler = event => {
+          console.log('User pressed: ', event.key);
+    
+          if (event.key === 'Enter') {
+            login();
+          }
+        };
+    
+        document.addEventListener('keydown', keyDownHandler);
+    
+        return () => {
+          document.removeEventListener('keydown', keyDownHandler);
+        };
+      }, []);
+
     const [eye, setEyeDisplay] = useState()
 
     function eyePass() {
