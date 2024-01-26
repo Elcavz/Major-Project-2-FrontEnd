@@ -5,6 +5,8 @@ import './App.css';
 import Register from './Authentication/register';
 import Login from './Authentication/login';
 import Home from './Home/home';
+import BoyStudents from './Page/boyStudents';
+import GirlStudents from './Page/girlStudents';
 
 function App() {
   const userToken = localStorage.getItem('token: ');
@@ -22,10 +24,12 @@ function App() {
         <Route path="login" element={<Login/>}/>
         <Route path="register" element={<Register/>}/>
         {userToken ? 
-        <Route path='/'>
+        <Route path='/Home'>
           <Route index element={<Home/>}/>
+          <Route path='/Home/Boy-Students' element={<BoyStudents/>}/>
+          <Route path='/Home/Girl-Students' element={<GirlStudents/>}/>
         </Route>
-        : '' }
+        : '/Home' }
       </Routes>
     </BrowserRouter>
   );

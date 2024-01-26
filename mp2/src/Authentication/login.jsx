@@ -58,7 +58,7 @@ function Login() {
                 SetLoginBtnBoxShadow(true);
 
                 function myURL() {
-                    document.location.href = '/';
+                    document.location.href = '/Home';
                 }
                 setTimeout(myURL, 2000);
             } else {
