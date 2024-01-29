@@ -8,11 +8,17 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+#landscapeNav {
+    display: none;
+}
+
 
 .wrapper {
     background-image: url(Home/assets/cool-background.png);
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    flex-direction: row;
 }
 
 .wrapper .vh-100 #adminContainer {
@@ -50,7 +56,7 @@ span {
     height: 85%;
 }
 
-.wrapper nav {
+.wrapper #portraitNav {
     width: 15%;
     background-color: #181e36;
 }
@@ -573,4 +579,71 @@ input::-webkit-inner-spin-button {
 #oldPasswordH4,
 #oldPassWrong {
     width: fit-content;
+}
+
+@media only screen and (max-width: 1024px) {
+    .navBar {
+        height: 488px!important;
+    }
+
+    #adminContainer {
+        padding: 1rem!important;
+    }
+
+    #logoutBtn span {
+        margin-right: 1rem!important;
+    }
+
+    #profileBtn span {
+        font-size: large!important;
+        margin-right: 0.5rem!important;
+    }
+
+    #dbBtn span {
+        font-size: large!important;
+        margin-right: 1rem!important;
+    }
+
+    #regStudentBtn span {
+        font-size: large!important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .wrapper #portraitNav {
+        display: none!important;
+    }
+
+    #landscapeNav {
+        display: block;
+        background-color: #181e36;
+        overflow: hidden;
+    }
+
+    #landscapeNav a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+  
+    #landscapeNav  a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .wrapper .container {
+        margin-top: 10px;
+    }
+
+    #adminContainer,
+    #adminContainer h2 {
+        text-align: end!important;
+    }
 }

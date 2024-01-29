@@ -10,7 +10,6 @@ import GirlStudents from './Page/girlStudents';
 
 function App() {
   const userToken = localStorage.getItem('token: ');
-  console.log('myToken: ', userToken)
   const pathnameLogin = document.location.pathname === '/login'
   const pathnameRegister = document.location.pathname === '/register'
 

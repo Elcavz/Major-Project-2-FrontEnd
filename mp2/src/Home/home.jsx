@@ -206,7 +206,6 @@ function LoadStudentData() {
     }).then((studentData) => {
         const tableBody = document.getElementById('studentsTableBody');
         
-        console.log(studentData.students)
         const filteredData = studentData.students.filter((element) => {
             const filterValue = document.getElementById('filter').value
             
@@ -366,7 +365,6 @@ const adminData = () => {
     }).then((adminData) => {
         return adminData.json();
     }).then((adminData) => {
-        console.log(adminData.result)
         setAdminUsername(adminData.result.username)
         setAdminEmail(adminData.result.email)
     }) 
@@ -594,8 +592,8 @@ useEffect(() => {
 
     <div>
     {/* NAVIGATION BAR */}
-        <section className="wrapper d-flex flex-row bg-dark">
-            <nav className="vh-100">
+        <section className="wrapper bg-dark">
+            <nav id="portraitNav" className="vh-100">
                 <div className="pt-5">
                     <div id="profilePic" className="text-center m-auto p-auto border rounded-circle">
                         <img className="img-fluid w-75" src={admin} alt=""/>
@@ -682,6 +680,12 @@ useEffect(() => {
                             Log Out
                         </span>
                     </button>
+                </div>
+            </nav>
+            <nav id="landscapeNav">
+            <div id="adminContainer" className="p-5 text-center">
+                    <span id="adminUsername" className="text-white fw-bold fs-3" title={`${adminUsername} | Administrator`}>{adminUsername}</span>
+                    <h2 className="text-white-50 fs-5 text-center text-decoration-underline">ADMINISTRATIVE</h2>
                 </div>
             </nav>
 
